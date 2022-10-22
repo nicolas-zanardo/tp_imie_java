@@ -1,4 +1,4 @@
-package fr.imie.fomation.api.entity;
+package fr.imie.fomation.api.model;
 
 
 import lombok.Data;
@@ -16,6 +16,6 @@ public class TypeSalle {
     private Long id;
 
     @Column(name="nom", nullable = false)
-    private String firstName;
+    private String nom;
 
 }
