@@ -4,6 +4,7 @@ import fr.imie.webapp.CustomProperties;
 import fr.imie.webapp.model.TypeSalle;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,18 @@ public class TypeSalleProxy {
                TypeSalle.class
        );
 
+       return response.getBody();
+   }
+
+   public Iterable<TypeSalle> getTypeSalles() {
+       String getTypeSallesUrl = props.getApiUrl() + "/type-salles";
+       RestTemplate restTemplate = new RestTemplate();
+       ResponseEntity<Iterable<TypeSalle>> response = restTemplate.exchange(
+               getTypeSallesUrl,
+               HttpMethod.GET,
+               null,
+               new ParameterizedTypeReference<Iterable<TypeSalle>>() {}
+       );
        return response.getBody();
    }
 }

@@ -1,29 +1,73 @@
 package fr.imie.fomation.api.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
-import org.junit.jupiter.api.Test;
+import fr.imie.fomation.api._init_data.InitData;
+import fr.imie.fomation.api.service.TypeSalleService;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.hamcrest.CoreMatchers.is;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.util.stream.StreamSupport;
 
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TypeSalleControllerTest {
 
     @Autowired
     public MockMvc mockMvc;
+    @Autowired
+    public TypeSalleService typeSalleService;
 
+    @BeforeAll
+    public static void setup() {
+        System.out.println("-- CRUD TYPE SALLE --");
+        InitData.setup();
+    }
+
+    @Order(1)
     @Test
     public void testAddTypeSalle() throws Exception {
-        mockMvc.perform(post("/add-type-salle")
+        mockMvc.perform(post("/api/add-type-salle")
                 .contentType(MediaType.APPLICATION_JSON).content("{\n" +
-                        "    \"nom\": \"informatique test\"\n" +
+                        "    \"nom\": \"informatique TEST\"\n" +
                         "}")
         );
+        Assertions.assertEquals(1, StreamSupport.stream(typeSalleService.getTypeSalles().spliterator(), true).count());
     }
+
+    @Order(2)
+    @Test
+    public void testGetTypeSalleById() throws Exception {
+        mockMvc.perform(get("/api/type-salle/1")).andExpect(status().isOk()).andExpect(jsonPath("nom", is("informatique TEST")));
+    }
+
+    @Order(3)
+    @Test
+    public void testPutTypeSalle() throws Exception {
+        mockMvc.perform(put("/api/type-salle/1").contentType(MediaType.APPLICATION_JSON).content("{\n" +
+                "    \"nom\": \"informatique\"\n" +
+                "}")
+        );
+        mockMvc.perform(get("/api/type-salle/1")).andExpect(status().isOk()).andExpect(jsonPath("nom", is("informatique")));
+    }
+
+    @Order(4)
+    @Test
+    public void testDeleteTypeSalle() throws Exception {
+        mockMvc.perform(delete("/api/type-salle/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        Assertions.assertEquals(0, StreamSupport.stream(typeSalleService.getTypeSalles().spliterator(), true).count());
+    }
+
 }
