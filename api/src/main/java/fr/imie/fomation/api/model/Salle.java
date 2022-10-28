@@ -1,0 +1,25 @@
+package fr.imie.fomation.api.model;
+
+import javax.persistence.*;
+import lombok.Data;
+
+/**
+ *
+ * @author jason
+ */
+@Data
+@Entity
+@Table(name = "salle")
+public class Salle {
+    
+    @Id
+    @GeneratedValue (strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
+    
+    @Column (name = "nom", nullable = false)
+    private String nom;
+    
+    @Column (name = "nombre_places", nullable = false)
+    private int number_places;
+}
