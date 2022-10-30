@@ -8,13 +8,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 
 @Data
 @Controller
-public class ResponsableGestionController {
+public class TypeSalleController {
 
     @Autowired
     private TypeSalleService typeSalleService;
@@ -27,22 +28,40 @@ public class ResponsableGestionController {
         return "manage-type-salle";
     }
 
+
+    @GetMapping("manage-type-salle/{id}")
+    public String getTypeSalle(@PathVariable("id") final int id, Model model) {
+        TypeSalle typeSalle = typeSalleService.getTypeSalle(id);
+        model.addAttribute("typeSalle", typeSalle);
+        listTypeSalleModel(model);
+        return "manage-type-salle";
+    }
+
+    /**
+     * Save TypeSalle
+     * @param typeSalle TypeSalle
+     * @return ModelAndView
+     */
     @PostMapping("save-type-salle")
     public ModelAndView saveTypeSalle(@ModelAttribute TypeSalle typeSalle) {
-        if(typeSalle.getId() != null) {
-            System.out.println("TODO update" + typeSalle.getId());
+        if(!typeSalle.getNom().isEmpty()) {
+            typeSalle.setNom(typeSalle.getNom().toLowerCase().trim());
+            typeSalleService.saveTypeSalle(typeSalle);
         }
-        typeSalleService.saveTypeSalle(typeSalle);
         return new ModelAndView("redirect:/manage-type-salle");
     }
 
+    @GetMapping("delete-type-salle/{id}")
+    public ModelAndView deleteTypeSalle(@PathVariable("id") final int id, Model model) {
+        typeSalleService.deleteTypeSalle(id);
+        return new ModelAndView("redirect:/manage-type-salle");
+    }
 
     /**
      * @param model Model
-     * @return Model
      */
-    private Model listTypeSalleModel(Model model) {
+    private void listTypeSalleModel(Model model) {
         Iterable<TypeSalle> listTypeSale = typeSalleService.getTypeSalles();
-        return model.addAttribute("typeSalles", listTypeSale);
+        model.addAttribute("typeSalles", listTypeSale);
     }
 }
