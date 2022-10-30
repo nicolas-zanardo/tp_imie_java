@@ -4,11 +4,11 @@ import lombok.Data;
 
 
 @Data
-public class SalleFormData {
+public class Salle {
 
     private Integer id;
     private String nom;
     private int nombrePlaces;
-    private int typeSalle;
+    private TypeSalle typeSalle;
 
 }

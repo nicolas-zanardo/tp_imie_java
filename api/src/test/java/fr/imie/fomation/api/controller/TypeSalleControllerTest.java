@@ -8,10 +8,12 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.hamcrest.CoreMatchers.is;
+
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.stream.StreamSupport;
@@ -22,15 +24,18 @@ import java.util.stream.StreamSupport;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TypeSalleControllerTest {
 
-    @Autowired
-    public MockMvc mockMvc;
+
     @Autowired
     public TypeSalleService typeSalleService;
+
+    @Autowired
+    private MockMvc mockMvc;
 
     @BeforeAll
     public static void setup() {
         System.out.println("-- CRUD TYPE SALLE --");
         InitData.setup();
+        System.out.println("-- setup() [ OK ] --");
     }
 
     @Order(1)
@@ -62,8 +67,34 @@ class TypeSalleControllerTest {
 
     @Order(4)
     @Test
+    public void testCanDeletedTypeSalle() throws Exception {
+        mockMvc.perform(post("/api/add-salle")
+                .contentType(MediaType.APPLICATION_JSON).content("{\n" +
+                        "    \"nom\": \"RM 10\",\n" +
+                        "    \"nombrePlaces\": 20,\n" +
+                        "    \"typeSalle\": {\n" +
+                        "        \"id\": 1,\n" +
+                        "        \"nom\": \"informatique\"\n" +
+                        "    }\n" +
+                        "}")
+        );
+        Assertions.assertEquals(true, typeSalleService.findTypeSalleUsedBySalle(typeSalleService.getTypeSalle(1L)));
+    }
+
+    @Order(5)
+    @Test
+    public void testCantDeletedTypeSalle() throws Exception {
+        mockMvc.perform(delete("/api/delete-salle/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        Assertions.assertEquals(false, typeSalleService.findTypeSalleUsedBySalle(typeSalleService.getTypeSalle(1L)));
+    }
+
+    @Order(6)
+    @Test
     public void testDeleteTypeSalle() throws Exception {
-        mockMvc.perform(delete("/api/type-salle/1")
+        mockMvc.perform(delete("/api/type-salle-delete/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

@@ -61,7 +61,7 @@ public class TypeSalleController {
      * @param model Model
      */
     private void listTypeSalleModel(Model model) {
-        Iterable<TypeSalle> listTypeSale = typeSalleService.getTypeSalles();
-        model.addAttribute("typeSalles", listTypeSale);
+        Iterable<TypeSalle> listTypeSales = typeSalleService.getTypeSalles();
+        model.addAttribute("typeSalles", listTypeSales);
     }
 }

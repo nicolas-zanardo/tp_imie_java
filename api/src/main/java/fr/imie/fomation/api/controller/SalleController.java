@@ -6,11 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
-/**
- *
- * @author jason
- */
 @RestController
 @RequestMapping(path = "/api")
 public class SalleController {
@@ -34,7 +29,7 @@ public class SalleController {
         return salle.orElse(null);
     }
     
-    @PutMapping("/salle/{id}")
+    @PutMapping("/update-salle/{id}")
     public Salle updateSalle(@PathVariable("id") final Long id, @RequestBody Salle salle) {
         Optional<Salle> s = SalleService.getSalle(id);
         if(s.isPresent()) {
@@ -50,7 +45,7 @@ public class SalleController {
         }
     }
     
-    @DeleteMapping("/salle/{id}")
+    @DeleteMapping("/delete-salle/{id}")
     public void deleteSalle(@PathVariable("id") final Long id) {
         SalleService.deleteSalle(id);
     }

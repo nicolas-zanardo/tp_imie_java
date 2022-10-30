@@ -2,7 +2,10 @@ package fr.imie.fomation.api.controller;
 
 import fr.imie.fomation.api.model.TypeSalle;
 import fr.imie.fomation.api.service.TypeSalleService;
+
 import java.util.Optional;
+import java.util.stream.StreamSupport;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -67,9 +70,11 @@ public class TypeSalleController {
 
     /**
      * DELETE - type Salle
+     *
      * @param id Long
+     * @return
      */
-    @DeleteMapping("/type-salle/{id}")
+    @DeleteMapping("/type-salle-delete/{id}")
     public void deleteTypeSalle(@PathVariable("id") final Long id) {
         typeSalleService.deleteTypeSalle(id);
     }

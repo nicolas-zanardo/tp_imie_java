@@ -21,5 +21,9 @@ public class Salle {
     private String nom;
     
     @Column (name = "nombre_places", nullable = false)
-    private int number_places;
+    private int nombrePlaces;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_type_salle", nullable = false)
+    private TypeSalle typeSalle;
 }

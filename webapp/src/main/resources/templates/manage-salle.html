@@ -1,10 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Calendrier Web Application</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container-fluid">
+      <div class="navbar-brand" >IMIE</div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link " aria-current="page" href="manage-type-salle">Gestion des types de salles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="manage-salle">Gestion des salles</a>
+          </li>
+
+        </ul>
+        <div class="d-flex">
+          <button class="btn btn-outline-info" type="submit">login</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+<main >
+  <!--        Title-->
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-12">
+        <h1>Salle</h1>
+        <hr>
+      </div>
+    </div>
+  </div>
+
+  <!--        Form-->
+  <div class="container text-center bg-light shadow-sm p-3">
+    <form th:action="@{/save-salle}" method="post" th:object="${salle}">
+      <input type="hidden" th:field="*{id}" class="form-control">
+
+      <div class="d-flex align-items-center py-3">
+        <label for="inputName" class="me-3 w-25 text-start">Nom de la salle</label>
+        <input type="text" th:field="*{nom}" class="form-control w-75" id="inputName">
+      </div>
+      <div class="d-flex my-3">
+        <div class="d-flex align-items-center w-50 me-3">
+          <label for="inputNombrePlaces" class="me-3">Nombre de place</label>
+          <input type="number" th:field="*{nombrePlaces}" class="form-control w-50" id="inputNombrePlaces">
+        </div>
+        <select class="form-select w-50" aria-label="Default select example" th:field="*{typeSalle}">
+          <option class="col-sm-3" th:each="tSalle : ${typeSalles}" th:value="${tSalle.id}" th:text="${tSalle.nom}"></option>
+        </select>
+        <div class="w-50 text-end">
+          <button type="submit" class="btn btn-primary">Valider</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="container">
+    <hr>
+    <table class="table mt-3">
+      <thead>
+      <tr>
+        <th>Nom de Salle</th>
+        <th>Type de Salle</th>
+        <th class="text-end"><div class="px-3">Action</div></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="salle, row : ${salles}">
+        <td  th:text="${salle.nom}">nom</td>
+        <td  th:text="${salle.typeSalle.nom}">nom</td>
+        <td class="text-end">
+          <a th:href="@{/manage-salle/{id}(id=${salle.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal"  th:attrappend="data-bs-target=${'#modalDelete_' + salle.id}">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" th:attrappend="id=${'modalDelete_' + salle.id}, aiaria-labelledby=${'modalLabelDelete_' + salle.id}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                  <div class="d-flex align-items-end"><b class="modal-title me-2" th:attrappend="id=${'modalLabelDelete_' + salle.id}">Suppression : </b> <span th:text="${salle.nom}"></span></div>
+
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+                  <div>Vous êtes sur le point de supprimer <b th:text="${salle.nom}"></b>.</div>
+                  <div>Voulez vous continuer ?</div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+                  <a th:href="@{/delete-salle/{id}(id=${salle.id})}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+
+
+
+<!-- CDN -->
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+<!-- Custom Code -->
+<script src="index.js"></script>
+<script>
+  const table = new simpleDatatables.DataTable("table")
+</script>
 
 </body>
 </html>
