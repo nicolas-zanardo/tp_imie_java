@@ -2,7 +2,6 @@ package fr.imie.webapp.repository;
 
 import fr.imie.webapp.CustomProperties;
 import fr.imie.webapp.model.Salle;
-import fr.imie.webapp.model.TypeSalle;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -25,6 +24,24 @@ public class SalleProxy {
         ResponseEntity<Salle> response = restTemplate.exchange(
                 createSalleUrl,
                 HttpMethod.POST,
+                request,
+                Salle.class
+        );
+        return response.getBody();
+    }
+
+    /**
+     * Update - type salle
+     * @param salle Salle
+     * @return ResponseEntity
+     */
+    public Salle updateSalle(Salle salle) {
+        String updateSalleUrl = props.getApiUrl() + "/update-salle/" + salle.getId();
+        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<Salle> request = new HttpEntity<Salle>(salle);
+        ResponseEntity<Salle> response = restTemplate.exchange(
+                updateSalleUrl,
+                HttpMethod.PUT,
                 request,
                 Salle.class
         );

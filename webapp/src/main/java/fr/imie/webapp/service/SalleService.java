@@ -21,10 +21,11 @@ public class SalleService {
 
     public void saveSalle(Salle salle) {
         Salle saveSalle = null;
+
         if(salle.getId() == null) {
             saveSalle = salleProxy.createSalle(salle);
         } else {
-            // TODO create update
+            saveSalle = salleProxy.updateSalle(salle);
         }
     }
 

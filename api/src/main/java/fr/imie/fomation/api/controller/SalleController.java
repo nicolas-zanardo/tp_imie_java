@@ -34,10 +34,13 @@ public class SalleController {
         Optional<Salle> s = SalleService.getSalle(id);
         if(s.isPresent()) {
             Salle currentSalle = s.get();
-            String nom = salle.getNom();
-            if (nom != null) {
-                currentSalle.setNom(nom);
+            if(salle.getNom() != null) {
+                currentSalle.setNom(salle.getNom());
             }
+            if(salle.getTypeSalle() != null) {
+                currentSalle.setTypeSalle(salle.getTypeSalle());
+            }
+            currentSalle.setNombrePlaces(salle.getNombrePlaces());
             SalleService.saveSalle(currentSalle);
             return currentSalle;
         } else {
