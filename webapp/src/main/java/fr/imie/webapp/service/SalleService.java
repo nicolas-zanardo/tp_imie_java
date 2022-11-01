@@ -1,8 +1,6 @@
 package fr.imie.webapp.service;
 
 import fr.imie.webapp.model.Salle;
-import fr.imie.webapp.model.SalleFormData;
-import fr.imie.webapp.model.TypeSalle;
 import fr.imie.webapp.repository.SalleProxy;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
