@@ -23,12 +23,11 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="manage-type-salle">Type de salle</a>
+                            <a class="nav-link active" aria-current="page" th:href="@{~/manage-type-salle}">Gestion types de salles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="manage-salle">Gestion des salles</a>
+                            <a class="nav-link" th:href="@{~/manage-salle}">Gestion des salles</a>
                         </li>
-
                     </ul>
                     <div class="d-flex">
                         <button class="btn btn-outline-info" type="submit">login</button>
@@ -44,20 +43,24 @@
         <div class="container mt-5">
             <div class="row">
                 <div class="col-12">
-                    <h1>Type de salle</h1>
-                    <hr>
+                    <div class="d-flex align-items-center">
+                        <h1>Type salle</h1>
+                        <div class="mx-3" th:if="${isEdit}">
+                            <a  class="btn btn-secondary" th:href="@{~/manage-type-salle}">Ajout d'un nouveau type de salle</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
 <!--        Form-->
         <div class="container text-center bg-light shadow-sm py-5">
-            <form th:action="@{/save-type-salle}" method="post" th:object="${typeSalle}">
+            <form th:action="@{~/save-type-salle}" method="post" th:object="${typeSalle}">
                 <input type="hidden" th:field="*{id}" class="form-control">
                 <div class="mb-3 row">
                     <label for="inputName" class="col-2 col-form-label">Type de salle</label>
                     <div class="col-sm-7">
-                        <input type="text" th:field="*{nom}" class="form-control" id="inputName">
+                        <input type="text" th:field="*{nom}" class="form-control" id="inputName" required>
                     </div>
                     <div class="col-sm-3">
                         <button type="submit" class="btn btn-primary">Valider</button>
@@ -79,7 +82,7 @@
                 <tr th:each="typeSalle, row : ${typeSalles}">
                     <td  th:text="${typeSalle.nom}">nom</td>
                     <td class="text-end">
-                       <a th:href="@{/manage-type-salle/{id}(id=${typeSalle.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
+                       <a th:href="@{~/manage-type-salle/{id}(id=${typeSalle.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"  th:attrappend="data-bs-target=${'#modalDelete_' + typeSalle.id}">
                             <i class="fa-solid fa-trash"></i>
                         </button>
@@ -99,7 +102,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
-                                        <a th:href="@{/delete-type-salle/{id}(id=${typeSalle.id})}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
+                                        <a th:href="@{~/delete-type-salle/{id}(id=${typeSalle.id})}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
                                     </div>
                                 </div>
                             </div>
@@ -112,8 +115,6 @@
         </div>
 
     </main>
-
-
 
 
     <!-- CDN -->

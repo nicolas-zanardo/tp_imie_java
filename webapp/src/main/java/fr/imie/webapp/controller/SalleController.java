@@ -27,6 +27,7 @@ public class SalleController {
     public String manageSalle(Model model) {
         Salle salle = new Salle();
         model.addAttribute("salle", salle);
+        model.addAttribute("isEdit", false);
         listTypeSalleModel(model);
         ListSallesModel(model);
         return "manage-salle";
@@ -36,6 +37,7 @@ public class SalleController {
     public String getSalle(@PathVariable("id") final int id, Model model) {
         Salle salle = salleService.getSalle(id);
         model.addAttribute("salle", salle);
+        model.addAttribute("isEdit", true);
         listTypeSalleModel(model);
         ListSallesModel(model);
         return "manage-salle";
@@ -45,11 +47,13 @@ public class SalleController {
     @PostMapping("/save-salle")
     public ModelAndView saveSalle(SalleFormData salleFormData) {
         if(!salleFormData.getNom().isEmpty() &&
-                salleFormData.getNombrePlaces() > 0 &&
-                salleFormData.getTypeSalle() > 0
+                (salleFormData.getNombrePlaces() > 0) &&
+                (salleFormData.getTypeSalle() > 0)
         ) {
+            TypeSalle typeSalle = typeSalleService.getTypeSalle(salleFormData.getTypeSalle());
             Salle salle = new Salle();
-            salle.setTypeSalle(typeSalleService.getTypeSalle(salleFormData.getTypeSalle()));
+            salle.setId(salleFormData.getId());
+            salle.setTypeSalle(typeSalle);
             salle.setNombrePlaces(salleFormData.getNombrePlaces());
             salle.setNom(salleFormData.getNom().toLowerCase().trim());
             salleService.saveSalle(salle);

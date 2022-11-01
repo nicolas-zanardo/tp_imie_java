@@ -24,6 +24,7 @@ public class TypeSalleController {
     public String manageTypeSalle(Model model) {
         TypeSalle typeSalle = new TypeSalle();
         model.addAttribute("typeSalle", typeSalle);
+        model.addAttribute("isEdit", false);
         listTypeSalleModel(model);
         return "manage-type-salle";
     }
@@ -32,6 +33,7 @@ public class TypeSalleController {
     @GetMapping("/manage-type-salle/{id}")
     public String getTypeSalle(@PathVariable("id") final int id, Model model) {
         TypeSalle typeSalle = typeSalleService.getTypeSalle(id);
+        model.addAttribute("isEdit", true);
         model.addAttribute("typeSalle", typeSalle);
         listTypeSalleModel(model);
         return "manage-type-salle";

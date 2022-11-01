@@ -78,7 +78,7 @@ class TypeSalleControllerTest {
                         "    }\n" +
                         "}")
         );
-        Assertions.assertEquals(true, typeSalleService.findTypeSalleUsedBySalle(typeSalleService.getTypeSalle(1L)));
+        Assertions.assertTrue(typeSalleService.findTypeSalleUsedBySalle(typeSalleService.getTypeSalle(1L)));
     }
 
     @Order(5)
@@ -88,7 +88,7 @@ class TypeSalleControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-        Assertions.assertEquals(false, typeSalleService.findTypeSalleUsedBySalle(typeSalleService.getTypeSalle(1L)));
+        Assertions.assertFalse(typeSalleService.findTypeSalleUsedBySalle(typeSalleService.getTypeSalle(1L)));
     }
 
     @Order(6)
