@@ -23,26 +23,28 @@ public class SalleController {
     @Autowired
     private SalleService salleService;
 
-    @GetMapping("manage-salle")
+    @GetMapping("/manage-salle")
     public String manageSalle(Model model) {
         Salle salle = new Salle();
         model.addAttribute("salle", salle);
+        model.addAttribute("isEdit", false);
         listTypeSalleModel(model);
         ListSallesModel(model);
         return "manage-salle";
     }
 
-    @GetMapping("manage-salle/{id}")
+    @GetMapping("/manage-salle/{id}")
     public String getSalle(@PathVariable("id") final int id, Model model) {
         Salle salle = salleService.getSalle(id);
         model.addAttribute("salle", salle);
+        model.addAttribute("isEdit", true);
         listTypeSalleModel(model);
         ListSallesModel(model);
         return "manage-salle";
     }
 
 
-    @PostMapping("save-salle")
+    @PostMapping("/save-salle")
     public ModelAndView saveSalle(SalleFormData salleFormData) {
         if(!salleFormData.getNom().isEmpty() &&
                 salleFormData.getNombrePlaces() > 0 &&
@@ -57,7 +59,7 @@ public class SalleController {
         return new ModelAndView("redirect:/manage-salle");
     }
 
-    @GetMapping("delete-salle/{id}")
+    @GetMapping("/delete-salle/{id}")
     public ModelAndView deleteSalle(@PathVariable("id") final int id, Model model) {
         salleService.deleteSalle(id);
         return new ModelAndView("redirect:/manage-salle");

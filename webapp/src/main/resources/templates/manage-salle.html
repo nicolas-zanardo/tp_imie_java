@@ -23,10 +23,10 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="manage-type-salle">Gestion types de salles</a>
+            <a class="nav-link " aria-current="page" th:href="@{~/manage-type-salle}">Gestion types de salles</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="manage-salle">Gestion des salles</a>
+            <a class="nav-link active" th:href="@{~/manage-salle}">Gestion des salles</a>
           </li>
 
         </ul>
@@ -44,7 +44,12 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-12">
-        <h1>Salle</h1>
+        <div class="d-flex align-items-center">
+          <h1>Salle</h1>
+          <div class="mx-3" th:if="${isEdit}">
+            <a  class="btn btn-secondary" th:href="@{~/manage-salle}">Ajout d'une nouvelle salle</a>
+          </div>
+        </div>
         <hr>
       </div>
     </div>
@@ -52,7 +57,7 @@
 
   <!--        Form-->
   <div class="container text-center bg-light shadow-sm p-3">
-    <form th:action="@{/save-salle}" method="post" th:object="${salle}">
+    <form th:action="@{~/save-salle}" method="post" th:object="${salle}">
       <input type="hidden" th:field="*{id}" class="form-control">
 
       <div class="d-flex align-items-center py-3">
@@ -89,7 +94,7 @@
         <td  th:text="${salle.nom}">nom</td>
         <td  th:text="${salle.typeSalle.nom}">nom</td>
         <td class="text-end">
-          <a th:href="@{/manage-salle/{id}(id=${salle.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
+          <a th:href="@{~/manage-salle/{id}(id=${salle.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
           <button type="button" class="btn btn-danger" data-bs-toggle="modal"  th:attrappend="data-bs-target=${'#modalDelete_' + salle.id}">
             <i class="fa-solid fa-trash"></i>
           </button>
@@ -109,7 +114,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
-                  <a th:href="@{/delete-salle/{id}(id=${salle.id})}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
+                  <a th:href="@{~/delete-salle/{id}(id=${salle.id})}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
                 </div>
               </div>
             </div>

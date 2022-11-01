@@ -20,18 +20,20 @@ public class TypeSalleController {
     @Autowired
     private TypeSalleService typeSalleService;
 
-    @GetMapping("manage-type-salle")
+    @GetMapping("/manage-type-salle")
     public String manageTypeSalle(Model model) {
         TypeSalle typeSalle = new TypeSalle();
         model.addAttribute("typeSalle", typeSalle);
+        model.addAttribute("isEdit", false);
         listTypeSalleModel(model);
         return "manage-type-salle";
     }
 
 
-    @GetMapping("manage-type-salle/{id}")
+    @GetMapping("/manage-type-salle/{id}")
     public String getTypeSalle(@PathVariable("id") final int id, Model model) {
         TypeSalle typeSalle = typeSalleService.getTypeSalle(id);
+        model.addAttribute("isEdit", true);
         model.addAttribute("typeSalle", typeSalle);
         listTypeSalleModel(model);
         return "manage-type-salle";
@@ -42,7 +44,7 @@ public class TypeSalleController {
      * @param typeSalle TypeSalle
      * @return ModelAndView
      */
-    @PostMapping("save-type-salle")
+    @PostMapping("/save-type-salle")
     public ModelAndView saveTypeSalle(@ModelAttribute TypeSalle typeSalle) {
         if(!typeSalle.getNom().isEmpty()) {
             typeSalle.setNom(typeSalle.getNom().toLowerCase().trim());
@@ -51,7 +53,7 @@ public class TypeSalleController {
         return new ModelAndView("redirect:/manage-type-salle");
     }
 
-    @GetMapping("delete-type-salle/{id}")
+    @GetMapping("/delete-type-salle/{id}")
     public ModelAndView deleteTypeSalle(@PathVariable("id") final int id, Model model) {
         typeSalleService.deleteTypeSalle(id);
         return new ModelAndView("redirect:/manage-type-salle");
