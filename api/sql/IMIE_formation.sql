@@ -4,14 +4,14 @@
 
 
 #------------------------------------------------------------
-# Table: Classe
+# Table: classe
 #------------------------------------------------------------
 
-CREATE TABLE Classe(
+CREATE TABLE classe(
         id               Int  Auto_increment  NOT NULL ,
         nom              Varchar (45) NOT NULL ,
         nombre_personnes Int NOT NULL
-	,CONSTRAINT Classe_PK PRIMARY KEY (id)
+	,CONSTRAINT classe_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
 
@@ -61,11 +61,11 @@ CREATE TABLE formation(
         FRIDAY_am    Bool ,
         FRIDAY_pm    Bool ,
         id_salle     Int ,
-        id_Classe    Int NOT NULL
+        id_classe    Int NOT NULL
 	,CONSTRAINT formation_PK PRIMARY KEY (id)
 
 	,CONSTRAINT formation_salle_FK FOREIGN KEY (id_salle) REFERENCES salle(id)
-	,CONSTRAINT formation_Classe0_FK FOREIGN KEY (id_Classe) REFERENCES Classe(id)
+	,CONSTRAINT formation_classe0_FK FOREIGN KEY (id_classe) REFERENCES classe(id)
 )ENGINE=InnoDB;
 
 
@@ -146,11 +146,11 @@ CREATE TABLE teach(
 
 CREATE TABLE learn(
         id        Int NOT NULL ,
-        id_Classe Int NOT NULL
-	,CONSTRAINT learn_PK PRIMARY KEY (id,id_Classe)
+        id_classe Int NOT NULL
+	,CONSTRAINT learn_PK PRIMARY KEY (id,id_classe)
 
 	,CONSTRAINT learn_profil_FK FOREIGN KEY (id) REFERENCES profil(id)
-	,CONSTRAINT learn_Classe0_FK FOREIGN KEY (id_Classe) REFERENCES Classe(id)
+	,CONSTRAINT learn_classe0_FK FOREIGN KEY (id_classe) REFERENCES classe(id)
 )ENGINE=InnoDB;
 
 
