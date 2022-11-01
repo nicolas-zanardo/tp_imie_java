@@ -38,6 +38,7 @@ public class SalleController {
         Salle salle = salleService.getSalle(id);
         model.addAttribute("salle", salle);
         model.addAttribute("isEdit", true);
+        model.addAttribute("idTypeSalle", salle.getTypeSalle().getId());
         listTypeSalleModel(model);
         ListSallesModel(model);
         return "manage-salle";

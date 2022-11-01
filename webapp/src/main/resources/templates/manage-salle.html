@@ -69,10 +69,12 @@
           <label for="inputNombrePlaces" class="me-3">Nombre de place</label>
           <input type="number" th:field="*{nombrePlaces}" class="form-control w-50" id="inputNombrePlaces" required>
         </div>
-        <select class="form-select w-50" aria-label="Default select" th:field="*{typeSalle}" required>
+        <select class="form-select w-50" aria-label="Default select" th:field="*{typeSalle}" th:if="${idTypeSalle == null}" required>
           <option class="col-sm-3" th:each="tSalle : ${typeSalles}" th:value="${tSalle.id}" th:text="${tSalle.nom}"></option>
         </select>
-
+        <select class="form-select w-50" aria-label="Default select" name="typeSalle" th:if="${idTypeSalle}" required>
+          <option class="col-sm-3" th:each="tSalle : ${typeSalles}" th:value="${tSalle.id}" th:text="${tSalle.nom}" th:selected="${tSalle.id == idTypeSalle}"></option>
+        </select>
         <div class="w-50 text-end">
           <button type="submit" class="btn btn-primary">Valider</button>
         </div>
