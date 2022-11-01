@@ -38,6 +38,7 @@ public class SalleController {
             if (nom != null) {
                 currentSalle.setNom(nom);
             }
+            currentSalle.setNombrePlaces(salle.getNombrePlaces());
             SalleService.saveSalle(currentSalle);
             return currentSalle;
         } else {
