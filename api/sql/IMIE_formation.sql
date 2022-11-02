@@ -42,15 +42,15 @@ CREATE TABLE salle(
 
 
 #------------------------------------------------------------
-# Table: profil
+# Table: user
 #------------------------------------------------------------
 
-CREATE TABLE profil(
+CREATE TABLE user(
         id        Int  Auto_increment  NOT NULL ,
         lastname  Varchar (45) NOT NULL ,
         firstname Varchar (45) NOT NULL ,
         ROLE      Enum ("etudiant","formateur","responsables pédagogiques","responsable global ","responsable de maintenance ","responsables de la gestion") NOT NULL
-	,CONSTRAINT profil_PK PRIMARY KEY (id)
+	,CONSTRAINT user_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
 
@@ -66,12 +66,12 @@ CREATE TABLE formation(
         recursive     Bool ,
         id_salle      Int NOT NULL ,
         id_Classe     Int NOT NULL ,
-        id_profil     Int NOT NULL
+        id_user       Int NOT NULL
 	,CONSTRAINT formation_PK PRIMARY KEY (id)
 
 	,CONSTRAINT formation_salle_FK FOREIGN KEY (id_salle) REFERENCES salle(id)
 	,CONSTRAINT formation_Classe0_FK FOREIGN KEY (id_Classe) REFERENCES Classe(id)
-	,CONSTRAINT formation_profil1_FK FOREIGN KEY (id_profil) REFERENCES profil(id)
+	,CONSTRAINT formation_user1_FK FOREIGN KEY (id_user) REFERENCES user(id)
 )ENGINE=InnoDB;
 
 
@@ -80,13 +80,13 @@ CREATE TABLE formation(
 #------------------------------------------------------------
 
 CREATE TABLE list_issue(
-        id        Int  Auto_increment  NOT NULL ,
-        nom       Varchar (250) NOT NULL ,
-        status    Enum ("initial","en cours","terminé") NOT NULL ,
-        id_profil Int NOT NULL
+        id      Int  Auto_increment  NOT NULL ,
+        nom     Varchar (250) NOT NULL ,
+        status  Enum ("initial","en cours","terminé") NOT NULL ,
+        id_user Int NOT NULL
 	,CONSTRAINT list_issue_PK PRIMARY KEY (id)
 
-	,CONSTRAINT list_issue_profil_FK FOREIGN KEY (id_profil) REFERENCES profil(id)
+	,CONSTRAINT list_issue_user_FK FOREIGN KEY (id_user) REFERENCES user(id)
 )ENGINE=InnoDB;
 
 
@@ -125,7 +125,7 @@ CREATE TABLE learn(
         id_Classe Int NOT NULL
 	,CONSTRAINT learn_PK PRIMARY KEY (id,id_Classe)
 
-	,CONSTRAINT learn_profil_FK FOREIGN KEY (id) REFERENCES profil(id)
+	,CONSTRAINT learn_user_FK FOREIGN KEY (id) REFERENCES user(id)
 	,CONSTRAINT learn_Classe0_FK FOREIGN KEY (id_Classe) REFERENCES Classe(id)
 )ENGINE=InnoDB;
 
