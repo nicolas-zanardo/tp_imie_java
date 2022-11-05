@@ -10,7 +10,9 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
-
+/**
+ * @author Nicolas Zanardo
+ */
 public class InitData {
 
     public static void setup()  {

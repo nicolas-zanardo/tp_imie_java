@@ -5,6 +5,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * @author Nicolas Zanardo
+ */
 @Data
 @Entity
 @Table(name = "type_salle")

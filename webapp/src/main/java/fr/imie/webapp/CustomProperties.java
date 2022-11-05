@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Configuration;
 
 import lombok.Data;
 
+/**
+ * @author Nicolas Zanardo
+ */
 @Data
 @Configuration
 @ConfigurationProperties(prefix="fr.imie.webapp")

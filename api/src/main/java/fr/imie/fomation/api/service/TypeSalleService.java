@@ -11,6 +11,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Data
 @Service
 public class TypeSalleService {
@@ -19,17 +20,27 @@ public class TypeSalleService {
     private TypeSalleRepository typeSalleRepository;
     @Autowired
     private SalleRepository salleRepository;
-    
+
+    /**
+     * @author json
+     * @param id Long
+     * @return TypeSalle
+     */
     public Optional<TypeSalle> getTypeSalle(final Long id) {
         return typeSalleRepository.findById(id);
     }
-    
+
+    /**
+     * @author json
+     * @return TypeSalle
+     */
     public Iterable<TypeSalle> getTypeSalles() {
         return typeSalleRepository.findAll();
     }
 
 
     /**
+     * @author json
      * INSERT - Insert type salle
      * @param typeSalle TypeSalle
      * @return typeSalleRepository.save(typeSalle)
@@ -39,6 +50,7 @@ public class TypeSalleService {
     }
 
     /**
+     * @author json
      * DELETE - Type Salle
      * @param id int
      */
@@ -50,6 +62,7 @@ public class TypeSalleService {
     }
 
     /**
+     * @author json
      * ITERABLE - SALLES
      * @param typeSalle Optional<TypeSalle>
      * @return Iterable<Salle>
@@ -59,6 +72,7 @@ public class TypeSalleService {
     }
 
     /**
+     * @author json
      * BOOLEAN - Retourne True si la function findAllSalleByTypeSalle contient une salle
      * @param typeSalle Optional<TypeSalle>
      * @return boolean

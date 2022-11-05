@@ -47,9 +47,10 @@ CREATE TABLE salle(
 
 CREATE TABLE user(
         id        Int  Auto_increment  NOT NULL ,
-        lastname  Varchar (45) NOT NULL ,
-        firstname Varchar (45) NOT NULL ,
-        ROLE      Enum ("etudiant","formateur","responsables pédagogiques","responsable global ","responsable de maintenance ","responsables de la gestion") NOT NULL
+        lastname  Varchar (250) NOT NULL ,
+        firstname Varchar (250) NOT NULL ,
+        login     Varchar (250) NOT NULL ,
+        password  Varchar (250) NOT NULL
 	,CONSTRAINT user_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
@@ -59,14 +60,14 @@ CREATE TABLE user(
 #------------------------------------------------------------
 
 CREATE TABLE formation(
-        id            Int  Auto_increment  NOT NULL ,
-        nom_formation Varchar (250) NOT NULL ,
-        date_debut    Date ,
-        date_fin      Date ,
-        recursive     Bool ,
-        id_salle      Int NOT NULL ,
-        id_Classe     Int NOT NULL ,
-        id_user       Int NOT NULL
+        id                 Int  Auto_increment  NOT NULL ,
+        nom_formation      Varchar (250) NOT NULL ,
+        date_debut         Date ,
+        date_fin           Date ,
+        recursive_calandar Bool ,
+        id_salle           Int NOT NULL ,
+        id_Classe          Int NOT NULL ,
+        id_user            Int NOT NULL
 	,CONSTRAINT formation_PK PRIMARY KEY (id)
 
 	,CONSTRAINT formation_salle_FK FOREIGN KEY (id_salle) REFERENCES salle(id)
@@ -98,21 +99,31 @@ CREATE TABLE week(
         id           Int  Auto_increment  NOT NULL ,
         YEAR         Int ,
         WEEK_OF_YEAR Int ,
-        recursive    Bool ,
-        MONDAY_AM    Bool ,
-        MONDAY_PM    Bool ,
-        TUESDAY_AM   Bool ,
-        TUESDAY_PM   Bool ,
-        WEDNESDAY_AM Bool ,
-        WEDNESDAY_PM Bool ,
-        THURSDAY_AM  Bool ,
-        THURSDAY_PM  Bool ,
-        FRIDAY_AM    Bool ,
-        FRIDAY_PM    Bool ,
+        MONDAY_AM    Bool NOT NULL ,
+        MONDAY_PM    Bool NOT NULL ,
+        TUESDAY_AM   Bool NOT NULL ,
+        TUESDAY_PM   Bool NOT NULL ,
+        WEDNESDAY_AM Bool NOT NULL ,
+        WEDNESDAY_PM Bool NOT NULL ,
+        THURSDAY_AM  Bool NOT NULL ,
+        THURSDAY_PM  Bool NOT NULL ,
+        FRIDAY_AM    Bool NOT NULL ,
+        FRIDAY_PM    Bool NOT NULL ,
         id_formation Int NOT NULL
 	,CONSTRAINT week_PK PRIMARY KEY (id)
 
 	,CONSTRAINT week_formation_FK FOREIGN KEY (id_formation) REFERENCES formation(id)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: ROLE
+#------------------------------------------------------------
+
+CREATE TABLE ROLE(
+        id   Int  Auto_increment  NOT NULL ,
+        ROLE Varchar (50) NOT NULL
+	,CONSTRAINT ROLE_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
 
@@ -141,5 +152,19 @@ CREATE TABLE suffer(
 
 	,CONSTRAINT suffer_salle_FK FOREIGN KEY (id) REFERENCES salle(id)
 	,CONSTRAINT suffer_list_issue0_FK FOREIGN KEY (id_list_issue) REFERENCES list_issue(id)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: need
+#------------------------------------------------------------
+
+CREATE TABLE need(
+        id      Int NOT NULL ,
+        id_user Int NOT NULL
+	,CONSTRAINT need_PK PRIMARY KEY (id,id_user)
+
+	,CONSTRAINT need_ROLE_FK FOREIGN KEY (id) REFERENCES ROLE(id)
+	,CONSTRAINT need_user0_FK FOREIGN KEY (id_user) REFERENCES user(id)
 )ENGINE=InnoDB;
 

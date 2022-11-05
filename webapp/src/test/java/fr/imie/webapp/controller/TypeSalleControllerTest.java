@@ -10,6 +10,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.CoreMatchers.containsString;
 
+/**
+ * @author Nicolas Zanardo
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 class TypeSalleControllerTest {

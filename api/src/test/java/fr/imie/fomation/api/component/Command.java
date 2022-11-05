@@ -1,5 +1,8 @@
 package fr.imie.fomation.api.component;
 
+/**
+ * @author Nicolas Zanardo
+ */
 public class Command {
     private String language;
     private String option;

@@ -2,10 +2,7 @@ package fr.imie.fomation.api.controller;
 
 import fr.imie.fomation.api.model.TypeSalle;
 import fr.imie.fomation.api.service.TypeSalleService;
-
 import java.util.Optional;
-import java.util.stream.StreamSupport;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +15,7 @@ public class TypeSalleController {
 
     /**
      * Get All - type salle
+     * @author Nicolas Zanardo
      * @return typeSalleService
      */
     @GetMapping("/type-salles")
@@ -27,16 +25,18 @@ public class TypeSalleController {
 
     /**
      * Create - new type salle
+     * @author Nicolas Zanardo
      * @param typeSalle TypeSalle
      * @return typeSalleService.saveTypeSalle(typeSalle)
      */
     @PostMapping("/add-type-salle")
     public TypeSalle createTypeSalle(@RequestBody TypeSalle typeSalle) {
-      return typeSalleService.saveTypeSalle(typeSalle);
+        return typeSalleService.saveTypeSalle(typeSalle);
     }
 
     /**
      * Get By id - type salle
+     * @author Nicolas Zanardo
      * @param id long
      * @return TypeSalle | null
      */
@@ -48,6 +48,7 @@ public class TypeSalleController {
 
     /**
      * Put Edit - type salle
+     * @author Nicolas Zanardo
      * @param id Long
      * @param typeSalle TypeSalle
      * @return TypeSalleService | null
@@ -70,7 +71,7 @@ public class TypeSalleController {
 
     /**
      * DELETE - type Salle
-     *
+     * @author Nicolas Zanardo
      * @param id Long
      * @return
      */
