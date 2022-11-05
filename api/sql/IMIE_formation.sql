@@ -4,14 +4,14 @@
 
 
 #------------------------------------------------------------
-# Table: Classe
+# Table: classe
 #------------------------------------------------------------
 
-CREATE TABLE Classe(
+CREATE TABLE classe(
         id               Int  Auto_increment  NOT NULL ,
         nom              Varchar (45) NOT NULL ,
         nombre_personnes Int NOT NULL
-	,CONSTRAINT Classe_PK PRIMARY KEY (id)
+	,CONSTRAINT classe_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
 
@@ -66,12 +66,12 @@ CREATE TABLE formation(
         date_fin           Date ,
         recursive_calandar Bool ,
         id_salle           Int NOT NULL ,
-        id_Classe          Int NOT NULL ,
+        id_classe          Int NOT NULL ,
         id_user            Int NOT NULL
 	,CONSTRAINT formation_PK PRIMARY KEY (id)
 
 	,CONSTRAINT formation_salle_FK FOREIGN KEY (id_salle) REFERENCES salle(id)
-	,CONSTRAINT formation_Classe0_FK FOREIGN KEY (id_Classe) REFERENCES Classe(id)
+	,CONSTRAINT formation_classe0_FK FOREIGN KEY (id_classe) REFERENCES classe(id)
 	,CONSTRAINT formation_user1_FK FOREIGN KEY (id_user) REFERENCES user(id)
 )ENGINE=InnoDB;
 
@@ -121,8 +121,8 @@ CREATE TABLE week(
 #------------------------------------------------------------
 
 CREATE TABLE ROLE(
-        id   Int  Auto_increment  NOT NULL ,
-        ROLE Varchar (50) NOT NULL
+        id        Int  Auto_increment  NOT NULL ,
+        ROLE_NAME Varchar (50) NOT NULL
 	,CONSTRAINT ROLE_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
@@ -133,11 +133,11 @@ CREATE TABLE ROLE(
 
 CREATE TABLE learn(
         id        Int NOT NULL ,
-        id_Classe Int NOT NULL
-	,CONSTRAINT learn_PK PRIMARY KEY (id,id_Classe)
+        id_classe Int NOT NULL
+	,CONSTRAINT learn_PK PRIMARY KEY (id,id_classe)
 
 	,CONSTRAINT learn_user_FK FOREIGN KEY (id) REFERENCES user(id)
-	,CONSTRAINT learn_Classe0_FK FOREIGN KEY (id_Classe) REFERENCES Classe(id)
+	,CONSTRAINT learn_classe0_FK FOREIGN KEY (id_classe) REFERENCES classe(id)
 )ENGINE=InnoDB;
 
 
