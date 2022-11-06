@@ -5,6 +5,8 @@ import fr.imie.fomation.api.service.RoleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -19,7 +21,12 @@ public class RoleUserController {
 
     // GET ALL ROLE USERS
     @GetMapping("/role-users")
-    public Iterable<RoleUser> getRoleUsers() { return roleUserService.getRolesUser(); }
+    public Iterable<RoleUser> getRoleUsers() {
+        Iterator<RoleUser> roles = roleUserService.getRolesUser().iterator();
+        while (roles.hasNext()) {
+            System.out.println(roles.next().toString());
+        }
+        return roleUserService.getRolesUser(); }
 
     // GET ROLE USER BY ID
     @GetMapping("/role-user/{id}")
@@ -31,7 +38,10 @@ public class RoleUserController {
     // ADD ROLE USER
     @PostMapping("/add-role-user")
     public RoleUser createRoleUSer(@RequestBody RoleUser roleUser) {
-        return roleUserService.saveRoleUser(roleUser);
+        if (roleUserService.findRoleUserByName(roleUser.getRoleName()).isEmpty()) {
+            return roleUserService.saveRoleUser(roleUser);
+        }
+        return new RoleUser();
     }
 
     // UPDATE ROLE USER

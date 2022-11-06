@@ -22,7 +22,6 @@ public class SalleService {
 
     public void saveSalle(Salle salle) {
         Salle saveSalle = null;
-
         if(salle.getId() == null) {
             saveSalle = salleProxy.createSalle(salle);
         } else {

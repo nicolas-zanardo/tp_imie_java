@@ -2,7 +2,6 @@ package fr.imie.fomation.api.controller;
 
 import fr.imie.fomation.api._init_data.InitData;
 import fr.imie.fomation.api.service.RoleUserService;
-import org.junit.Test;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -52,18 +51,20 @@ class RoleUserControllerTest {
     @Order(2)
     @Test
     public void testGetRoleUserById() throws Exception {
-        mockMvc.perform(get("/api/role-user/1")).andExpect(status().isOk()).andExpect(jsonPath("roleNom", is("eleve_test")));
+        mockMvc.perform(get("/api/role-user/1")).andExpect(status().isOk()).andExpect(jsonPath("roleName", is("eleve_test")));
     }
 
     @Order(3)
     @Test
     public void testPutRoleUser() throws Exception {
         mockMvc.perform(put("/api/update-role-user/1").contentType(MediaType.APPLICATION_JSON).content("{\n" +
-                "    \"roleNom\": \"eleve\"\n" +
+                "    \"roleName\": \"eleve\"\n" +
                 "}")
         );
-        mockMvc.perform(get("/api/update-role-user/1")).andExpect(status().isOk()).andExpect(jsonPath("nom", is("eleve")));
+        mockMvc.perform(get("/api/role-user/1")).andExpect(status().isOk()).andExpect(jsonPath("roleName", is("eleve")));
     }
+
+
 
     @Order(6)
     @Test
