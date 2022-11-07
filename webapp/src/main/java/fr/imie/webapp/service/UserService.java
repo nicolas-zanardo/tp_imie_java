@@ -22,8 +22,9 @@ public class UserService {
     public User getUser(final int id) { return  userProxy.getUser(id); }
     // SAVE USER
     public void saveUser(User user) {
+        System.out.println(user);
         User saveUser = null;
-        if(saveUser.getId() == null) {
+        if(user.getId() == null) {
             saveUser = userProxy.createUser(user);
         } else {
             saveUser = userProxy.updateUser(user);

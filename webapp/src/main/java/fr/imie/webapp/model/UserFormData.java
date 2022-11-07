@@ -12,5 +12,5 @@ public class UserFormData {
     private String firstName;
     private String login;
     private String password;
-    private int roleUser;
+    private int role;
 }

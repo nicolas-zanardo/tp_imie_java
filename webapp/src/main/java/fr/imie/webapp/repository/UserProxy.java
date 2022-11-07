@@ -25,7 +25,7 @@ public class UserProxy {
     public User createUser(User user) {
         String createUserUrl = props.getApiUrl() + "/add-user";
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<User> request = new HttpEntity<>(user);
+        HttpEntity<User> request = new HttpEntity<User>(user);
         ResponseEntity<User> response = restTemplate.exchange(
                 createUserUrl,
                 HttpMethod.POST,
@@ -73,7 +73,7 @@ public class UserProxy {
     }
 
     public void deleteUser(int id) {
-        String deleteUserUrl = props.getApiUrl() + "/update-user/" + id;
+        String deleteUserUrl = props.getApiUrl() + "/delete-user/" + id;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Void> response = restTemplate.exchange(
                 deleteUserUrl,

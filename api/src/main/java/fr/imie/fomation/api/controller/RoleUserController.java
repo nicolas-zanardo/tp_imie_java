@@ -22,10 +22,11 @@ public class RoleUserController {
     // GET ALL ROLE USERS
     @GetMapping("/role-users")
     public Iterable<RoleUser> getRoleUsers() {
-        Iterator<RoleUser> roles = roleUserService.getRolesUser().iterator();
-        while (roles.hasNext()) {
-            System.out.println(roles.next().toString());
-        }
+        // DEBUG -- TEST STRING OUTPUT ex: ROLE_FORMATION
+//        Iterator<RoleUser> roles = roleUserService.getRolesUser().iterator();
+//        while (roles.hasNext()) {
+//            System.out.println(roles.next().toString());
+//        }
         return roleUserService.getRolesUser(); }
 
     // GET ROLE USER BY ID

@@ -41,7 +41,7 @@ public class UserController {
         User user = userService.getUser(id);
         model.addAttribute("isEdit", true);
         model.addAttribute("user", user);
-        model.addAttribute("idRoleUSer", user.getRoleUser().getId());
+        model.addAttribute("idRoleUSer", user.getRole().getId());
         listUserModel(model);
         listRoleModel(model);
         return "manage-users";
@@ -52,16 +52,16 @@ public class UserController {
         if(!userFormData.getFirstName().isEmpty() &&
                 !userFormData.getLastName().isEmpty() &&
                 !userFormData.getLogin().isEmpty() &&
-                userFormData.getRoleUser() > 0
+                userFormData.getRole() > 0
         ) {
-            RoleUser roleUser = roleUserService.getRoleUser(userFormData.getRoleUser());
+            RoleUser roleUser = roleUserService.getRoleUser(userFormData.getRole());
             User user = new User();
             user.setId(userFormData.getId());
             user.setPassword(userFormData.getPassword());
             user.setLogin(userFormData.getLogin());
             user.setFirstName(userFormData.getFirstName());
             user.setLastName(userFormData.getLastName());
-            user.setRoleUser(roleUser);
+            user.setRole(roleUser);
             userService.saveUser(user);
         }
         return new ModelAndView("redirect:/manage-users");

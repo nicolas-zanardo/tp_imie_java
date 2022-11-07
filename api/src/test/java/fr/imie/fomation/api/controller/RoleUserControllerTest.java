@@ -64,7 +64,15 @@ class RoleUserControllerTest {
         mockMvc.perform(get("/api/role-user/1")).andExpect(status().isOk()).andExpect(jsonPath("roleName", is("eleve")));
     }
 
-
+    @Order(4)
+    @Test
+    public void testUniqueRoleName() throws Exception {
+        mockMvc.perform(post("/api/add-role-user").contentType(MediaType.APPLICATION_JSON).content("{\n" +
+                "    \"roleName\": \"eleve\"\n" +
+                "}")
+        );
+        Assertions.assertEquals(1, StreamSupport.stream(roleUserService.getRolesUser().spliterator(), true).count());
+    }
 
     @Order(6)
     @Test
