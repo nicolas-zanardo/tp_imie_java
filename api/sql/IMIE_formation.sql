@@ -83,7 +83,7 @@ CREATE TABLE formation(
 CREATE TABLE list_issue(
         id      Int  Auto_increment  NOT NULL ,
         nom     Varchar (250) NOT NULL ,
-        status  Enum ("initial","en cours","terminé") NOT NULL ,
+        status  Varchar (250) NOT NULL ,
         id_user Int NOT NULL
 	,CONSTRAINT list_issue_PK PRIMARY KEY (id)
 
