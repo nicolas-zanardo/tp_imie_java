@@ -42,30 +42,16 @@ CREATE TABLE salle(
 
 
 #------------------------------------------------------------
-# Table: role
-#------------------------------------------------------------
-
-CREATE TABLE role(
-        id_role   Int  Auto_increment  NOT NULL ,
-        role_name Varchar (50) NOT NULL
-	,CONSTRAINT role_PK PRIMARY KEY (id_role)
-)ENGINE=InnoDB COMMENT "INSERT INTO role_user (role_name) VALUES ('éléves'), ('formateur'), ('responsable maintenance'), ('responsable global'), ('responsables de la gestion');" ;
-
-
-#------------------------------------------------------------
 # Table: user
 #------------------------------------------------------------
 
 CREATE TABLE user(
-        id_user   Int  Auto_increment  NOT NULL ,
+        id        Int  Auto_increment  NOT NULL ,
         lastname  Varchar (250) NOT NULL ,
         firstname Varchar (250) NOT NULL ,
         login     Varchar (250) NOT NULL ,
-        password  Varchar (250) NOT NULL ,
-        id_role   Int NOT NULL
-	,CONSTRAINT user_PK PRIMARY KEY (id_user)
-
-	,CONSTRAINT user_role_FK FOREIGN KEY (id_role) REFERENCES role(id_role)
+        password  Varchar (250) NOT NULL
+	,CONSTRAINT user_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
 
@@ -86,26 +72,7 @@ CREATE TABLE formation(
 
 	,CONSTRAINT formation_salle_FK FOREIGN KEY (id_salle) REFERENCES salle(id)
 	,CONSTRAINT formation_classe0_FK FOREIGN KEY (id_classe) REFERENCES classe(id)
-	,CONSTRAINT formation_user1_FK FOREIGN KEY (id_user) REFERENCES user(id_user)
-)ENGINE=InnoDB;
-
-
-#------------------------------------------------------------
-# Table: list_issue
-#------------------------------------------------------------
-
-CREATE TABLE list_issue(
-        id      Int  Auto_increment  NOT NULL ,
-        nom     Varchar (250) NOT NULL ,
-<<<<<<< HEAD
-        status  Varchar (250) NOT NULL ,
-=======
-        status  Varchar (50) NOT NULL ,
->>>>>>> feature_role
-        id_user Int NOT NULL
-	,CONSTRAINT list_issue_PK PRIMARY KEY (id)
-
-	,CONSTRAINT list_issue_user_FK FOREIGN KEY (id_user) REFERENCES user(id_user)
+	,CONSTRAINT formation_user1_FK FOREIGN KEY (id_user) REFERENCES user(id)
 )ENGINE=InnoDB;
 
 
@@ -135,16 +102,55 @@ CREATE TABLE week(
 
 
 #------------------------------------------------------------
+# Table: role_user
+#------------------------------------------------------------
+
+CREATE TABLE role_user(
+        id        Int  Auto_increment  NOT NULL ,
+        role_name Varchar (50) NOT NULL
+	,CONSTRAINT role_user_PK PRIMARY KEY (id)
+)ENGINE=InnoDB COMMENT "INSERT INTO role_user (role_name) VALUES ('éléves'), ('formateur'), ('responsable maintenance'), ('responsable global'), ('responsables de la gestion');" ;
+
+
+#------------------------------------------------------------
+# Table: status
+#------------------------------------------------------------
+
+CREATE TABLE status(
+        id   Int  Auto_increment  NOT NULL ,
+        name Varchar (250) NOT NULL
+	,CONSTRAINT status_PK PRIMARY KEY (id)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: list_issue
+#------------------------------------------------------------
+
+CREATE TABLE list_issue(
+        id        Int  Auto_increment  NOT NULL ,
+        nom       Varchar (250) NOT NULL ,
+        status    Varchar (50) NOT NULL ,
+        id_user   Int NOT NULL ,
+        id_status Int NOT NULL
+	,CONSTRAINT list_issue_PK PRIMARY KEY (id)
+
+	,CONSTRAINT list_issue_user_FK FOREIGN KEY (id_user) REFERENCES user(id)
+	,CONSTRAINT list_issue_status0_FK FOREIGN KEY (id_status) REFERENCES status(id)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
 # Table: learn
 #------------------------------------------------------------
 
 CREATE TABLE learn(
-        id_user Int NOT NULL ,
-        id      Int NOT NULL
-	,CONSTRAINT learn_PK PRIMARY KEY (id_user,id)
+        id        Int NOT NULL ,
+        id_classe Int NOT NULL
+	,CONSTRAINT learn_PK PRIMARY KEY (id,id_classe)
 
-	,CONSTRAINT learn_user_FK FOREIGN KEY (id_user) REFERENCES user(id_user)
-	,CONSTRAINT learn_classe0_FK FOREIGN KEY (id) REFERENCES classe(id)
+	,CONSTRAINT learn_user_FK FOREIGN KEY (id) REFERENCES user(id)
+	,CONSTRAINT learn_classe0_FK FOREIGN KEY (id_classe) REFERENCES classe(id)
 )ENGINE=InnoDB;
 
 
@@ -159,5 +165,19 @@ CREATE TABLE suffer(
 
 	,CONSTRAINT suffer_salle_FK FOREIGN KEY (id) REFERENCES salle(id)
 	,CONSTRAINT suffer_list_issue0_FK FOREIGN KEY (id_list_issue) REFERENCES list_issue(id)
+)ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: need
+#------------------------------------------------------------
+
+CREATE TABLE need(
+        id      Int NOT NULL ,
+        id_user Int NOT NULL
+	,CONSTRAINT need_PK PRIMARY KEY (id,id_user)
+
+	,CONSTRAINT need_role_user_FK FOREIGN KEY (id) REFERENCES role_user(id)
+	,CONSTRAINT need_user0_FK FOREIGN KEY (id_user) REFERENCES user(id)
 )ENGINE=InnoDB;
 
