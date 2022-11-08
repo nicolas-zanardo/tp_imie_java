@@ -42,6 +42,17 @@ CREATE TABLE salle(
 
 
 #------------------------------------------------------------
+# Table: role
+#------------------------------------------------------------
+
+CREATE TABLE role(
+        id        Int  Auto_increment  NOT NULL ,
+        role_name Varchar (50) NOT NULL
+	,CONSTRAINT role_PK PRIMARY KEY (id)
+)ENGINE=InnoDB COMMENT "INSERT INTO role_user (role_name) VALUES ('éléves'), ('formateur'), ('responsable maintenance'), ('responsable global'), ('responsables de la gestion');" ;
+
+
+#------------------------------------------------------------
 # Table: user
 #------------------------------------------------------------
 
@@ -50,8 +61,11 @@ CREATE TABLE user(
         lastname  Varchar (250) NOT NULL ,
         firstname Varchar (250) NOT NULL ,
         login     Varchar (250) NOT NULL ,
-        password  Varchar (250) NOT NULL
+        password  Varchar (250) NOT NULL ,
+        id_role   Int NOT NULL
 	,CONSTRAINT user_PK PRIMARY KEY (id)
+
+	,CONSTRAINT user_role_FK FOREIGN KEY (id_role) REFERENCES role(id)
 )ENGINE=InnoDB;
 
 
@@ -102,17 +116,6 @@ CREATE TABLE week(
 
 
 #------------------------------------------------------------
-# Table: role_user
-#------------------------------------------------------------
-
-CREATE TABLE role_user(
-        id        Int  Auto_increment  NOT NULL ,
-        role_name Varchar (50) NOT NULL
-	,CONSTRAINT role_user_PK PRIMARY KEY (id)
-)ENGINE=InnoDB COMMENT "INSERT INTO role_user (role_name) VALUES ('éléves'), ('formateur'), ('responsable maintenance'), ('responsable global'), ('responsables de la gestion');" ;
-
-
-#------------------------------------------------------------
 # Table: status
 #------------------------------------------------------------
 
@@ -131,12 +134,14 @@ CREATE TABLE list_issue(
         id        Int  Auto_increment  NOT NULL ,
         nom       Varchar (250) NOT NULL ,
         status    Varchar (50) NOT NULL ,
+        id_salle  Int NOT NULL ,
         id_user   Int NOT NULL ,
         id_status Int NOT NULL
 	,CONSTRAINT list_issue_PK PRIMARY KEY (id)
 
-	,CONSTRAINT list_issue_user_FK FOREIGN KEY (id_user) REFERENCES user(id)
-	,CONSTRAINT list_issue_status0_FK FOREIGN KEY (id_status) REFERENCES status(id)
+	,CONSTRAINT list_issue_salle_FK FOREIGN KEY (id_salle) REFERENCES salle(id)
+	,CONSTRAINT list_issue_user0_FK FOREIGN KEY (id_user) REFERENCES user(id)
+	,CONSTRAINT list_issue_status1_FK FOREIGN KEY (id_status) REFERENCES status(id)
 )ENGINE=InnoDB;
 
 
@@ -151,33 +156,5 @@ CREATE TABLE learn(
 
 	,CONSTRAINT learn_user_FK FOREIGN KEY (id) REFERENCES user(id)
 	,CONSTRAINT learn_classe0_FK FOREIGN KEY (id_classe) REFERENCES classe(id)
-)ENGINE=InnoDB;
-
-
-#------------------------------------------------------------
-# Table: suffer
-#------------------------------------------------------------
-
-CREATE TABLE suffer(
-        id            Int NOT NULL ,
-        id_list_issue Int NOT NULL
-	,CONSTRAINT suffer_PK PRIMARY KEY (id,id_list_issue)
-
-	,CONSTRAINT suffer_salle_FK FOREIGN KEY (id) REFERENCES salle(id)
-	,CONSTRAINT suffer_list_issue0_FK FOREIGN KEY (id_list_issue) REFERENCES list_issue(id)
-)ENGINE=InnoDB;
-
-
-#------------------------------------------------------------
-# Table: need
-#------------------------------------------------------------
-
-CREATE TABLE need(
-        id      Int NOT NULL ,
-        id_user Int NOT NULL
-	,CONSTRAINT need_PK PRIMARY KEY (id,id_user)
-
-	,CONSTRAINT need_role_user_FK FOREIGN KEY (id) REFERENCES role_user(id)
-	,CONSTRAINT need_user0_FK FOREIGN KEY (id_user) REFERENCES user(id)
 )ENGINE=InnoDB;
 
