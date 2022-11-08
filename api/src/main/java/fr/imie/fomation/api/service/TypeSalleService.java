@@ -11,7 +11,9 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+/**
+ * @author Nicolas Zanardo
+ */
 @Data
 @Service
 public class TypeSalleService {
@@ -40,7 +42,7 @@ public class TypeSalleService {
 
 
     /**
-     * @author json
+     * @author Nicolas Zanardo
      * INSERT - Insert type salle
      * @param typeSalle TypeSalle
      * @return typeSalleRepository.save(typeSalle)
@@ -50,20 +52,21 @@ public class TypeSalleService {
     }
 
     /**
-     * @author json
+     * @author Nicolas Zanardo
      * DELETE - Type Salle
      * @param id int
      */
     public void deleteTypeSalle(final Long id) {
         Optional<TypeSalle> typeSalle = getTypeSalle(id);
-        if(!findTypeSalleUsedBySalle(typeSalle)) {
+
+        if(!countSalleByType(typeSalle)) {
             typeSalleRepository.deleteById(id);
         }
     }
 
     /**
-     * @author json
-     * ITERABLE - SALLES
+     * @author Nicolas Zanardo
+     * ITERABLE - FIND All SALLE BY TYPE
      * @param typeSalle Optional<TypeSalle>
      * @return Iterable<Salle>
      */
@@ -72,12 +75,12 @@ public class TypeSalleService {
     }
 
     /**
-     * @author json
-     * BOOLEAN - Retourne True si la function findAllSalleByTypeSalle contient une salle
+     * @author Nicolas Zanardo
+     * BOOLEAN - Retourne True si la function countSalleByType contient une salle
      * @param typeSalle Optional<TypeSalle>
      * @return boolean
      */
-    public boolean findTypeSalleUsedBySalle(Optional<TypeSalle> typeSalle) {
+    public boolean countSalleByType(Optional<TypeSalle> typeSalle) {
         return StreamSupport.stream(findAllSalleByTypeSalle(typeSalle).spliterator(), true).findAny().isPresent();
     }
 

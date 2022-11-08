@@ -23,8 +23,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                        <li class="nav-item dropdown bg-light rounded ">
-                            <a class="nav-link dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Salle
                             </a>
                             <ul class="dropdown-menu">
@@ -36,12 +36,12 @@
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Classes
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu bg-light rounded">
                                 <li><a class="dropdown-item" th:href="@{~/manage-classes}">Gestion des classes</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="nav-item dropdown bg-light rounded">
+                            <a class="nav-link dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 User
                             </a>
                             <ul class="dropdown-menu">
@@ -65,9 +65,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="d-flex align-items-center">
-                        <h1>Type salle</h1>
+                        <h1>Role User</h1>
                         <div class="mx-3" th:if="${isEdit}">
-                            <a  class="btn btn-secondary" th:href="@{~/manage-type-salle}">Ajout d'un nouveau type de salle</a>
+                            <a  class="btn btn-secondary" th:href="@{~/manage-roles-user}">Ajout d'un nouveau Role user</a>
                         </div>
                     </div>
                 </div>
@@ -76,12 +76,12 @@
 
 <!--        Form-->
         <div class="container text-center bg-light shadow-sm py-5">
-            <form th:action="@{~/save-type-salle}" method="post" th:object="${typeSalle}">
+            <form th:action="@{~/save-role-user}" method="post" th:object="${roleUser}">
                 <input type="hidden" th:field="*{id}" class="form-control">
                 <div class="mb-3 row">
                     <label for="inputName" class="col-2 col-form-label">Type de salle</label>
                     <div class="col-sm-7">
-                        <input type="text" th:field="*{nom}" class="form-control" id="inputName" required>
+                        <input type="text" th:field="*{roleName}" class="form-control" id="inputName" required>
                     </div>
                     <div class="col-sm-3">
                         <button type="submit" class="btn btn-primary">Valider</button>
@@ -95,35 +95,35 @@
             <table class="table mt-3">
                 <thead>
                 <tr>
-                    <th>Type de Salle</th>
+                    <th>Role</th>
                     <th class="text-end"><div class="px-3">Action</div></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="typeSalle, row : ${typeSalles}">
-                    <td  th:text="${typeSalle.nom}">nom</td>
+                <tr th:each="roleUser, row : ${rolesUser}">
+                    <td  th:text="${roleUser.roleName}">nom</td>
                     <td class="text-end">
-                       <a th:href="@{~/manage-type-salle/{id}(id=${typeSalle.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"  th:attrappend="data-bs-target=${'#modalDelete_' + typeSalle.id}">
+                       <a th:href="@{~/manage-roles-user/{id}(id=${roleUser.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"  th:attrappend="data-bs-target=${'#modalDelete_' + roleUser.id}">
                             <i class="fa-solid fa-trash"></i>
                         </button>
 
                         <!-- Modal -->
-                        <div class="modal fade" th:attrappend="id=${'modalDelete_' + typeSalle.id}, aiaria-labelledby=${'modalLabelDelete_' + typeSalle.id}" tabindex="-1" aria-hidden="true">
+                        <div class="modal fade" th:attrappend="id=${'modalDelete_' + roleUser.id}, aiaria-labelledby=${'modalLabelDelete_' + roleUser.id}" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header bg-dark text-white">
-                                        <div class="d-flex align-items-end"><b class="modal-title me-2" th:attrappend="id=${'modalLabelDelete_' + typeSalle.id}">Suppression : </b> <span th:text="${typeSalle.nom}"></span></div>
+                                        <div class="d-flex align-items-end"><b class="modal-title me-2" th:attrappend="id=${'modalLabelDelete_' + roleUser.id}">Suppression : </b> <span th:text="${roleUser.roleName}"></span></div>
 
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body text-start">
-                                        <div>Vous êtes sur le point de supprimer <b th:text="${typeSalle.nom}"></b>.</div>
+                                        <div>Vous êtes sur le point de supprimer <b th:text="${roleUser.roleName}"></b>.</div>
                                         <div>Voulez vous continuer ?</div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
-                                        <a th:href="@{~/delete-type-salle/{id}(id=${typeSalle.id})}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
+                                        <a th:href="@{~/delete-role-user/{id}(id=${roleUser.id})}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
                                     </div>
                                 </div>
                             </div>
