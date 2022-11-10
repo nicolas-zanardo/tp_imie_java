@@ -10,15 +10,15 @@ import javax.persistence.*;
  */
 @Data
 @Entity
-@Table(name = "type_salle")
-public class TypeSalle {
+@Table(name = "room_type")
+public class RoomType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name="nom", nullable = false)
-    private String nom;
+    @Column(name="name", nullable = false)
+    private String name;
 
 }

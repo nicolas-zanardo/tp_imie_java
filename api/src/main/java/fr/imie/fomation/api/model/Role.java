@@ -12,16 +12,16 @@ import java.text.Normalizer;
 @Entity
 @Table(
         name= "role",
-        uniqueConstraints={@UniqueConstraint(columnNames={"role_name"})}
+        uniqueConstraints={@UniqueConstraint(columnNames={"name"})}
 )
-public class RoleUser {
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_role", nullable = false)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name= "role_name", nullable = false)
+    @Column(name= "name", nullable = false)
     private String roleName;
 
     public String toString() {

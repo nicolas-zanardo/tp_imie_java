@@ -1,8 +1,8 @@
 package fr.imie.fomation.api.controller;
 
 import fr.imie.fomation.api._init_data.InitData;
-import fr.imie.fomation.api.service.SalleService;
-import fr.imie.fomation.api.service.TypeSalleService;
+import fr.imie.fomation.api.service.RoomService;
+import fr.imie.fomation.api.service.RoomTypeService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,12 +23,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class SalleControllerTest {
+class RoomControllerTest {
 
     @Autowired
-    public SalleService salleService;
+    public RoomService roomService;
     @Autowired
-    public TypeSalleService typeSalleService;
+    public RoomTypeService roomTypeService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -45,41 +45,41 @@ class SalleControllerTest {
     public void testAddTypeSalle() throws Exception {
         mockMvc.perform(post("/api/add-type-salle")
                 .contentType(MediaType.APPLICATION_JSON).content("{\n" +
-                        "    \"nom\": \"ordinaire\"\n" +
+                        "    \"name\": \"ordinaire\"\n" +
                         "}")
         );
         mockMvc.perform(post("/api/add-salle")
                 .contentType(MediaType.APPLICATION_JSON).content("{\n" +
-                        "    \"nom\": \"RM 10\",\n" +
-                        "    \"nombrePlaces\": 20,\n" +
-                        "    \"typeSalle\": {\n" +
+                        "    \"name\": \"RM 10\",\n" +
+                        "    \"nbrPlace\": 20,\n" +
+                        "    \"roomType\": {\n" +
                         "        \"id\": 1,\n" +
-                        "        \"nom\": \"ordinaire\"\n" +
+                        "        \"name\": \"ordinaire\"\n" +
                         "    }\n" +
                         "}")
         );
-        Assertions.assertEquals(1, StreamSupport.stream(typeSalleService.getTypeSalles().spliterator(), true).count());
+        Assertions.assertEquals(1, StreamSupport.stream(roomTypeService.getTypeRooms().spliterator(), true).count());
     }
 
     @Order(2)
     @Test
     public void testGetSalleById() throws Exception {
-        mockMvc.perform(get("/api/salle/1")).andExpect(status().isOk()).andExpect(jsonPath("nom", is("RM 10")));
+        mockMvc.perform(get("/api/salle/1")).andExpect(status().isOk()).andExpect(jsonPath("name", is("RM 10")));
     }
 
     @Order(3)
     @Test
     public void testPutSalle() throws Exception {
         mockMvc.perform(put("/api/update-salle/1").contentType(MediaType.APPLICATION_JSON).content("{\n" +
-                "    \"nom\": \"RM TEST\",\n" +
-                "    \"nombrePlaces\": 20,\n" +
-                "    \"typeSalle\": {\n" +
+                "    \"name\": \"RM TEST\",\n" +
+                "    \"nbrPlace\": 20,\n" +
+                "    \"roomType\": {\n" +
                 "        \"id\": 1,\n" +
-                "        \"nom\": \"ordinaire\"\n" +
+                "        \"name\": \"ordinaire\"\n" +
                 "    }\n" +
                 "}")
         );
-        mockMvc.perform(get("/api/salle/1")).andExpect(status().isOk()).andExpect(jsonPath("nom", is("RM TEST")));
+        mockMvc.perform(get("/api/salle/1")).andExpect(status().isOk()).andExpect(jsonPath("name", is("RM TEST")));
     }
 
     @Order(4)
@@ -89,7 +89,7 @@ class SalleControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-        Assertions.assertEquals(0, StreamSupport.stream(salleService.getSalles().spliterator(), true).count());
+        Assertions.assertEquals(0, StreamSupport.stream(roomService.getRooms().spliterator(), true).count());
     }
 
 }

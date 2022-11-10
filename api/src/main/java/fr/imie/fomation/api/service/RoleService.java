@@ -1,8 +1,8 @@
 package fr.imie.fomation.api.service;
 
-import fr.imie.fomation.api.model.RoleUser;
+import fr.imie.fomation.api.model.Role;
 import fr.imie.fomation.api.model.User;
-import fr.imie.fomation.api.repository.RoleUserRepository;
+import fr.imie.fomation.api.repository.RoleRepository;
 import fr.imie.fomation.api.repository.UserRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,21 +17,21 @@ import java.util.stream.StreamSupport;
  */
 @Data
 @Service
-public class RoleUserService {
+public class RoleService {
 
     @Autowired
-    private RoleUserRepository roleUserRepository;
+    private RoleRepository roleRepository;
     @Autowired
     private UserRepository userRepository;
 
-    public Optional<RoleUser> getRoleUser(final Long id ) { return roleUserRepository.findById(id); }
-    public Iterable<RoleUser> getRolesUser() { return roleUserRepository.findAll(); }
-    public RoleUser saveRoleUser(RoleUser roleUser) {return roleUserRepository.save(roleUser);}
-    public List<RoleUser> findRoleUserByName(String roleName) { return roleUserRepository.findByRoleName(roleName); }
+    public Optional<Role> getRoleUser(final Long id ) { return roleRepository.findById(id); }
+    public Iterable<Role> getRolesUser() { return roleRepository.findAll(); }
+    public Role saveRoleUser(Role roleUser) {return roleRepository.save(roleUser);}
+    public List<Role> findRoleUserByName(String roleName) { return roleRepository.findByRoleName(roleName); }
     public void deleteRoleUser(final Long id) {
-        Optional<RoleUser> roleUser = getRoleUser(id);
+        Optional<Role> roleUser = getRoleUser(id);
         if (!countUserByRole(roleUser)) {
-            roleUserRepository.deleteById(id);
+            roleRepository.deleteById(id);
         }
     }
 
@@ -41,7 +41,7 @@ public class RoleUserService {
      * @param roleUser Optional<RoleUser>
      * @return Iterable<User>
      */
-    public Iterable<User> findAllUserByRole(Optional<RoleUser> roleUser) {
+    public Iterable<User> findAllUserByRole(Optional<Role> roleUser) {
         return userRepository.findByRoleId(roleUser.get().getId());
     }
 
@@ -50,7 +50,7 @@ public class RoleUserService {
      * @param roleUser Optional<RoleUser>
      * @return boolean
      */
-    public boolean countUserByRole(Optional<RoleUser> roleUser) {
+    public boolean countUserByRole(Optional<Role> roleUser) {
         return StreamSupport.stream(findAllUserByRole(roleUser).spliterator(), true).findAny().isPresent();
     }
 }

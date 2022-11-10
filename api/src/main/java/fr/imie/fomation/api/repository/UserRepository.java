@@ -1,6 +1,5 @@
 package fr.imie.fomation.api.repository;
 
-import fr.imie.fomation.api.model.RoleUser;
 import fr.imie.fomation.api.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

@@ -9,21 +9,21 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name = "salle")
-public class Salle {
+@Table(name = "room")
+public class Room {
 
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column (name = "nom", nullable = false)
-    private String nom;
+    @Column (name = "name", nullable = false)
+    private String name;
 
-    @Column (name = "nombre_places", nullable = false)
-    private int nombrePlaces;
+    @Column (name = "nbr_place", nullable = false)
+    private int nbrPlace;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_type_salle", nullable = false)
-    private TypeSalle typeSalle;
+    @JoinColumn(name = "id_room_type", nullable = false)
+    private RoomType roomType;
 }

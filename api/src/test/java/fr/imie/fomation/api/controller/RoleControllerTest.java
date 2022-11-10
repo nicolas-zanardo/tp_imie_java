@@ -1,7 +1,7 @@
 package fr.imie.fomation.api.controller;
 
 import fr.imie.fomation.api._init_data.InitData;
-import fr.imie.fomation.api.service.RoleUserService;
+import fr.imie.fomation.api.service.RoleService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,10 +22,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class RoleUserControllerTest {
+class RoleControllerTest {
 
     @Autowired
-    public RoleUserService roleUserService;
+    public RoleService roleUserService;
 
     @Autowired
     private MockMvc mockMvc;

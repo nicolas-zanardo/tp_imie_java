@@ -1,7 +1,7 @@
 package fr.imie.fomation.api.controller;
 
 import fr.imie.fomation.api._init_data.InitData;
-import fr.imie.fomation.api.service.ClasseService;
+import fr.imie.fomation.api.service.ClassService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.stream.StreamSupport;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,10 +22,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ClasseControllerTest {
+class ClassControllerTest {
 
     @Autowired
-    public ClasseService classService;
+    public ClassService classService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -40,11 +39,11 @@ class ClasseControllerTest {
 
     @Order(1)
     @Test
-    public void testAddClasse() throws Exception {
+    public void testAddClass() throws Exception {
         mockMvc.perform(post("/api/add-classe")
                 .contentType(MediaType.APPLICATION_JSON).content("{\n" +
-                        "    \"nom\": \"MS2I\",\n" +
-                        "    \"nombrePersonnes\": 28\n" +
+                        "    \"name\": \"MS2I\",\n" +
+                        "    \"nbrPeople\": 28\n" +
                         "}")
         );
         Assertions.assertEquals(1, StreamSupport.stream(classService.getClasses().spliterator(), true).count());
@@ -52,24 +51,24 @@ class ClasseControllerTest {
 
     @Order(2)
     @Test
-    public void testGetTypeSalleById() throws Exception {
-        mockMvc.perform(get("/api/classe/1")).andExpect(status().isOk()).andExpect(jsonPath("nom", is("MS2I")));
+    public void testGetClassById() throws Exception {
+        mockMvc.perform(get("/api/classe/1")).andExpect(status().isOk()).andExpect(jsonPath("name", is("MS2I")));
     }
 
     @Order(3)
     @Test
-    public void testPutTypeSalle() throws Exception {
+    public void testPutClass() throws Exception {
         mockMvc.perform(put("/api/update-classe/1").contentType(MediaType.APPLICATION_JSON).content("{\n" +
-                "    \"nom\": \"MS2ID\",\n" +
-                "    \"nombrePersonnes\": 28\n" +
+                "    \"name\": \"MS2ID\",\n" +
+                "    \"nbrPeople\": 28\n" +
                 "}")
         );
-        mockMvc.perform(get("/api/classe/1")).andExpect(status().isOk()).andExpect(jsonPath("nom", is("MS2ID")));
+        mockMvc.perform(get("/api/classe/1")).andExpect(status().isOk()).andExpect(jsonPath("name", is("MS2ID")));
     }
 
     @Order(6)
     @Test
-    public void testDeleteTypeSalle() throws Exception {
+    public void testDeleteClass() throws Exception {
         mockMvc.perform(delete("/api/delete-classe/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))

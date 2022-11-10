@@ -1,6 +1,6 @@
 package fr.imie.fomation.api.repository;
 
-import fr.imie.fomation.api.model.TypeSalle;
+import fr.imie.fomation.api.model.RoomType;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * @author Nicolas Zanardo
  */
 @Repository
-public interface TypeSalleRepository extends CrudRepository<TypeSalle, Long> {
+public interface RoomTypeRepository extends CrudRepository<RoomType, Long> {
 }
