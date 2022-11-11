@@ -27,7 +27,7 @@ class SalleControllerTest {
         mockMvc.perform(get("/manage-salle"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(view().name("manage-salle"))
+                .andExpect(view().name("manage-room"))
                 .andExpect(content().string(containsString("Salle")));
     }
 

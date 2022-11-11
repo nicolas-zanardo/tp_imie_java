@@ -3,11 +3,6 @@ package fr.imie.fomation.api.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * @author Nicolas Zanardo
@@ -19,7 +14,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_user", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name="lastname", nullable = false)
@@ -35,7 +30,7 @@ public class User {
     private String password;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_role", nullable = false)
-    private RoleUser role;
+    @JoinColumn(name = "id_role")
+    private Role role;
 
 }

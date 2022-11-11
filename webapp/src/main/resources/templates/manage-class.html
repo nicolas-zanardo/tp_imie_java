@@ -23,7 +23,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown ">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Salle
             </a>
@@ -32,16 +32,16 @@
               <li><a class="dropdown-item" th:href="@{~/manage-salle}">Gestion des salles</a></li>
             </ul>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <li class="nav-item dropdown bg-light rounded">
+            <a class="nav-link dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Classes
             </a>
-            <ul class="dropdown-menu bg-light rounded">
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" th:href="@{~/manage-classes}">Gestion des classes</a></li>
             </ul>
           </li>
-          <li class="nav-item dropdown bg-light rounded">
-            <a class="nav-link dropdown-toggle text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               User
             </a>
             <ul class="dropdown-menu">
@@ -65,9 +65,9 @@
     <div class="row">
       <div class="col-12">
         <div class="d-flex align-items-center">
-          <h1>Users</h1>
+          <h1>Classe</h1>
           <div class="mx-3" th:if="${isEdit}">
-            <a  class="btn btn-secondary" th:href="@{~/manage-users}">Ajout d'un nouvel user</a>
+            <a  class="btn btn-secondary" th:href="@{~/manage-classes}">Ajout d'une nouvelle classe</a>
           </div>
         </div>
         <hr>
@@ -77,41 +77,27 @@
 
   <!--        Form-->
   <div class="container text-center bg-light shadow-sm p-3">
-    <form th:action="@{~/save-user}" method="post" th:object="${user}">
+    <form th:action="@{~/save-classe}" method="post" th:object="${classRoom}">
       <input type="hidden" th:field="*{id}" class="form-control">
 
       <div class="d-flex align-items-center py-3">
-        <div class="d-flex align-items-center mx-3 w-50">
-          <label for="inputfirstName" class="me-3 w-25 text-start">Nom</label>
-          <input type="text" th:field="*{firstName}" class="form-control w-75" id="inputfirstName" required>
+        <div class="d-flex align-items-center me-3 w-75">
+          <label for="inputName" class="me-3 w-25 text-start">Nom de la salle</label>
+          <input type="text" th:field="*{name}" class="form-control w-75" id="inputName" required>
         </div>
-        <div class="d-flex  align-items-center mx-3 w-50">
-          <label for="inputlastName" class="me-3 w-25 text-start">prenom</label>
-          <input type="text" th:field="*{lastName}" class="form-control w-75" id="inputlastName" required>
-        </div>
+        <div class="w-25 text-end"></div>
       </div>
 
-      <div class="d-flex align-items-center py-3 rounded border bg-white">
-        <div class="d-flex align-items-center mx-3 w-50">
-          <label for="inputlogin" class="me-3 w-25 text-start">login</label>
-          <input type="text" th:field="*{login}" class="form-control w-75" id="inputlogin" required>
+      <div class="d-flex my-3 w-100">
+        <div class="d-flex align-items-center me-3 w-75">
+          <label for="inputNombrePlaces" class="me-3 w-25 text-start">Nombre de place</label>
+          <input type="number" th:field="*{nbrPeople}" class="form-control w-75" id="inputNombrePlaces" required>
         </div>
-        <div class="d-flex align-items-center mx-3 w-50">
-          <label for="inputpassword" class="me-3 w-25 text-start">password</label>
-          <input type="password" th:field="*{password}" class="form-control w-75" id="inputpassword">
-        </div>
-      </div>
 
-      <div class="d-flex my-3">
-        <select class="form-select w-50" aria-label="Default select" th:field="*{role}" th:if="${idRoleUSer == null}" required>
-          <option class="col-sm-3" th:each="role : ${listRole}" th:value="${role.id}" th:text="${role.name}"></option>
-        </select>
-        <select class="form-select w-50" aria-label="Default select" name="role" th:if="${idRoleUSer}" required>
-          <option class="col-sm-3" th:each="role : ${listRole}" th:value="${role.id}" th:text="${role.name}" th:selected="${role.id == idRoleUSer}"></option>
-        </select>
-        <div class="w-50 text-end">
+        <div class="w-25 text-end">
           <button type="submit" class="btn btn-primary">Valider</button>
         </div>
+
       </div>
     </form>
   </div>
@@ -121,51 +107,47 @@
     <table class="table mt-3">
       <thead>
       <tr>
-        <th>Nom et prénom</th>
-        <th>Qualité</th>
+        <th>Nom de la classe</th>
+        <th>nombre de place</th>
         <th class="text-end"><div class="px-3">Action</div></th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="user, row : ${listUsers}">
-        <td  th:text="${#strings.toUpperCase(user.firstName) + ' ' + #strings.toUpperCase(user.lastName)}">nom</td>
-        <td  th:text="${user.role.roleName}">nom</td>
+      <tr th:each="class, row : ${classRoom}">
+        <td  th:text="${class.name}">nom</td>
+        <td  th:text="${class.nbrPeople}">nom</td>
         <td class="text-end">
-          <a th:href="@{~/manage-users/{id}(id=${user.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
-          <button type="button" class="btn btn-danger" data-bs-toggle="modal"  th:attrappend="data-bs-target=${'#modalDelete_' + user.id}">
+          <a th:href="@{~/manage-classe/{id}(id=${class.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal"  th:attrappend="data-bs-target=${'#modalDelete_' + class.id}">
             <i class="fa-solid fa-trash"></i>
           </button>
 
           <!-- Modal -->
-          <div class="modal fade" th:attrappend="id=${'modalDelete_' + user.id}, aiaria-labelledby=${'modalLabelDelete_' + user.id}" tabindex="-1" aria-hidden="true">
+          <div class="modal fade" th:attrappend="id=${'modalDelete_' + class.id}, aiaria-labelledby=${'modalLabelDelete_' + class.id}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
-                  <div class="d-flex align-items-end"><b class="modal-title me-2" th:attrappend="id=${'modalLabelDelete_' + user.id}">Suppression : </b> <span th:text="${user.firstName}"></span></div>
+                  <div class="d-flex align-items-end"><b class="modal-title me-2" th:attrappend="id=${'modalLabelDelete_' + class.id}">Suppression : </b> <span th:text="${class.name}"></span></div>
 
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-start">
-                  <div>Vous êtes sur le point de supprimer <b th:text="${#strings.toUpperCase(user.firstName) + ' ' + #strings.toUpperCase(user.lastName)}"></b>.</div>
+                  <div>Vous êtes sur le point de supprimer <b th:text="${class.name}"></b>.</div>
                   <div>Voulez vous continuer ?</div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
-                  <a th:href="@{~/delete-user/{id}(id=${user.id})}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
+                  <a th:href="@{~/delete-classe/{id}(id=${class.id})}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
                 </div>
               </div>
             </div>
           </div>
         </td>
       </tr>
-
       </tbody>
     </table>
   </div>
-
 </main>
-
-
 
 
 <!-- CDN -->

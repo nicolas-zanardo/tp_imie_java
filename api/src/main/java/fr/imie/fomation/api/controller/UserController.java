@@ -1,13 +1,12 @@
 package fr.imie.fomation.api.controller;
 
-import fr.imie.fomation.api.model.RoleUser;
+import fr.imie.fomation.api.model.Role;
 import fr.imie.fomation.api.model.User;
 import fr.imie.fomation.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
-import java.util.Set;
 
 /**
  *
@@ -43,7 +42,7 @@ public class UserController {
             String firstname = user.getFirstName();
             String login = user.getLogin();
             String password = user.getPassword();
-            RoleUser roles = user.getRole();
+            Role roles = user.getRole();
             if (lastname != null) {
                 currentUser.setLastName(lastname.trim().toLowerCase());
             }

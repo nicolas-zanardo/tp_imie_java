@@ -1,9 +1,9 @@
 package fr.imie.webapp.controller;
 
-import fr.imie.webapp.model.RoleUser;
+import fr.imie.webapp.model.Role;
 import fr.imie.webapp.model.User;
 import fr.imie.webapp.model.UserFormData;
-import fr.imie.webapp.service.RoleUserService;
+import fr.imie.webapp.service.RoleService;
 import fr.imie.webapp.service.UserService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
-    private RoleUserService roleUserService;
+    private RoleService roleUserService;
 
     @GetMapping("/manage-users")
     public String manageUsers(Model model) {
@@ -54,7 +54,7 @@ public class UserController {
                 !userFormData.getLogin().isEmpty() &&
                 userFormData.getRole() > 0
         ) {
-            RoleUser roleUser = roleUserService.getRoleUser(userFormData.getRole());
+            Role roleUser = roleUserService.getRole(userFormData.getRole());
             User user = new User();
             user.setId(userFormData.getId());
             user.setPassword(userFormData.getPassword());
@@ -79,7 +79,7 @@ public class UserController {
     }
 
     private void listRoleModel(Model model) {
-        Iterable<RoleUser> listRole = roleUserService.getAllRolesUser();
+        Iterable<Role> listRole = roleUserService.getAllRoles();
         model.addAttribute("listRole", listRole);
     }
 
