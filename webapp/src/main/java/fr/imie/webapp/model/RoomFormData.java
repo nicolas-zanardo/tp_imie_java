@@ -6,7 +6,11 @@ import lombok.Data;
  * @author Nicolas Zanardo
  */
 @Data
-public class RoleUser {
+public class RoomFormData {
+
     private Integer id;
-    private String roleName;
+    private String name;
+    private int nbrPlace;
+    private int roomType;
+
 }

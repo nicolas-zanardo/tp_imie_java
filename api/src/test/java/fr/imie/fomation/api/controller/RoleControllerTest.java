@@ -39,10 +39,10 @@ class RoleControllerTest {
 
     @Order(1)
     @Test
-    public void testAddRoleUser() throws Exception {
+    public void testRoleUserAdd() throws Exception {
         mockMvc.perform(post("/api/add-role-user")
                 .contentType(MediaType.APPLICATION_JSON).content("{\n" +
-                        "    \"roleName\": \"eleve_test\"\n" +
+                        "    \"name\": \"eleve_test\"\n" +
                         "}")
         );
         Assertions.assertEquals(1, StreamSupport.stream(roleUserService.getRolesUser().spliterator(), true).count());
@@ -50,31 +50,61 @@ class RoleControllerTest {
 
     @Order(2)
     @Test
-    public void testGetRoleUserById() throws Exception {
-        mockMvc.perform(get("/api/role-user/1")).andExpect(status().isOk()).andExpect(jsonPath("roleName", is("eleve_test")));
+    public void testRoleUserGetById() throws Exception {
+        mockMvc.perform(get("/api/role-user/1")).andExpect(status().isOk()).andExpect(jsonPath("name", is("eleve_test")));
     }
 
     @Order(3)
     @Test
-    public void testPutRoleUser() throws Exception {
+    public void testRoleUserPut() throws Exception {
         mockMvc.perform(put("/api/update-role-user/1").contentType(MediaType.APPLICATION_JSON).content("{\n" +
-                "    \"roleName\": \"eleve\"\n" +
+                "    \"name\": \"eleve\"\n" +
                 "}")
         );
-        mockMvc.perform(get("/api/role-user/1")).andExpect(status().isOk()).andExpect(jsonPath("roleName", is("eleve")));
+        mockMvc.perform(get("/api/role-user/1")).andExpect(status().isOk()).andExpect(jsonPath("name", is("eleve")));
     }
 
     @Order(4)
     @Test
-    public void testUniqueRoleName() throws Exception {
+    public void testRoleNameUnique() throws Exception {
         mockMvc.perform(post("/api/add-role-user").contentType(MediaType.APPLICATION_JSON).content("{\n" +
-                "    \"roleName\": \"eleve\"\n" +
+                "    \"name\": \"eleve\"\n" +
                 "}")
         );
         Assertions.assertEquals(1, StreamSupport.stream(roleUserService.getRolesUser().spliterator(), true).count());
     }
 
+    @Order(5)
+    @Test
+    public void testRoleCantBeDelete() throws Exception {
+        mockMvc.perform((post("/api/add-user")
+                .contentType(MediaType.APPLICATION_JSON).content("{\n" +
+                        "    \"lastName\": \"mustor\",\n" +
+                        "    \"firstName\": \"mike\",\n" +
+                        "    \"login\": \"log_mustor\",\n" +
+                        "    \"password\": \"Aa123456789*2\",\n" +
+                        "    \"role\": \n" +
+                        "        {\n" +
+                        "            \"id\":1,\n" +
+                        "            \"name\": \"eleve\"\n" +
+                        "        }\n" +
+                        "}"))
+        );
+    Assertions.assertTrue(roleUserService.roleHaveUser(roleUserService.getRoleUser(1L)));
+    }
+
     @Order(6)
+    @Test
+    public void testRoleCanDeleted() throws Exception {
+        mockMvc.perform(delete("/api/delete-user/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        Assertions.assertFalse(roleUserService.roleHaveUser(roleUserService.getRoleUser(1L)));
+    }
+
+
+    @Order(7)
     @Test
     public void testDeleteRoleUser() throws Exception {
         mockMvc.perform(delete("/api/delete-role-user/1")

@@ -6,9 +6,9 @@ import lombok.Data;
  * @author Nicolas Zanardo
  */
 @Data
-public class Salle {
+public class Room {
     private Integer id;
-    private String nom;
-    private Integer nombrePlaces;
-    private TypeSalle typeSalle;
+    private String name;
+    private Integer nbrPlace;
+    private RoomType roomType;
 }

@@ -58,8 +58,7 @@ public class RoomTypeService {
      */
     public void deleteRoomType(final Long id) {
         Optional<RoomType> typeSalle = getTypeRoom(id);
-
-        if(!countRoomByType(typeSalle)) {
+        if(!typeRoomHaveRoom(typeSalle)) {
             roomTypeRepository.deleteById(id);
         }
     }
@@ -80,7 +79,7 @@ public class RoomTypeService {
      * @param roomType Optional<RoomType>
      * @return boolean
      */
-    public boolean countRoomByType(Optional<RoomType> roomType) {
+    public boolean typeRoomHaveRoom(Optional<RoomType> roomType) {
         return StreamSupport.stream(findAllRoomByType(roomType).spliterator(), true).findAny().isPresent();
     }
 

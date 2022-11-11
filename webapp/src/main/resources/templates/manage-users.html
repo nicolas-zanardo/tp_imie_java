@@ -104,10 +104,10 @@
 
       <div class="d-flex my-3">
         <select class="form-select w-50" aria-label="Default select" th:field="*{role}" th:if="${idRoleUSer == null}" required>
-          <option class="col-sm-3" th:each="role : ${listRole}" th:value="${role.id}" th:text="${role.roleName}"></option>
+          <option class="col-sm-3" th:each="role : ${listRole}" th:value="${role.id}" th:text="${role.name}"></option>
         </select>
         <select class="form-select w-50" aria-label="Default select" name="role" th:if="${idRoleUSer}" required>
-          <option class="col-sm-3" th:each="role : ${listRole}" th:value="${role.id}" th:text="${role.roleName}" th:selected="${role.id == idRoleUSer}"></option>
+          <option class="col-sm-3" th:each="role : ${listRole}" th:value="${role.id}" th:text="${role.name}" th:selected="${role.id == idRoleUSer}"></option>
         </select>
         <div class="w-50 text-end">
           <button type="submit" class="btn btn-primary">Valider</button>

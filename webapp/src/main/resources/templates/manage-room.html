@@ -77,23 +77,23 @@
 
   <!--        Form-->
   <div class="container text-center bg-light shadow-sm p-3">
-    <form th:action="@{~/save-salle}" method="post" th:object="${salle}">
+    <form th:action="@{~/save-salle}" method="post" th:object="${room}">
       <input type="hidden" th:field="*{id}" class="form-control">
 
       <div class="d-flex align-items-center py-3">
         <label for="inputName" class="me-3 w-25 text-start">Nom de la salle</label>
-        <input type="text" th:field="*{nom}" class="form-control w-75" id="inputName" required>
+        <input type="text" th:field="*{name}" class="form-control w-75" id="inputName" required>
       </div>
       <div class="d-flex my-3">
         <div class="d-flex align-items-center w-50 me-3">
           <label for="inputNombrePlaces" class="me-3">Nombre de place</label>
-          <input type="number" th:field="*{nombrePlaces}" class="form-control w-50" id="inputNombrePlaces" required>
+          <input type="number" th:field="*{nbrPlace}" class="form-control w-50" id="inputNombrePlaces" required>
         </div>
-        <select class="form-select w-50" aria-label="Default select" th:field="*{typeSalle}" th:if="${idTypeSalle == null}" required>
-          <option class="col-sm-3" th:each="tSalle : ${typeSalles}" th:value="${tSalle.id}" th:text="${tSalle.nom}"></option>
+        <select class="form-select w-50" aria-label="Default select" th:field="*{roomType}" th:if="${idTypeRoom == null}" required>
+          <option class="col-sm-3" th:each="room : ${typeRoom}" th:value="${room.id}" th:text="${room.nom}"></option>
         </select>
-        <select class="form-select w-50" aria-label="Default select" name="typeSalle" th:if="${idTypeSalle}" required>
-          <option class="col-sm-3" th:each="tSalle : ${typeSalles}" th:value="${tSalle.id}" th:text="${tSalle.nom}" th:selected="${tSalle.id == idTypeSalle}"></option>
+        <select class="form-select w-50" aria-label="Default select" name="typeSalle" th:if="${idTypeRoom}" required>
+          <option class="col-sm-3" th:each="room : ${typeRoom}" th:value="${room.id}" th:text="${room.nom}" th:selected="${room.id == idTypeRoom}"></option>
         </select>
         <div class="w-50 text-end">
           <button type="submit" class="btn btn-primary">Valider</button>
@@ -113,31 +113,31 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="salle, row : ${salles}">
-        <td  th:text="${salle.nom}">nom</td>
-        <td  th:text="${salle.typeSalle.nom}">nom</td>
+      <tr th:each="room, row : ${listRoom}">
+        <td  th:text="${room.nom}">nom</td>
+        <td  th:text="${room.roomType.name}">nom</td>
         <td class="text-end">
-          <a th:href="@{~/manage-salle/{id}(id=${salle.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
-          <button type="button" class="btn btn-danger" data-bs-toggle="modal"  th:attrappend="data-bs-target=${'#modalDelete_' + salle.id}">
+          <a th:href="@{~/manage-salle/{id}(id=${room.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal"  th:attrappend="data-bs-target=${'#modalDelete_' + room.id}">
             <i class="fa-solid fa-trash"></i>
           </button>
 
           <!-- Modal -->
-          <div class="modal fade" th:attrappend="id=${'modalDelete_' + salle.id}, aiaria-labelledby=${'modalLabelDelete_' + salle.id}" tabindex="-1" aria-hidden="true">
+          <div class="modal fade" th:attrappend="id=${'modalDelete_' + room.id}, aiaria-labelledby=${'modalLabelDelete_' + room.id}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
-                  <div class="d-flex align-items-end"><b class="modal-title me-2" th:attrappend="id=${'modalLabelDelete_' + salle.id}">Suppression : </b> <span th:text="${salle.nom}"></span></div>
+                  <div class="d-flex align-items-end"><b class="modal-title me-2" th:attrappend="id=${'modalLabelDelete_' + room.id}">Suppression : </b> <span th:text="${room.nom}"></span></div>
 
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-start">
-                  <div>Vous êtes sur le point de supprimer <b th:text="${salle.nom}"></b>.</div>
+                  <div>Vous êtes sur le point de supprimer <b th:text="${room.nom}"></b>.</div>
                   <div>Voulez vous continuer ?</div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
-                  <a th:href="@{~/delete-salle/{id}(id=${salle.id})}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
+                  <a th:href="@{~/delete-salle/{id}(id=${room.id})}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
                 </div>
               </div>
             </div>

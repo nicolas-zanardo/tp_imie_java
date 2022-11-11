@@ -1,7 +1,7 @@
 package fr.imie.webapp.repository;
 
 import fr.imie.webapp.CustomProperties;
-import fr.imie.webapp.model.RoleUser;
+import fr.imie.webapp.model.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -16,71 +16,71 @@ import org.springframework.web.client.RestTemplate;
  */
 @Slf4j
 @Component
-public class RoleUserProxy {
+public class RoleProxy {
 
     @Autowired
     private CustomProperties props;
 
     // CREATE ROLE USER
-    public RoleUser createRoleUser(RoleUser roleUser) {
-        String createRoleUserUrl = props.getApiUrl() + "/add-role-user";
+    public Role createRole(Role role) {
+        String createRoleUrl = props.getApiUrl() + "/add-role-user";
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<RoleUser> request = new HttpEntity<>(roleUser);
-        ResponseEntity<RoleUser> response = restTemplate.exchange(
-                createRoleUserUrl,
+        HttpEntity<Role> request = new HttpEntity<>(role);
+        ResponseEntity<Role> response = restTemplate.exchange(
+                createRoleUrl,
                 HttpMethod.POST,
                 request,
-                RoleUser.class
+                Role.class
         );
         return response.getBody();
     }
 
     // GET ALL ROLE USER
-    public Iterable<RoleUser> getAllRoleUser() {
-        String getAllRoleUser = props.getApiUrl() + "/role-users";
+    public Iterable<Role> getAllRole() {
+        String getAllRole = props.getApiUrl() + "/role-users";
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Iterable<RoleUser>> response =restTemplate.exchange(
-                getAllRoleUser,
+        ResponseEntity<Iterable<Role>> response =restTemplate.exchange(
+                getAllRole,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<Iterable<RoleUser>>() {}
+                new ParameterizedTypeReference<Iterable<Role>>() {}
         );
         return response.getBody();
     }
 
     // GET ROLE USER BY ID
-    public RoleUser getRoleUSerById(int id) {
-        String getRoleUserUrl = props.getApiUrl() + "/role-user/" + id;
+    public Role getRoleById(int id) {
+        String getRoleUrl = props.getApiUrl() + "/role-user/" + id;
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<RoleUser> response = restTemplate.exchange(
-                getRoleUserUrl,
+        ResponseEntity<Role> response = restTemplate.exchange(
+                getRoleUrl,
                 HttpMethod.GET,
                 null,
-                RoleUser.class
+                Role.class
         );
         return response.getBody();
     }
 
     // UPDATE ROLE USER
-    public RoleUser updateRoleUser(RoleUser roleUser) {
-        String updateRoleUSerUrl = props.getApiUrl() + "/update-role-user/" + roleUser.getId();
+    public Role updateRole(Role role) {
+        String updateUSerUrl = props.getApiUrl() + "/update-role-user/" + role.getId();
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<RoleUser> request = new HttpEntity<>(roleUser);
-        ResponseEntity<RoleUser> response = restTemplate.exchange(
-                updateRoleUSerUrl,
+        HttpEntity<Role> request = new HttpEntity<>(role);
+        ResponseEntity<Role> response = restTemplate.exchange(
+                updateUSerUrl,
                 HttpMethod.PUT,
                 request,
-                RoleUser.class
+                Role.class
         );
         return response.getBody();
     }
 
     // DELETE ROLE USER
-    public void deleteRoleUser(int id) {
-        String deleteRoleUserUrl = props.getApiUrl() + "/delete-role-user/" + id;
+    public void deleteRole(int id) {
+        String deleteRoleUrl = props.getApiUrl() + "/delete-role-user/" + id;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Void> response = restTemplate.exchange(
-                deleteRoleUserUrl,
+                deleteRoleUrl,
                 HttpMethod.DELETE,
                 null,
                 Void.class

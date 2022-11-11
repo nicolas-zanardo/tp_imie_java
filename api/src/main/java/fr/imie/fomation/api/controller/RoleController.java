@@ -19,13 +19,7 @@ public class RoleController {
 
     // GET ALL ROLE USERS
     @GetMapping("/role-users")
-    public Iterable<Role> getRoleUsers() {
-        // DEBUG -- TEST STRING OUTPUT ex: ROLE_FORMATION
-//        Iterator<RoleUser> roles = roleUserService.getRolesUser().iterator();
-//        while (roles.hasNext()) {
-//            System.out.println(roles.next().toString());
-//        }
-        return roleUserService.getRolesUser(); }
+    public Iterable<Role> getRoleUsers() { return roleUserService.getRolesUser(); }
 
     // GET ROLE USER BY ID
     @GetMapping("/role-user/{id}")
@@ -37,10 +31,10 @@ public class RoleController {
     // ADD ROLE USER
     @PostMapping("/add-role-user")
     public Role createRoleUSer(@RequestBody Role roleUser) {
-        if (roleUserService.findRoleUserByName(roleUser.getRoleName()).isEmpty()) {
+        if (roleUserService.findRoleUserByName(roleUser.getName()).isEmpty()) {
             return roleUserService.saveRoleUser(roleUser);
         }
-        return new Role();
+       return new Role();
     }
 
     // UPDATE ROLE USER
@@ -49,9 +43,9 @@ public class RoleController {
         Optional<Role> role = roleUserService.getRoleUser(id);
         if(role.isPresent()) {
             Role currentRole = role.get();
-            String roleName = roleUser.getRoleName();
+            String roleName = roleUser.getName();
             if(roleName != null) {
-                currentRole.setRoleName(roleName);
+                currentRole.setName(roleName);
             }
             roleUserService.saveRoleUser(currentRole);
             return  currentRole;

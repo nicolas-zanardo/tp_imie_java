@@ -27,10 +27,10 @@ public class RoleService {
     public Optional<Role> getRoleUser(final Long id ) { return roleRepository.findById(id); }
     public Iterable<Role> getRolesUser() { return roleRepository.findAll(); }
     public Role saveRoleUser(Role roleUser) {return roleRepository.save(roleUser);}
-    public List<Role> findRoleUserByName(String roleName) { return roleRepository.findByRoleName(roleName); }
+    public List<Role> findRoleUserByName(String roleName) { return roleRepository.findByName(roleName); }
     public void deleteRoleUser(final Long id) {
         Optional<Role> roleUser = getRoleUser(id);
-        if (!countUserByRole(roleUser)) {
+        if (!roleHaveUser(roleUser)) {
             roleRepository.deleteById(id);
         }
     }
@@ -50,7 +50,7 @@ public class RoleService {
      * @param roleUser Optional<RoleUser>
      * @return boolean
      */
-    public boolean countUserByRole(Optional<Role> roleUser) {
+    public boolean roleHaveUser(Optional<Role> roleUser) {
         return StreamSupport.stream(findAllUserByRole(roleUser).spliterator(), true).findAny().isPresent();
     }
 }

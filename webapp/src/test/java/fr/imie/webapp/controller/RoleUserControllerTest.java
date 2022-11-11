@@ -27,7 +27,7 @@ class RoleUserControllerTest {
         mockMvc.perform(get("/manage-roles-user"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(view().name("manage-roles-user"))
+                .andExpect(view().name("manage-role"))
                 .andExpect(content().string(containsString("Role User")));
     }
 }

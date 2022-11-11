@@ -1,7 +1,7 @@
 package fr.imie.webapp.repository;
 
 import fr.imie.webapp.CustomProperties;
-import fr.imie.webapp.model.Salle;
+import fr.imie.webapp.model.Class;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -16,70 +16,66 @@ import org.springframework.web.client.RestTemplate;
  */
 @Slf4j
 @Component
-public class SalleProxy {
+public class ClassProxy {
+
     @Autowired
     private CustomProperties props;
 
-    public Salle createSalle(Salle salle) {
-        String createSalleUrl = props.getApiUrl() + "/add-salle";
+    public Class createClass(Class classe) {
+        String createClasseUrl = props.getApiUrl() + "/add-classe";
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<Salle> request = new HttpEntity<Salle>(salle);
-        ResponseEntity<Salle> response = restTemplate.exchange(
-                createSalleUrl,
+        HttpEntity<Class> request = new HttpEntity<Class>(classe);
+        ResponseEntity<Class> response = restTemplate.exchange(
+                createClasseUrl,
                 HttpMethod.POST,
                 request,
-                Salle.class
+                Class.class
         );
         return response.getBody();
     }
 
-    /**
-     * Update - type salle
-     * @param salle Salle
-     * @return ResponseEntity
-     */
-    public Salle updateSalle(Salle salle) {
-        String updateSalleUrl = props.getApiUrl() + "/update-salle/" + salle.getId();
+    public Class updateClass(Class classe) {
+        String updateTypeSalleUrl = props.getApiUrl() + "/update-classe/" + classe.getId();
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<Salle> request = new HttpEntity<Salle>(salle);
-        ResponseEntity<Salle> response = restTemplate.exchange(
-                updateSalleUrl,
+        HttpEntity<Class> request = new HttpEntity<Class>(classe);
+        ResponseEntity<Class> response = restTemplate.exchange(
+                updateTypeSalleUrl,
                 HttpMethod.PUT,
                 request,
-                Salle.class
+                Class.class
         );
         return response.getBody();
     }
 
-    public Iterable<Salle> getSalles() {
-        String getSallesUrl = props.getApiUrl() + "/salles";
+    public Class getClass(int id) {
+        String getClassesUrl = props.getApiUrl() + "/classe/" + id;
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Iterable<Salle>> response = restTemplate.exchange(
-                getSallesUrl,
+        ResponseEntity<Class> response = restTemplate.exchange(
+                getClassesUrl,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<Iterable<Salle>>() {}
+                Class.class
         );
         return response.getBody();
     }
 
-    public Salle getSalle(int id) {
-        String getSalleUrl = props.getApiUrl() + "/salle/" + id;
+    public Iterable<Class> getClasses() {
+        String getClassesUrl = props.getApiUrl() + "/classes";
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Salle> response = restTemplate.exchange(
-                getSalleUrl,
+        ResponseEntity<Iterable<Class>> response = restTemplate.exchange(
+                getClassesUrl,
                 HttpMethod.GET,
                 null,
-                Salle.class
+                new ParameterizedTypeReference<Iterable<Class>>() {}
         );
         return response.getBody();
     }
 
-    public void deleteSalle(int id) {
-        String deleteSalleUrl = props.getApiUrl() + "/delete-salle/" + id;
+    public void deleteClass(int id) {
+        String deleteTypeSalleUrl = props.getApiUrl() + "/delete-classe/" + id;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Void> response = restTemplate.exchange(
-                deleteSalleUrl,
+                deleteTypeSalleUrl,
                 HttpMethod.DELETE,
                 null,
                 Void.class

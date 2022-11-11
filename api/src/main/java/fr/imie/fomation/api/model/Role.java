@@ -22,18 +22,18 @@ public class Role {
     private Long id;
 
     @Column(name= "name", nullable = false)
-    private String roleName;
+    private String name;
 
     public String toString() {
-        return "ROLE_" + stripAccentsAndSpace(roleName);
+        return "ROLE_" + stripAccentsAndSpace(name);
     }
 
-    public String stripAccentsAndSpace(String roleName)
+    public String stripAccentsAndSpace(String name)
     {
-        roleName = Normalizer.normalize(roleName, Normalizer.Form.NFD);
-        roleName = roleName.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
-        roleName = roleName.replaceAll("\\s+","_");
-        return roleName.toUpperCase();
+        name = Normalizer.normalize(name, Normalizer.Form.NFD);
+        name = name.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        name = name.replaceAll("\\s+","_");
+        return name.toUpperCase();
     }
 
 }

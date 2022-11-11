@@ -1,7 +1,7 @@
 package fr.imie.webapp.repository;
 
 import fr.imie.webapp.CustomProperties;
-import fr.imie.webapp.model.Classe;
+import fr.imie.webapp.model.Room;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -16,66 +16,69 @@ import org.springframework.web.client.RestTemplate;
  */
 @Slf4j
 @Component
-public class ClasseProxy {
-
+public class RoomProxy {
     @Autowired
     private CustomProperties props;
 
-    public Classe createClasse(Classe classe) {
-        String createClasseUrl = props.getApiUrl() + "/add-classe";
+    public Room createRoom(Room room) {
+        String createRoomUrl = props.getApiUrl() + "/add-salle";
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<Classe> request = new HttpEntity<Classe>(classe);
-        ResponseEntity<Classe> response = restTemplate.exchange(
-                createClasseUrl,
+        HttpEntity<Room> request = new HttpEntity<Room>(room);
+        ResponseEntity<Room> response = restTemplate.exchange(
+                createRoomUrl,
                 HttpMethod.POST,
                 request,
-                Classe.class
+                Room.class
         );
         return response.getBody();
     }
 
-    public Classe updateClasse(Classe classe) {
-        String updateTypeSalleUrl = props.getApiUrl() + "/update-classe/" + classe.getId();
+    /**
+     * Update - type salle
+     * @return ResponseEntity
+     */
+    public Room updateRoom(Room room) {
+        String updateRoomUrl = props.getApiUrl() + "/update-salle/" + room.getId();
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<Classe> request = new HttpEntity<Classe>(classe);
-        ResponseEntity<Classe> response = restTemplate.exchange(
-                updateTypeSalleUrl,
+        HttpEntity<Room> request = new HttpEntity<Room>(room);
+        ResponseEntity<Room> response = restTemplate.exchange(
+                updateRoomUrl,
                 HttpMethod.PUT,
                 request,
-                Classe.class
+                Room.class
         );
         return response.getBody();
     }
 
-    public Classe getClasse(int id) {
-        String getClassesUrl = props.getApiUrl() + "/classe/" + id;
+    public Iterable<Room> getRooms() {
+        String getRoomUrl = props.getApiUrl() + "/salles";
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Classe> response = restTemplate.exchange(
-                getClassesUrl,
+        ResponseEntity<Iterable<Room>> response = restTemplate.exchange(
+                getRoomUrl,
                 HttpMethod.GET,
                 null,
-                Classe.class
+                new ParameterizedTypeReference<Iterable<Room>>() {}
         );
         return response.getBody();
     }
 
-    public Iterable<Classe> getClasses() {
-        String getClassesUrl = props.getApiUrl() + "/classes";
+    public Room getRoom(int id) {
+        String getSalleUrl = props.getApiUrl() + "/salle/" + id;
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Iterable<Classe>> response = restTemplate.exchange(
-                getClassesUrl,
+        ResponseEntity<Room> response = restTemplate.exchange(
+                getSalleUrl,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<Iterable<Classe>>() {}
+                Room.class
         );
         return response.getBody();
     }
 
-    public void deleteClasse(int id) {
-        String deleteTypeSalleUrl = props.getApiUrl() + "/delete-classe/" + id;
+    public void deleteRoom(int id) {
+        String deleteSalleUrl = props.getApiUrl() + "/delete-salle/" + id;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Void> response = restTemplate.exchange(
-                deleteTypeSalleUrl,
+                deleteSalleUrl,
                 HttpMethod.DELETE,
                 null,
                 Void.class

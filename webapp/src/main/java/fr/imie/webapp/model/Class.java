@@ -6,7 +6,8 @@ import lombok.Data;
  * @author Nicolas Zanardo
  */
 @Data
-public class TypeSalle {
+public class Class {
     private Integer id;
-    private String nom;
+    private String name;
+    private Integer nbrPeople;
 }

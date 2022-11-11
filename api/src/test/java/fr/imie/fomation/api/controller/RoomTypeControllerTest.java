@@ -42,7 +42,7 @@ class RoomTypeControllerTest {
 
     @Order(1)
     @Test
-    public void testAddRoomType() throws Exception {
+    public void testRoomTypeAdd() throws Exception {
         mockMvc.perform(post("/api/add-type-salle")
                 .contentType(MediaType.APPLICATION_JSON).content("{\n" +
                         "    \"name\": \"informatique TEST\"\n" +
@@ -53,13 +53,13 @@ class RoomTypeControllerTest {
 
     @Order(2)
     @Test
-    public void testGetRoomTypeById() throws Exception {
+    public void testRoomTypeGetById() throws Exception {
         mockMvc.perform(get("/api/type-salle/1")).andExpect(status().isOk()).andExpect(jsonPath("name", is("informatique TEST")));
     }
 
     @Order(3)
     @Test
-    public void testPutRoomType() throws Exception {
+    public void testRoomTypePut() throws Exception {
         mockMvc.perform(put("/api/type-salle/1").contentType(MediaType.APPLICATION_JSON).content("{\n" +
                 "    \"name\": \"informatique\"\n" +
                 "}")
@@ -69,7 +69,7 @@ class RoomTypeControllerTest {
 
     @Order(4)
     @Test
-    public void testCanDeletedRoomType() throws Exception {
+    public void testRoomTypeCantBeDeleted() throws Exception {
         mockMvc.perform(post("/api/add-salle")
                 .contentType(MediaType.APPLICATION_JSON).content("{\n" +
                         "    \"name\": \"RM 10\",\n" +
@@ -80,22 +80,22 @@ class RoomTypeControllerTest {
                         "    }\n" +
                         "}")
         );
-        Assertions.assertTrue(roomTypeService.countRoomByType(roomTypeService.getTypeRoom(1L)));
+        Assertions.assertTrue(roomTypeService.typeRoomHaveRoom(roomTypeService.getTypeRoom(1L)));
     }
 
     @Order(5)
     @Test
-    public void testCantDeletedRoomType() throws Exception {
+    public void testRoomTypeCanDeleted() throws Exception {
         mockMvc.perform(delete("/api/delete-salle/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-        Assertions.assertFalse(roomTypeService.countRoomByType(roomTypeService.getTypeRoom(1L)));
+        Assertions.assertFalse(roomTypeService.typeRoomHaveRoom(roomTypeService.getTypeRoom(1L)));
     }
 
     @Order(6)
     @Test
-    public void testDeleteRoomType() throws Exception {
+    public void testRoomTypeDelete() throws Exception {
         mockMvc.perform(delete("/api/type-salle-delete/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))

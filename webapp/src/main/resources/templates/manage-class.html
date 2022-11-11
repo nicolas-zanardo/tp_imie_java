@@ -77,13 +77,13 @@
 
   <!--        Form-->
   <div class="container text-center bg-light shadow-sm p-3">
-    <form th:action="@{~/save-classe}" method="post" th:object="${classe}">
+    <form th:action="@{~/save-classe}" method="post" th:object="${classRoom}">
       <input type="hidden" th:field="*{id}" class="form-control">
 
       <div class="d-flex align-items-center py-3">
         <div class="d-flex align-items-center me-3 w-75">
           <label for="inputName" class="me-3 w-25 text-start">Nom de la salle</label>
-          <input type="text" th:field="*{nom}" class="form-control w-75" id="inputName" required>
+          <input type="text" th:field="*{name}" class="form-control w-75" id="inputName" required>
         </div>
         <div class="w-25 text-end"></div>
       </div>
@@ -91,7 +91,7 @@
       <div class="d-flex my-3 w-100">
         <div class="d-flex align-items-center me-3 w-75">
           <label for="inputNombrePlaces" class="me-3 w-25 text-start">Nombre de place</label>
-          <input type="number" th:field="*{nombrePersonnes}" class="form-control w-75" id="inputNombrePlaces" required>
+          <input type="number" th:field="*{nbrPeople}" class="form-control w-75" id="inputNombrePlaces" required>
         </div>
 
         <div class="w-25 text-end">
@@ -113,31 +113,31 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="classe, row : ${classes}">
-        <td  th:text="${classe.nom}">nom</td>
-        <td  th:text="${classe.nombrePersonnes}">nom</td>
+      <tr th:each="class, row : ${classRoom}">
+        <td  th:text="${class.name}">nom</td>
+        <td  th:text="${class.nbrPeople}">nom</td>
         <td class="text-end">
-          <a th:href="@{~/manage-classe/{id}(id=${classe.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
-          <button type="button" class="btn btn-danger" data-bs-toggle="modal"  th:attrappend="data-bs-target=${'#modalDelete_' + classe.id}">
+          <a th:href="@{~/manage-classe/{id}(id=${class.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal"  th:attrappend="data-bs-target=${'#modalDelete_' + class.id}">
             <i class="fa-solid fa-trash"></i>
           </button>
 
           <!-- Modal -->
-          <div class="modal fade" th:attrappend="id=${'modalDelete_' + classe.id}, aiaria-labelledby=${'modalLabelDelete_' + classe.id}" tabindex="-1" aria-hidden="true">
+          <div class="modal fade" th:attrappend="id=${'modalDelete_' + class.id}, aiaria-labelledby=${'modalLabelDelete_' + class.id}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
-                  <div class="d-flex align-items-end"><b class="modal-title me-2" th:attrappend="id=${'modalLabelDelete_' + classe.id}">Suppression : </b> <span th:text="${classe.nom}"></span></div>
+                  <div class="d-flex align-items-end"><b class="modal-title me-2" th:attrappend="id=${'modalLabelDelete_' + class.id}">Suppression : </b> <span th:text="${class.name}"></span></div>
 
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-start">
-                  <div>Vous êtes sur le point de supprimer <b th:text="${classe.nom}"></b>.</div>
+                  <div>Vous êtes sur le point de supprimer <b th:text="${class.name}"></b>.</div>
                   <div>Voulez vous continuer ?</div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
-                  <a th:href="@{~/delete-classe/{id}(id=${classe.id})}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
+                  <a th:href="@{~/delete-classe/{id}(id=${class.id})}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
                 </div>
               </div>
             </div>

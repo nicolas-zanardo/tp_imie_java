@@ -1,6 +1,6 @@
 package fr.imie.fomation.api.model;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -16,24 +16,24 @@ import org.springframework.boot.test.context.SpringBootTest;
 class RoleTest {
 
 
-//    @Test
-//    void testToString() {
-//        Role formateur = new Role();
-//        formateur.setRoleName("formateur");
-//        Assert.assertEquals(formateur.toString(), "ROLE_FORMATEUR");
-//    }
-//
-//    @Test
-//    void testToStringWithAccent() {
-//        Role eleve = new Role();
-//        eleve.setRoleName("éléve");
-//        Assert.assertEquals(eleve.toString(), "ROLE_ELEVE");
-//    }
+    @Test
+    void testToString() {
+        Role formateur = new Role();
+        formateur.setName("formateur");
+        Assertions.assertEquals(formateur.toString(), "ROLE_FORMATEUR");
+    }
 
-//    @Test
-//    void stripAccentsAndSpace() {
-//        Role eleve = new Role();
-//        eleve.setRoleName("éléve");
-//        Assert.assertEquals("ELEVE", eleve.stripAccentsAndSpace(eleve.getRoleName()));
-//    }
+    @Test
+    void testToStringWithAccent() {
+        Role eleve = new Role();
+        eleve.setName("éléve");
+        Assertions.assertEquals(eleve.toString(), "ROLE_ELEVE");
+    }
+
+    @Test
+    void stripAccentsAndSpace() {
+        Role eleve = new Role();
+        eleve.setName("éléve");
+        Assertions.assertEquals("ELEVE", eleve.stripAccentsAndSpace(eleve.getName()));
+    }
 }
