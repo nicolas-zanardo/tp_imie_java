@@ -1,7 +1,7 @@
 package fr.imie.webapp.repository;
 
 import fr.imie.webapp.CustomProperties;
-import fr.imie.webapp.model.User;
+import fr.imie.webapp.model.Class;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -16,70 +16,69 @@ import org.springframework.web.client.RestTemplate;
  */
 @Slf4j
 @Component
-public class UserProxy {
+public class ClassProxy {
 
     @Autowired
     private CustomProperties props;
 
-    public User createUser(User user) {
-        String createUserUrl = props.getApiUrl() + "/add-user";
+    public Class createClass(Class classe) {
+        String createClasseUrl = props.getApiUrl() + "/add-classe";
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<User> request = new HttpEntity<User>(user);
-        ResponseEntity<User> response = restTemplate.exchange(
-                createUserUrl,
+        HttpEntity<Class> request = new HttpEntity<Class>(classe);
+        ResponseEntity<Class> response = restTemplate.exchange(
+                createClasseUrl,
                 HttpMethod.POST,
                 request,
-                User.class
+                Class.class
         );
         return response.getBody();
     }
 
-    public User updateUser(User user) {
-        String updateUserUrl = props.getApiUrl() + "/update-user/" + user.getId();
+    public Class updateClass(Class classe) {
+        String updateTypeSalleUrl = props.getApiUrl() + "/update-classe/" + classe.getId();
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<User> request = new HttpEntity<>(user);
-        ResponseEntity<User> response = restTemplate.exchange(
-                updateUserUrl,
+        HttpEntity<Class> request = new HttpEntity<Class>(classe);
+        ResponseEntity<Class> response = restTemplate.exchange(
+                updateTypeSalleUrl,
                 HttpMethod.PUT,
                 request,
-                User.class
+                Class.class
         );
         return response.getBody();
     }
 
-    public Iterable<User> getUsers() {
-        String usersUrl = props.getApiUrl() + "/users";
+    public Class getClass(int id) {
+        String getClassesUrl = props.getApiUrl() + "/classe/" + id;
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Iterable<User>> response = restTemplate.exchange(
-                usersUrl,
+        ResponseEntity<Class> response = restTemplate.exchange(
+                getClassesUrl,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<Iterable<User>>() {}
+                Class.class
         );
         return response.getBody();
     }
 
-    public User getUser(int id) {
-        String userUrl = props.getApiUrl() + "/user/" + id;
+    public Iterable<Class> getClasses() {
+        String getClassesUrl = props.getApiUrl() + "/classes";
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<User> response = restTemplate.exchange(
-                userUrl,
+        ResponseEntity<Iterable<Class>> response = restTemplate.exchange(
+                getClassesUrl,
                 HttpMethod.GET,
                 null,
-                User.class
+                new ParameterizedTypeReference<Iterable<Class>>() {}
         );
-        return  response.getBody();
+        return response.getBody();
     }
 
-    public void deleteUser(int id) {
-        String deleteUserUrl = props.getApiUrl() + "/delete-user/" + id;
+    public void deleteClass(int id) {
+        String deleteTypeSalleUrl = props.getApiUrl() + "/delete-classe/" + id;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Void> response = restTemplate.exchange(
-                deleteUserUrl,
+                deleteTypeSalleUrl,
                 HttpMethod.DELETE,
                 null,
                 Void.class
         );
     }
-
 }

@@ -27,7 +27,7 @@ class ClasseControllerTest {
         mockMvc.perform(get("/manage-classes"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(view().name("manage-classes"))
+                .andExpect(view().name("manage-class"))
                 .andExpect(content().string(containsString("Classe")));
     }
 
