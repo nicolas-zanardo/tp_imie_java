@@ -24,7 +24,7 @@ public class SalleProxy {
         String createSalleUrl = props.getApiUrl() + "/add-salle";
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<Salle> request = new HttpEntity<Salle>(salle);
-        ResponseEntity<Salle> response = restTemplate.exchange(
+        ResponseEntity<Salle> response = restTemplate.exchange (
                 createSalleUrl,
                 HttpMethod.POST,
                 request,
