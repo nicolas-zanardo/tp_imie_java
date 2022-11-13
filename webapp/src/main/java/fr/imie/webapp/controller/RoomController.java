@@ -50,11 +50,13 @@ public class RoomController {
 
     @PostMapping("/save-salle")
     public ModelAndView saveRoom(RoomFormData roomFormData) {
+        System.out.println(roomFormData);
         if(!roomFormData.getName().isEmpty() &&
                 (roomFormData.getNbrPlace() > 0) &&
                 (roomFormData.getRoomType() > 0)
         ) {
             RoomType roomType = roomTypeService.getTypeRoom(roomFormData.getRoomType());
+            System.out.println(roomType);
             Room room = new Room();
             room.setId(roomFormData.getId());
             room.setRoomType(roomType);
@@ -74,7 +76,7 @@ public class RoomController {
 
     private void listTypeRoomModel(Model model) {
         Iterable<RoomType> listTypeRoom = roomTypeService.getTypeRooms();
-        model.addAttribute("typeRoom", listTypeRoom);
+        model.addAttribute("listTypeRoom", listTypeRoom);
     }
 
     private void listRoomModel(Model model) {

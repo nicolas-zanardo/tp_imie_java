@@ -46,14 +46,14 @@ public class RoleController {
             role.setName(role.getName().toLowerCase().trim());
             roleService.saveRole(role);
         }
-        return new ModelAndView("redirect:/manage-role");
+        return new ModelAndView("redirect:/manage-roles-user");
     }
 
     // DELETE ROLE USER
     @GetMapping("/delete-role-user/{id}")
     public ModelAndView deleteRole(@PathVariable("id") final int id, Model model) {
         roleService.deleteRole(id);
-        return new ModelAndView("redirect:/manage-role");
+        return new ModelAndView("redirect:/manage-roles-user");
     }
 
     // LIST GET ALL ROLE USER

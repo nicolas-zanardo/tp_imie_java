@@ -37,7 +37,7 @@
               Classes
             </a>
             <ul class="dropdown-menu bg-light rounded">
-              <li><a class="dropdown-item" th:href="@{~/manage-classes}">Gestion des classes</a></li>
+              <li><a class="dropdown-item" th:href="@{~/manage-class}">Gestion des classes</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown bg-light rounded">
@@ -129,7 +129,7 @@
       <tbody>
       <tr th:each="user, row : ${listUsers}">
         <td  th:text="${#strings.toUpperCase(user.firstName) + ' ' + #strings.toUpperCase(user.lastName)}">nom</td>
-        <td  th:text="${user.role.roleName}">nom</td>
+        <td  th:text="${user.role.name}">nom</td>
         <td class="text-end">
           <a th:href="@{~/manage-users/{id}(id=${user.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
           <button type="button" class="btn btn-danger" data-bs-toggle="modal"  th:attrappend="data-bs-target=${'#modalDelete_' + user.id}">

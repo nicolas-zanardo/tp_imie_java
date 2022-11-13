@@ -7,7 +7,6 @@ import lombok.Data;
  */
 @Data
 public class RoomFormData {
-
     private Integer id;
     private String name;
     private int nbrPlace;

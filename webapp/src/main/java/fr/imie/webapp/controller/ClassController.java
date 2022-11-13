@@ -22,7 +22,7 @@ public class ClassController {
     @Autowired
     private ClassService classeService;
 
-    @GetMapping("/manage-classes")
+    @GetMapping("/manage-class")
     public String manageRoomType(Model model) {
         Class classRoom = new Class();
         model.addAttribute("classRoom", classRoom);
@@ -31,7 +31,7 @@ public class ClassController {
         return "manage-class";
     }
 
-    @GetMapping("/manage-classe/{id}")
+    @GetMapping("/manage-class/{id}")
     public String getRoomType(@PathVariable("id") final int id, Model model) {
         Class classRoom = classeService.getClass(id);
         model.addAttribute("isEdit", true);
@@ -40,7 +40,7 @@ public class ClassController {
         return "manage-class";
     }
 
-    @PostMapping("/save-classe")
+    @PostMapping("/save-class")
     public ModelAndView saveRoomType(@ModelAttribute Class classRoom) {
         if(!classRoom.getName().isEmpty()) {
             classRoom.setName(classRoom.getName().toLowerCase().trim());
@@ -50,7 +50,7 @@ public class ClassController {
         return new ModelAndView("redirect:/manage-class");
     }
 
-    @GetMapping("/delete-classe/{id}")
+    @GetMapping("/delete-class/{id}")
     public ModelAndView deleteRoomType(@PathVariable("id") final int id, Model model) {
         classeService.deleteClass(id);
         return new ModelAndView("redirect:/manage-class");
@@ -59,6 +59,6 @@ public class ClassController {
 
     private void listClassModel(Model model) {
         Iterable<Class> listClasses = classeService.getClasses();
-        model.addAttribute("classes", listClasses);
+        model.addAttribute("listClasses", listClasses);
     }
 }

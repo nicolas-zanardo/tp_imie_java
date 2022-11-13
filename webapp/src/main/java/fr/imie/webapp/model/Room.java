@@ -9,6 +9,6 @@ import lombok.Data;
 public class Room {
     private Integer id;
     private String name;
-    private Integer nbrPlace;
+    private int nbrPlace;
     private RoomType roomType;
 }

@@ -37,7 +37,7 @@
               Classes
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" th:href="@{~/manage-classes}">Gestion des classes</a></li>
+              <li><a class="dropdown-item" th:href="@{~/manage-class}">Gestion des classes</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
@@ -90,10 +90,10 @@
           <input type="number" th:field="*{nbrPlace}" class="form-control w-50" id="inputNombrePlaces" required>
         </div>
         <select class="form-select w-50" aria-label="Default select" th:field="*{roomType}" th:if="${idTypeRoom == null}" required>
-          <option class="col-sm-3" th:each="room : ${typeRoom}" th:value="${room.id}" th:text="${room.nom}"></option>
+          <option class="col-sm-3" th:each="room : ${listTypeRoom}" th:value="${room.id}" th:text="${room.name}"></option>
         </select>
-        <select class="form-select w-50" aria-label="Default select" name="typeSalle" th:if="${idTypeRoom}" required>
-          <option class="col-sm-3" th:each="room : ${typeRoom}" th:value="${room.id}" th:text="${room.nom}" th:selected="${room.id == idTypeRoom}"></option>
+        <select class="form-select w-50" aria-label="Default select" name="roomType" th:if="${idTypeRoom}" required>
+          <option class="col-sm-3" th:each="room : ${listTypeRoom}" th:value="${room.id}" th:text="${room.name}" th:selected="${room.id == idTypeRoom}"></option>
         </select>
         <div class="w-50 text-end">
           <button type="submit" class="btn btn-primary">Valider</button>
@@ -114,7 +114,7 @@
       </thead>
       <tbody>
       <tr th:each="room, row : ${listRoom}">
-        <td  th:text="${room.nom}">nom</td>
+        <td  th:text="${room.name}">nom</td>
         <td  th:text="${room.roomType.name}">nom</td>
         <td class="text-end">
           <a th:href="@{~/manage-salle/{id}(id=${room.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
@@ -127,12 +127,12 @@
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
-                  <div class="d-flex align-items-end"><b class="modal-title me-2" th:attrappend="id=${'modalLabelDelete_' + room.id}">Suppression : </b> <span th:text="${room.nom}"></span></div>
+                  <div class="d-flex align-items-end"><b class="modal-title me-2" th:attrappend="id=${'modalLabelDelete_' + room.id}">Suppression : </b> <span th:text="${room.name}"></span></div>
 
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-start">
-                  <div>Vous êtes sur le point de supprimer <b th:text="${room.nom}"></b>.</div>
+                  <div>Vous êtes sur le point de supprimer <b th:text="${room.name}"></b>.</div>
                   <div>Voulez vous continuer ?</div>
                 </div>
                 <div class="modal-footer">

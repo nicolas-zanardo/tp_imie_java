@@ -32,7 +32,7 @@ class ClassControllerTest {
 
     @BeforeAll
     public static void setup() {
-        System.out.println("-- CRUD CLASSE --");
+        System.out.println("-- CRUD CLASS --");
         InitData.setup();
         System.out.println("-- setup() [ OK ] --");
     }

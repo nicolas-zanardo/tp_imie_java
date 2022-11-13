@@ -45,9 +45,9 @@ public class RoomIssueController {
     @PostMapping("/save-room-issue")
     public ModelAndView saveRoomIssue(RoomIssueFormData roomIssueFormData) {
         if (!roomIssueFormData.getName().isEmpty() &&
-                (roomIssueFormData.getSalle() > 0)
+                (roomIssueFormData.getRoom() > 0)
         ) {
-            Room room = roomService.getRoom(roomIssueFormData.getSalle());
+            Room room = roomService.getRoom(roomIssueFormData.getRoom());
             RoomIssue roomIssue = new RoomIssue();
             roomIssue.setId(roomIssueFormData.getId());
             roomIssue.setRoom(room);

@@ -23,6 +23,7 @@ public class RoomTypeService {
    public void saveTypeRoom(RoomType roomType) {
        RoomType savedRoomType = null;
        if(roomType.getId() == null) {
+           System.out.println(roomType);
            savedRoomType = roomTypeProxy.createTypeRoom(roomType);
        } else {
            savedRoomType = roomTypeProxy.updateTypeRoom(roomType);

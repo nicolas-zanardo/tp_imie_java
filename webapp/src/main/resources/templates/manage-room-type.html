@@ -37,7 +37,7 @@
                                 Classes
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" th:href="@{~/manage-classes}">Gestion des classes</a></li>
+                                <li><a class="dropdown-item" th:href="@{~/manage-class}">Gestion des classes</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -76,7 +76,7 @@
 
 <!--        Form-->
         <div class="container text-center bg-light shadow-sm py-5">
-            <form th:action="@{~/save-type-salle}" method="post" th:object="${typeRoom}">
+            <form th:action="@{~/save-type-salle}" th:method="post" th:object="${typeRoom}">
                 <input type="hidden" th:field="*{id}" class="form-control">
                 <div class="mb-3 row">
                     <label for="inputName" class="col-2 col-form-label">Type de salle</label>
@@ -100,8 +100,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="type, row : ${typeRoom}">
-                    <td  th:text="${type.name}">nom</td>
+                <tr th:each="type, row : ${listTypeRoom}">
+                    <td  th:text="${type.name}"></td>
                     <td class="text-end">
                        <a th:href="@{~/manage-type-salle/{id}(id=${type.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"  th:attrappend="data-bs-target=${'#modalDelete_' + type.id}">

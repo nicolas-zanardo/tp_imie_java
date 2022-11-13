@@ -24,7 +24,7 @@ public class RoomTypeController {
     private RoomTypeService roomTypeService;
 
     @GetMapping("/manage-type-salle")
-    public String manageTypeSalle(Model model) {
+    public String manageTypeRoom(Model model) {
         RoomType typeRoom = new RoomType();
         model.addAttribute("typeRoom", typeRoom);
         model.addAttribute("isEdit", false);
@@ -34,10 +34,10 @@ public class RoomTypeController {
 
 
     @GetMapping("/manage-type-salle/{id}")
-    public String getTypeSalle(@PathVariable("id") final int id, Model model) {
+    public String getTypeRoom(@PathVariable("id") final int id, Model model) {
         RoomType typeRoom = roomTypeService.getTypeRoom(id);
         model.addAttribute("isEdit", true);
-        model.addAttribute("typeSalle", typeRoom);
+        model.addAttribute("typeRoom", typeRoom);
         listTypeRoomModel(model);
         return "manage-room-type";
     }
@@ -53,13 +53,13 @@ public class RoomTypeController {
             roomType.setName(roomType.getName().toLowerCase().trim());
             roomTypeService.saveTypeRoom(roomType);
         }
-        return new ModelAndView("redirect:/manage-room-type");
+        return new ModelAndView("redirect:/manage-type-salle");
     }
 
     @GetMapping("/delete-type-salle/{id}")
     public ModelAndView deleteTypeRoom(@PathVariable("id") final int id, Model model) {
         roomTypeService.deleteTypeRoom(id);
-        return new ModelAndView("redirect:/manage-room-type");
+        return new ModelAndView("redirect:/manage-type-salle");
     }
 
     /**
