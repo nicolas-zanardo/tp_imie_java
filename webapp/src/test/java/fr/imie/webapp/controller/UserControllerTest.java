@@ -17,18 +17,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @SpringBootTest
 @AutoConfigureMockMvc
-class SalleControllerTest {
+class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void testGetTypeSalle() throws Exception {
-        mockMvc.perform(get("/manage-salle"))
+    public void testGetClasses() throws Exception {
+        mockMvc.perform(get("/manage-users"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(view().name("manage-room"))
-                .andExpect(content().string(containsString("Salle")));
+                .andExpect(view().name("manage-users"))
+                .andExpect(content().string(containsString("Users")));
     }
-
 }

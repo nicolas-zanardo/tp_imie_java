@@ -4,41 +4,52 @@
 
 
 #------------------------------------------------------------
-# Table: Classe
+# Table: classe
 #------------------------------------------------------------
 
-CREATE TABLE Classe(
-        id               Int  Auto_increment  NOT NULL ,
-        nom              Varchar (45) NOT NULL ,
-        nombre_personnes Int NOT NULL
-	,CONSTRAINT Classe_PK PRIMARY KEY (id)
+CREATE TABLE learning_class(
+        id         Int  Auto_increment  NOT NULL ,
+        name       Varchar (250) NOT NULL ,
+        nbr_people Int NOT NULL
+	,CONSTRAINT learning_class_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
 
 #------------------------------------------------------------
-# Table: type_salle
+# Table: room_type
 #------------------------------------------------------------
 
-CREATE TABLE type_salle(
-        id  Int  Auto_increment  NOT NULL ,
-        nom Varchar (45) NOT NULL
-	,CONSTRAINT type_salle_PK PRIMARY KEY (id)
+CREATE TABLE room_type(
+        id   Int  Auto_increment  NOT NULL ,
+        name Varchar (250) NOT NULL
+	,CONSTRAINT room_type_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
 
 #------------------------------------------------------------
-# Table: salle
+# Table: room
 #------------------------------------------------------------
 
-CREATE TABLE salle(
-        id            Int  Auto_increment  NOT NULL ,
-        nom           Varchar (45) NOT NULL ,
-        nombre_places Int NOT NULL ,
-        id_type_salle Int NOT NULL
-	,CONSTRAINT salle_PK PRIMARY KEY (id)
+CREATE TABLE room(
+        id           Int  Auto_increment  NOT NULL ,
+        name         Varchar (250) NOT NULL ,
+        nbr_place    Int NOT NULL ,
+        id_room_type Int NOT NULL
+	,CONSTRAINT room_PK PRIMARY KEY (id)
 
-	,CONSTRAINT salle_type_salle_FK FOREIGN KEY (id_type_salle) REFERENCES type_salle(id)
+	,CONSTRAINT room_room_type_FK FOREIGN KEY (id_room_type) REFERENCES room_type(id)
 )ENGINE=InnoDB;
+
+
+#------------------------------------------------------------
+# Table: role
+#------------------------------------------------------------
+
+CREATE TABLE role(
+        id   Int  Auto_increment  NOT NULL ,
+        name Varchar (250) NOT NULL
+	,CONSTRAINT role_PK PRIMARY KEY (id)
+)ENGINE=InnoDB COMMENT "INSERT INTO role_user (role_name) VALUES ('éléves'), ('formateur'), ('responsable maintenance'), ('responsable global'), ('responsables de la gestion');" ;
 
 
 #------------------------------------------------------------
@@ -46,48 +57,38 @@ CREATE TABLE salle(
 #------------------------------------------------------------
 
 CREATE TABLE user(
-        id        Int  Auto_increment  NOT NULL ,
-        lastname  Varchar (250) NOT NULL ,
-        firstname Varchar (250) NOT NULL ,
-        login     Varchar (250) NOT NULL ,
-        password  Varchar (250) NOT NULL
+        id                Int  Auto_increment  NOT NULL ,
+        lastname          Varchar (250) NOT NULL ,
+        firstname         Varchar (250) NOT NULL ,
+        login             Varchar (250) NOT NULL ,
+        password          Varchar (250) NOT NULL ,
+        id_learning_class Int ,
+        id_role           Int NOT NULL
 	,CONSTRAINT user_PK PRIMARY KEY (id)
+
+	,CONSTRAINT user_learning_class_FK FOREIGN KEY (id_learning_class) REFERENCES learning_class(id)
+	,CONSTRAINT user_role0_FK FOREIGN KEY (id_role) REFERENCES role(id)
 )ENGINE=InnoDB;
 
 
 #------------------------------------------------------------
-# Table: formation
+# Table: training_course
 #------------------------------------------------------------
 
-CREATE TABLE formation(
+CREATE TABLE training_course(
         id                 Int  Auto_increment  NOT NULL ,
-        nom_formation      Varchar (250) NOT NULL ,
+        formation_name     Varchar (250) NOT NULL ,
         date_debut         Date ,
         date_fin           Date ,
         recursive_calandar Bool ,
-        id_salle           Int NOT NULL ,
-        id_Classe          Int NOT NULL ,
+        id_room            Int NOT NULL ,
+        id_learning_class  Int NOT NULL ,
         id_user            Int NOT NULL
-	,CONSTRAINT formation_PK PRIMARY KEY (id)
+	,CONSTRAINT training_course_PK PRIMARY KEY (id)
 
-	,CONSTRAINT formation_salle_FK FOREIGN KEY (id_salle) REFERENCES salle(id)
-	,CONSTRAINT formation_Classe0_FK FOREIGN KEY (id_Classe) REFERENCES Classe(id)
-	,CONSTRAINT formation_user1_FK FOREIGN KEY (id_user) REFERENCES user(id)
-)ENGINE=InnoDB;
-
-
-#------------------------------------------------------------
-# Table: list_issue
-#------------------------------------------------------------
-
-CREATE TABLE list_issue(
-        id      Int  Auto_increment  NOT NULL ,
-        nom     Varchar (250) NOT NULL ,
-        status  Varchar (250) NOT NULL ,
-        id_user Int NOT NULL
-	,CONSTRAINT list_issue_PK PRIMARY KEY (id)
-
-	,CONSTRAINT list_issue_user_FK FOREIGN KEY (id_user) REFERENCES user(id)
+	,CONSTRAINT training_course_room_FK FOREIGN KEY (id_room) REFERENCES room(id)
+	,CONSTRAINT training_course_learning_class0_FK FOREIGN KEY (id_learning_class) REFERENCES learning_class(id)
+	,CONSTRAINT training_course_user1_FK FOREIGN KEY (id_user) REFERENCES user(id)
 )ENGINE=InnoDB;
 
 
@@ -96,75 +97,51 @@ CREATE TABLE list_issue(
 #------------------------------------------------------------
 
 CREATE TABLE week(
-        id           Int  Auto_increment  NOT NULL ,
-        YEAR         Int ,
-        WEEK_OF_YEAR Int ,
-        MONDAY_AM    Bool NOT NULL ,
-        MONDAY_PM    Bool NOT NULL ,
-        TUESDAY_AM   Bool NOT NULL ,
-        TUESDAY_PM   Bool NOT NULL ,
-        WEDNESDAY_AM Bool NOT NULL ,
-        WEDNESDAY_PM Bool NOT NULL ,
-        THURSDAY_AM  Bool NOT NULL ,
-        THURSDAY_PM  Bool NOT NULL ,
-        FRIDAY_AM    Bool NOT NULL ,
-        FRIDAY_PM    Bool NOT NULL ,
-        id_formation Int NOT NULL
+        id                 Int  Auto_increment  NOT NULL ,
+        YEAR               Int ,
+        WEEK_OF_YEAR       Int ,
+        MONDAY_AM          Bool NOT NULL ,
+        MONDAY_PM          Bool NOT NULL ,
+        TUESDAY_AM         Bool NOT NULL ,
+        TUESDAY_PM         Bool NOT NULL ,
+        WEDNESDAY_AM       Bool NOT NULL ,
+        WEDNESDAY_PM       Bool NOT NULL ,
+        THURSDAY_AM        Bool NOT NULL ,
+        THURSDAY_PM        Bool NOT NULL ,
+        FRIDAY_AM          Bool NOT NULL ,
+        FRIDAY_PM          Bool NOT NULL ,
+        id_training_course Int NOT NULL
 	,CONSTRAINT week_PK PRIMARY KEY (id)
 
-	,CONSTRAINT week_formation_FK FOREIGN KEY (id_formation) REFERENCES formation(id)
+	,CONSTRAINT week_training_course_FK FOREIGN KEY (id_training_course) REFERENCES training_course(id)
 )ENGINE=InnoDB;
 
 
 #------------------------------------------------------------
-# Table: ROLE
+# Table: room_status
 #------------------------------------------------------------
 
-CREATE TABLE ROLE(
+CREATE TABLE room_status(
         id   Int  Auto_increment  NOT NULL ,
-        ROLE Varchar (50) NOT NULL
-	,CONSTRAINT ROLE_PK PRIMARY KEY (id)
+        name Varchar (50) NOT NULL
+	,CONSTRAINT room_status_PK PRIMARY KEY (id)
 )ENGINE=InnoDB;
 
 
 #------------------------------------------------------------
-# Table: learn
+# Table: room_issue
 #------------------------------------------------------------
 
-CREATE TABLE learn(
-        id        Int NOT NULL ,
-        id_Classe Int NOT NULL
-	,CONSTRAINT learn_PK PRIMARY KEY (id,id_Classe)
+CREATE TABLE room_issue(
+        id             Int  Auto_increment  NOT NULL ,
+        name           Varchar (250) NOT NULL ,
+        id_room        Int NOT NULL ,
+        id_user        Int NOT NULL ,
+        id_room_status Int NOT NULL
+	,CONSTRAINT room_issue_PK PRIMARY KEY (id)
 
-	,CONSTRAINT learn_user_FK FOREIGN KEY (id) REFERENCES user(id)
-	,CONSTRAINT learn_Classe0_FK FOREIGN KEY (id_Classe) REFERENCES Classe(id)
-)ENGINE=InnoDB;
-
-
-#------------------------------------------------------------
-# Table: suffer
-#------------------------------------------------------------
-
-CREATE TABLE suffer(
-        id            Int NOT NULL ,
-        id_list_issue Int NOT NULL
-	,CONSTRAINT suffer_PK PRIMARY KEY (id,id_list_issue)
-
-	,CONSTRAINT suffer_salle_FK FOREIGN KEY (id) REFERENCES salle(id)
-	,CONSTRAINT suffer_list_issue0_FK FOREIGN KEY (id_list_issue) REFERENCES list_issue(id)
-)ENGINE=InnoDB;
-
-
-#------------------------------------------------------------
-# Table: need
-#------------------------------------------------------------
-
-CREATE TABLE need(
-        id      Int NOT NULL ,
-        id_user Int NOT NULL
-	,CONSTRAINT need_PK PRIMARY KEY (id,id_user)
-
-	,CONSTRAINT need_ROLE_FK FOREIGN KEY (id) REFERENCES ROLE(id)
-	,CONSTRAINT need_user0_FK FOREIGN KEY (id_user) REFERENCES user(id)
+	,CONSTRAINT room_issue_room_FK FOREIGN KEY (id_room) REFERENCES room(id)
+	,CONSTRAINT room_issue_user0_FK FOREIGN KEY (id_user) REFERENCES user(id)
+	,CONSTRAINT room_issue_room_status1_FK FOREIGN KEY (id_room_status) REFERENCES room_status(id)
 )ENGINE=InnoDB;
 
