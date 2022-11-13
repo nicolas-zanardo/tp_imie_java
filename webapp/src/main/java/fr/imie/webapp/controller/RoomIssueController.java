@@ -1,10 +1,10 @@
 package fr.imie.webapp.controller;
 
+import fr.imie.webapp.model.Room;
 import fr.imie.webapp.model.RoomIssue;
 import fr.imie.webapp.model.RoomIssueFormData;
-import fr.imie.webapp.model.Salle;
 import fr.imie.webapp.service.RoomIssueService;
-import fr.imie.webapp.service.SalleService;
+import fr.imie.webapp.service.RoomService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ public class RoomIssueController {
     private RoomIssueService roomIssueService;
 
     @Autowired
-    private SalleService salleService;
+    private RoomService roomService;
 
     @GetMapping("/manage-room-issue")
     public String manageRoomIssue(Model model) {
@@ -47,10 +47,10 @@ public class RoomIssueController {
         if (!roomIssueFormData.getName().isEmpty() &&
                 (roomIssueFormData.getSalle() > 0)
         ) {
-            Salle salle = salleService.getSalle(roomIssueFormData.getSalle());
+            Room room = roomService.getRoom(roomIssueFormData.getSalle());
             RoomIssue roomIssue = new RoomIssue();
             roomIssue.setId(roomIssueFormData.getId());
-            roomIssue.setSalle(salle);
+            roomIssue.setRoom(room);
             roomIssue.setName(roomIssueFormData.getName().toLowerCase().trim());
             roomIssueService.saveRoomIssue(roomIssue);
         }
@@ -58,7 +58,7 @@ public class RoomIssueController {
     }
 
     @GetMapping("/delete-room-issue/{id}")
-    public ModelAndView deleteRooomIssue(@PathVariable("id") final int id, Model model) {
+    public ModelAndView deleteRoomIssue(@PathVariable("id") final int id, Model model) {
         roomIssueService.deleteRoomIssue(id);
         return new ModelAndView("redirect:/manage-room-issue");
     }
@@ -68,8 +68,8 @@ public class RoomIssueController {
         model.addAttribute("room-issues", ListRoomIssues);
     }
 
-    private void listSalleModel(Model model) {
-        Iterable<Salle> ListSalles = salleService.getSalles();
-        model.addAttribute("salles", ListSalles);
+    private void listRoomModel(Model model) {
+        Iterable<Room> ListRooms = roomService.getRooms();
+        model.addAttribute("ListRooms", ListRooms);
     }
 }

@@ -14,5 +14,5 @@ import java.util.List;
 @Repository
 public interface RoomIssueRepository extends CrudRepository<RoomIssue, Long> {
 
-    List<RoomIssue> findBySalleId(Long Salle_id);
+    List<RoomIssue> findByRoomId(Long Salle_id);
 }

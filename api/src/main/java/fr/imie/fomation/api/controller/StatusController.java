@@ -2,11 +2,9 @@ package fr.imie.fomation.api.controller;
 
 
 import fr.imie.fomation.api.model.Status;
-import fr.imie.fomation.api.service.ClasseService;
 import fr.imie.fomation.api.service.StatusService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 /**

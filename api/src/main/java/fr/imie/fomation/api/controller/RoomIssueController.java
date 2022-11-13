@@ -34,8 +34,8 @@ public class RoomIssueController {
             if (roomIssue.getName() != null) {
                 currentRoomIssue.setName(roomIssue.getName());
             }
-            if (roomIssue.getSalle() != null) {
-                currentRoomIssue.setSalle(roomIssue.getSalle());
+            if (roomIssue.getRoom() != null) {
+                currentRoomIssue.setRoom(roomIssue.getRoom());
             }
             RoomIssueService.saveRoomIssue(currentRoomIssue);
             return currentRoomIssue;

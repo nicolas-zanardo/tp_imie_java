@@ -6,5 +6,5 @@ import lombok.Data;
 public class RoomIssue {
     private Integer id;
     private String name;
-    private Salle salle;
+    private Room room;
 }

@@ -1,7 +1,7 @@
 package fr.imie.webapp.repository;
 
 import fr.imie.webapp.CustomProperties;
-import fr.imie.webapp.model.Salle;
+import fr.imie.webapp.model.Room;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -23,9 +23,9 @@ public class RoomProxy {
     public Room createRoom(Room room) {
         String createRoomUrl = props.getApiUrl() + "/add-salle";
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<Salle> request = new HttpEntity<Salle>(salle);
-        ResponseEntity<Salle> response = restTemplate.exchange(
-                createSalleUrl,
+        HttpEntity<Room> request = new HttpEntity<Room>(room);
+        ResponseEntity<Room> response = restTemplate.exchange(
+                createRoomUrl,
                 HttpMethod.POST,
                 request,
                 Room.class

@@ -24,6 +24,6 @@ public class RoomIssue {
     private String name;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_salle", nullable = false)
-    private Salle salle;
+    @JoinColumn(name = "id_room", nullable = false)
+    private Room room;
 }
