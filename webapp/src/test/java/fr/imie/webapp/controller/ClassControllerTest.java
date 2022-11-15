@@ -23,7 +23,7 @@ class ClassControllerTest {
 
     @Test
     public void testGetClasses() throws Exception {
-        mockMvc.perform(get("/manage-classes"))
+        mockMvc.perform(get("/manage-class"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("manage-class"))
