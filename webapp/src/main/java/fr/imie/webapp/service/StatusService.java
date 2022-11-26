@@ -18,6 +18,10 @@ public class StatusService {
     private StatusProxy statusProxy;
 
 
+    public Iterable<Status> getStatuses() {return  statusProxy.getStatuses();}
+
+    public Status getStatus (final int id){return statusProxy.getStatus(id);}
+
     public void saveStatus(Status status){
         Status savedStatus = null;
         if(status.getId() == null){
@@ -28,11 +32,6 @@ public class StatusService {
         }
 
     }
-
-
-    public Iterable<Status> getStatuses() {return  statusProxy.getStatuses();}
-
-    public Status getStatus (final int id){return statusProxy.getStatus(id);}
 
     public void deleteStatus(final int id){ statusProxy.deleteStatus(id);}
 }

@@ -26,11 +26,11 @@ public class StatusProxy {
     private CustomProperties props;
 
     public Status  createStatus(Status status) {
-        String createStatus = props.getApiUrl() + "/add-status";
+        String createStatusUrl = props.getApiUrl() + "/add-status";
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<Status> request = new HttpEntity<Status>(status);
         ResponseEntity<Status> response = restTemplate.exchange(
-                createStatus,
+                createStatusUrl,
                 HttpMethod.POST,
                 request,
                 Status.class
@@ -41,12 +41,12 @@ public class StatusProxy {
 
     /**
      * Update - status
-     * @param status status
+     * @param status Status
      * @return ResponseEntity
      */
 
     public Status updateStatus(Status status){
-    String updateStatusUrl = props.getApiUrl() + "/update-status"+status.getId();
+    String updateStatusUrl = props.getApiUrl() + "/update-status/"+ status.getId();
     RestTemplate restTemplate = new RestTemplate();
     HttpEntity<Status> request = new HttpEntity<Status>(status);
     ResponseEntity<Status> response = restTemplate.exchange(
@@ -88,7 +88,7 @@ public class StatusProxy {
 
 
     public void deleteStatus(int id){
-        String deleteStatusUrl = props.getApiUrl() + "/delete-status" + id;
+        String deleteStatusUrl = props.getApiUrl() + "/delete-status/" + id;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Void> response = restTemplate.exchange(
                 deleteStatusUrl,

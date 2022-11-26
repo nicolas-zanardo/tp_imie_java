@@ -20,18 +20,15 @@ public class StatusService {
     @Autowired
     private StatusRepository statusRepository;
 
-    public Optional<Status> getStatus(final Long id){
+   // GET ALL STATUSES
+   public Iterable<Status> getStatuses() {return statusRepository.findAll();}
+
+    public Optional<Status> getStatusById(final Long id){
         return statusRepository.findById(id);
     }
-    public Iterable<Status> getStatus() {
-        return statusRepository.findAll();
-    }
-
+    public Status saveStatus(Status status){return statusRepository.save(status);}
     public void deleteStatus(final Long id) {
         statusRepository.deleteById(id);
-    }
-    public Status saveStatus(Status status){
-        return statusRepository.save(status);
     }
 
 }

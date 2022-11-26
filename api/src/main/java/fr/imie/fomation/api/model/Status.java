@@ -11,7 +11,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name= "status")
+@Table(name= "room_status")
 public class Status {
     @Id
     @GeneratedValue ( strategy = GenerationType.AUTO)

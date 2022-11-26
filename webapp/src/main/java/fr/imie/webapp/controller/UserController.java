@@ -33,6 +33,7 @@ public class UserController {
         model.addAttribute("isEdit", false);
         listUserModel(model);
         listRoleModel(model);
+        System.out.println("hello");
         return "manage-users";
     }
 
