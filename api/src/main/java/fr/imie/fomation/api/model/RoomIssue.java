@@ -26,4 +26,5 @@ public class RoomIssue {
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_room", nullable = false)
     private Room room;
+
 }

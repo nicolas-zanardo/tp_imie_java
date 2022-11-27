@@ -1,7 +1,9 @@
 package fr.imie.fomation.api.controller;
 
 import fr.imie.fomation.api.model.RoomIssue;
+import fr.imie.fomation.api.model.User;
 import fr.imie.fomation.api.service.RoomIssueService;
+import fr.imie.fomation.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +16,27 @@ public class RoomIssueController {
     @Autowired
     private RoomIssueService RoomIssueService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/room-issues")
-    public Iterable<RoomIssue> getRoomIssues() { return RoomIssueService.getRoomIssues();}
+    public Iterable<RoomIssue> getRoomIssues() {
+        /**
+         * Simulation d'une connection formateur sur son espace
+         */
+        // Recupérer un formateur
+
+        Iterable<User> formateurs = userService.getUserByRoleName("teacher");
+        for (User user : formateurs
+             ) {
+            System.out.println(user.getId());
+        }
+
+        // inserer l'id de ce formateur dans l'html
+        return RoomIssueService.getRoomIssues();
+    }
+
+
 
     @PostMapping("/add-room-issue")
     public RoomIssue createRoomIssue(@RequestBody RoomIssue roomIssue) { return RoomIssueService.saveRoomIssue(roomIssue); }

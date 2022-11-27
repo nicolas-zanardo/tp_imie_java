@@ -32,7 +32,7 @@ public class RoomIssueProxy {
     }
 
     public Iterable<RoomIssue> getRoomIssues() {
-        String getRoomIssuesUrl = props.getApiUrl() + "/room_issues";
+        String getRoomIssuesUrl = props.getApiUrl() + "/room-issues";
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Iterable<RoomIssue>> response = restTemplate.exchange(
                 getRoomIssuesUrl,
