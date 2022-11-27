@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 /**
  *
  * @author raouf
@@ -19,33 +20,31 @@ public class StatusController {
     @Autowired
     private StatusService statusService;
 
-    @GetMapping("/status")
+    @GetMapping("/statuses")
     public  Iterable<Status> getStatus() {
-        return  statusService.getStatus();
-    }
-    @PostMapping("/add-status")
-    public Status createStatus(@RequestBody Status status){
-        return  statusService.saveStatus(status);
-
+        return  statusService.getStatuses();
     }
 
     @GetMapping("/status/{id}")
     public Status getStatus (@PathVariable("id") final Long id) {
-        Optional<Status> status = statusService.getStatus(id);
+        Optional<Status> status = statusService.getStatusById(id);
         return status.orElse( null);
     }
-
+    @PostMapping("/add-status")
+    public Status createStatus(@RequestBody Status status){
+        return  statusService.saveStatus(status);
+    }
     @PutMapping("/update-status/{id}")
     public Status updateStatus(@PathVariable("id") final Long id, @RequestBody Status status){
-        Optional<Status>  st = statusService.getStatus(id);
+        Optional<Status>  st = statusService.getStatusById(id);
         if(st.isPresent()){
             Status currentStatus = st.get();
             String name = status.getName();
             if( name!= null ){
-                currentStatus.setName(name);
+                currentStatus.setName(name.trim().toLowerCase());
             }
 
-            currentStatus.setName(status.getName());
+            //currentStatus.setName(status.getName());
             statusService.saveStatus(currentStatus);
             return currentStatus;
 
@@ -55,5 +54,12 @@ public class StatusController {
         }
     }
 
-
+    /**
+     * @author json
+     * @param id Long
+     */
+    @DeleteMapping("/delete-status/{id}")
+    public void deleteSalle(@PathVariable("id") final Long id) {
+        statusService.deleteStatus(id);
+    }
 }

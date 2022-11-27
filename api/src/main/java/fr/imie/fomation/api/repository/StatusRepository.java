@@ -1,8 +1,11 @@
 package fr.imie.fomation.api.repository;
 
+
 import fr.imie.fomation.api.model.Status;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  *
@@ -10,4 +13,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface StatusRepository extends CrudRepository<Status, Long> {
+    List<Status> findAllById(Long status_id);
 }
+

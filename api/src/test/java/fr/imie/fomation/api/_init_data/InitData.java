@@ -20,7 +20,7 @@ public class InitData {
         ArrayList<Command> commandList = new ArrayList<>();
         commandList.add(new Command("bash", "-c", "mysqladmin -u admin -p\"admin\" -f drop IMIE_formation_TEST"));
         commandList.add(new Command("bash", "-c", "mysqladmin -u admin -p\"admin\" -f create IMIE_formation_TEST"));
-        commandList.add(new Command("bash", "-c", "mysql -u admin -p\"admin\" IMIE_formation_TEST < "+path+"/sql/IMIE_formation.sql"));
+        commandList.add(new Command("bash", "-c", "mysql -u admin -p\"admin\" IMIE_formation_TEST < "+path+"/api/sql/IMIE_formation.sql"));
         new ProcessBuilderExec(commandList);
     }
 

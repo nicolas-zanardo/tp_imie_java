@@ -20,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users")
-    public Iterable<User> getUsers() { return userService.getUsers(); }
+    public Iterable<User> getUsers() {return userService.getUsers(); }
 
     @GetMapping("/user/{id}")
     public User getUser (@PathVariable("id") final  Long id) {
