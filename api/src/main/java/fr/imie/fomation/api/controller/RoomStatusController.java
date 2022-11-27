@@ -1,8 +1,8 @@
 package fr.imie.fomation.api.controller;
 
 
-import fr.imie.fomation.api.model.Status;
-import fr.imie.fomation.api.service.StatusService;
+import fr.imie.fomation.api.model.RoomStatus;
+import fr.imie.fomation.api.service.RoomStatusService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,30 +15,30 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/api" )
-public class StatusController {
+public class RoomStatusController {
 
     @Autowired
-    private StatusService statusService;
+    private RoomStatusService statusService;
 
     @GetMapping("/statuses")
-    public  Iterable<Status> getStatus() {
+    public  Iterable<RoomStatus> getStatus() {
         return  statusService.getStatuses();
     }
 
     @GetMapping("/status/{id}")
-    public Status getStatus (@PathVariable("id") final Long id) {
-        Optional<Status> status = statusService.getStatusById(id);
+    public RoomStatus getStatus (@PathVariable("id") final Long id) {
+        Optional<RoomStatus> status = statusService.getStatusById(id);
         return status.orElse( null);
     }
     @PostMapping("/add-status")
-    public Status createStatus(@RequestBody Status status){
+    public RoomStatus createStatus(@RequestBody RoomStatus status){
         return  statusService.saveStatus(status);
     }
     @PutMapping("/update-status/{id}")
-    public Status updateStatus(@PathVariable("id") final Long id, @RequestBody Status status){
-        Optional<Status>  st = statusService.getStatusById(id);
+    public RoomStatus updateStatus(@PathVariable("id") final Long id, @RequestBody RoomStatus status){
+        Optional<RoomStatus>  st = statusService.getStatusById(id);
         if(st.isPresent()){
-            Status currentStatus = st.get();
+            RoomStatus currentStatus = st.get();
             String name = status.getName();
             if( name!= null ){
                 currentStatus.setName(name.trim().toLowerCase());

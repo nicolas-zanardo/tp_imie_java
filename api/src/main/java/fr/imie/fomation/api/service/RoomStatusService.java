@@ -1,7 +1,7 @@
 package fr.imie.fomation.api.service;
 
-import fr.imie.fomation.api.model.Status;
-import fr.imie.fomation.api.repository.StatusRepository;
+import fr.imie.fomation.api.model.RoomStatus;
+import fr.imie.fomation.api.repository.RoomStatusRepository;
 import java.util.Optional;
 
 import lombok.Data;
@@ -15,18 +15,18 @@ import org.springframework.stereotype.Service;
 
 @Data
 @Service
-public class StatusService {
+public class RoomStatusService {
 
     @Autowired
-    private StatusRepository statusRepository;
+    private RoomStatusRepository statusRepository;
 
    // GET ALL STATUSES
-   public Iterable<Status> getStatuses() {return statusRepository.findAll();}
+   public Iterable<RoomStatus> getStatuses() {return statusRepository.findAll();}
 
-    public Optional<Status> getStatusById(final Long id){
+    public Optional<RoomStatus> getStatusById(final Long id){
         return statusRepository.findById(id);
     }
-    public Status saveStatus(Status status){return statusRepository.save(status);}
+    public RoomStatus saveStatus(RoomStatus status){return statusRepository.save(status);}
     public void deleteStatus(final Long id) {
         statusRepository.deleteById(id);
     }

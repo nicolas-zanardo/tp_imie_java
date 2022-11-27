@@ -16,18 +16,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @SpringBootTest
 @AutoConfigureMockMvc
-class ClassControllerTest {
-
+public class RoomStatusControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void testGetClasses() throws Exception {
-        mockMvc.perform(get("/manage-class"))
+        mockMvc.perform(get("/manage-status"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(view().name("manage-class"))
-                .andExpect(content().string(containsString("Classe")));
+                .andExpect(view().name("manage-status"))
+                .andExpect(content().string(containsString("Status")));
     }
-
 }

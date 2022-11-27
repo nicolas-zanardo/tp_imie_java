@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <div class="container-fluid">
+    <div class="navbar-brand" >IMIE</div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item dropdown ">
+          <a  th:attrappend="
+          class=${
+          #httpServletRequest.requestURI ==  '/manage-salle' or
+          #httpServletRequest.requestURI == '/manage-type-salle' or
+          #httpServletRequest.requestURI == '/manage-status' ?
+          'nav-link dropdown-toggle bg-light rounded text-black' :
+          'nav-link dropdown-toggle' }"
+              href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Salle
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" th:href="@{~/manage-type-salle}">Gestion types des salles</a></li>
+            <li><a class="dropdown-item" th:href="@{~/manage-salle}">Gestion des salles</a></li>
+            <li><a class="dropdown-item" th:href="@{~/manage-status}">Gestion des statuses</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a th:attrappend="
+          class=${
+          #httpServletRequest.requestURI ==  '/manage-class' ?
+          'nav-link dropdown-toggle bg-light rounded text-black' :
+          'nav-link dropdown-toggle' }" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Classes
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" th:href="@{~/manage-class}">Gestion des classes</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a th:attrappend="
+          class=${
+          #httpServletRequest.requestURI ==  '/manage-roles-user' or
+          #httpServletRequest.requestURI == '/manage-users' ?
+          'nav-link dropdown-toggle bg-light rounded text-black' :
+          'nav-link dropdown-toggle' }" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            User
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" th:href="@{~/manage-roles-user}">Gestion des roles user</a></li>
+            <li><a class="dropdown-item" th:href="@{~/manage-users}">Gestion des users</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="d-flex">
+        <button class="btn btn-outline-info" type="submit">login</button>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -8,7 +8,7 @@ import lombok.Data;
  *
  */
 @Data
-public class Status {
+public class RoomStatus {
     private Integer id;
     private String name;
 }
