@@ -15,11 +15,14 @@ import java.util.Optional;
 @Service
 public class UserService {
 
+
     @Autowired
     private UserRepository userRepository;
 
     // GET ALL USER
-    public Iterable<User> getUsers() { return  userRepository.findAll(); }
+    public Iterable<User> getUsers() {
+
+        return  userRepository.findAll(); }
 
     // GET USER BY ID
     public Optional<User> getUserById(final Long id) { return userRepository.findById(id); }

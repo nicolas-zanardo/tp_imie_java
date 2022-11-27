@@ -1,8 +1,8 @@
 package fr.imie.webapp.service;
 
 
-import fr.imie.webapp.model.Status;
-import fr.imie.webapp.repository.StatusProxy;
+import fr.imie.webapp.model.RoomStatus;
+import fr.imie.webapp.repository.RoomStatusProxy;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,14 +12,18 @@ import org.springframework.stereotype.Service;
  */
 @Data
 @Service
-public class StatusService {
+public class RoomStatusService {
 
     @Autowired
-    private StatusProxy statusProxy;
+    private RoomStatusProxy statusProxy;
 
 
-    public void saveStatus(Status status){
-        Status savedStatus = null;
+    public Iterable<RoomStatus> getStatuses() {return  statusProxy.getStatuses();}
+
+    public RoomStatus getStatus (final int id){return statusProxy.getStatus(id);}
+
+    public void saveStatus(RoomStatus status){
+        RoomStatus savedStatus = null;
         if(status.getId() == null){
             savedStatus = statusProxy.createStatus(status);
         }else {
@@ -28,11 +32,6 @@ public class StatusService {
         }
 
     }
-
-
-    public Iterable<Status> getStatuses() {return  statusProxy.getStatuses();}
-
-    public Status getStatus (final int id){return statusProxy.getStatus(id);}
 
     public void deleteStatus(final int id){ statusProxy.deleteStatus(id);}
 }

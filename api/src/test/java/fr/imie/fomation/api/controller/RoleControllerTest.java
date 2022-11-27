@@ -51,7 +51,9 @@ class RoleControllerTest {
     @Order(2)
     @Test
     public void testRoleUserGetById() throws Exception {
-        mockMvc.perform(get("/api/role-user/1")).andExpect(status().isOk()).andExpect(jsonPath("name", is("eleve_test")));
+        mockMvc.perform(get("/api/role-user/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name", is("eleve_test")));
     }
 
     @Order(3)

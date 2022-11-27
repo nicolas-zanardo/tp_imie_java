@@ -11,8 +11,8 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name= "status")
-public class Status {
+@Table(name= "room_status")
+public class RoomStatus {
     @Id
     @GeneratedValue ( strategy = GenerationType.AUTO)
     @Column(name ="id", nullable = false)

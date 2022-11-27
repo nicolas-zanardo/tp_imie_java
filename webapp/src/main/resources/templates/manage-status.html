@@ -1,0 +1,99 @@
+<!--@Raouf YAHIA CHERIF-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head th:insert="share/head"></head>
+<body>
+<header th:insert="share/header"></header>
+
+
+<main >
+  <!--        Title-->
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex align-items-center">
+          <h1>Status</h1>
+          <div class="mx-3" th:if="${addNew}">
+          <a  class="btn btn-secondary" th:href="@{~/manage-status}">Ajout d'un nouveau status</a>
+          </div>
+          <div class="mx-3" th:if="${isEdit}">
+            <a  class="btn btn-secondary" th:href="@{~/manage-status}">Modification des status </a>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+
+  <!--        Form-->
+  <div class="container text-center bg-light shadow-sm py-5">
+    <form th:action="@{~/save-status}" th:method="post" th:object="${status}">
+      <input type="hidden" th:field="*{id}" class="form-control">
+      <div class="mb-3 row">
+        <label for="inputName" class="col-2 col-form-label">Status</label>
+        <div class="col-sm-7">
+          <input type="text" th:field="*{name}" class="form-control" id="inputName" required>
+        </div>
+        <div class="col-sm-3">
+          <button type="submit" class="btn btn-primary">Valider</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="container">
+    <hr>
+    <table class="table mt-3">
+      <thead>
+      <tr>
+        <th>Status</th>
+
+        <th class="text-end"><div class="px-3">Action</div></th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr th:each="status, row : ${listStatus}">
+
+        <td  th:text="${status.name}"></td>
+
+        <td class="text-end">
+          <a th:href="@{~/manage-status/{id}(id=${status.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal"  th:attrappend="data-bs-target=${'#modalDelete_' + status.id }">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" th:attrappend="id=${'modalDelete_' + status.id}, aiaria-labelledby=${'modalLabelDelete_' + status.id}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                  <div class="d-flex align-items-end"><b class="modal-title me-2" th:attrappend="id=${'modalLabelDelete_' + status.id}">Suppression : </b> <span th:text="${status.name}"></span></div>
+
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-start">
+                  <div>Vous êtes sur le point de supprimer <b th:text="${status.name}"></b>.</div>
+                  <div>Voulez vous continuer ?</div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+                  <a th:href="@{~/delete-status/{id}(id=${status.id})}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<div th:insert="share/script"></div>
+
+</body>
+</html>
