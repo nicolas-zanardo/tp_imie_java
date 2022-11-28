@@ -20,15 +20,19 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class RoomStatusController {
 
+    private  Boolean statusExiste = false;
     @Autowired
     private RoomStatusService statusService;
 
     @GetMapping("/manage-status")
     public String manageStatus(Model model){
+
         RoomStatus status = new RoomStatus();
+
         model.addAttribute("status", status);
         model.addAttribute("isEdit", false);
         model.addAttribute("addNew", true);
+        model.addAttribute("statusExiste",  statusExiste);
         listStatusModel(model);
 
         return "manage-status";
@@ -48,12 +52,18 @@ public class RoomStatusController {
     public ModelAndView saveStatus(@ModelAttribute RoomStatus status){
         if(!status.getName().isEmpty()){
             status.setName(status.getName().toLowerCase().trim());
-            statusService.saveStatus(status);
+            Iterable<RoomStatus>  list = statusService.getStatusProxy().getStatuses();
 
+            for (RoomStatus li: list) {
+                if(li.getName().equals(status.getName())){
+                    statusExiste = true;
+                    return  new ModelAndView("redirect:/manage-status");
+                }
+            }
+            statusService.saveStatus(status);
         }
         return  new ModelAndView("redirect:/manage-status");
     }
-
 
     @GetMapping("/delete-status/{id}")
     public ModelAndView deleteStatus(@PathVariable("id") final int id, Model model){

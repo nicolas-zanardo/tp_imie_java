@@ -36,11 +36,14 @@
           <input type="text" th:field="*{name}" class="form-control" id="inputName" required>
         </div>
         <div class="col-sm-3">
-          <button type="submit" class="btn btn-primary">Valider</button>
+          <button type="submit" class="btn btn-primary "  data-bs-toggle="modal" data-bs-target="#message">Valider</button>
         </div>
       </div>
     </form>
   </div>
+
+
+
 
   <div class="container">
     <hr>
@@ -91,7 +94,43 @@
     </table>
   </div>
 
+  <!-- Modal warning message le status existe déjà-->
+
+  <div class="modal fade" id="message"   th:if="${statusExiste == true}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <div class="d-flex align-items-end"><b class="modal-title me-2" th:attrappend="id=${'modalLabelDelete_' + status.id}">Status : </b> <span th:text="${status.name}"></span></div>
+
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-start">
+          <div>Se status existe déjà <b th:text="${status.name}"></b>.</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
 </main>
+
+<script th:inline="javascript" >
+
+   var existe =  /*[[${statusExiste}]]*/
+
+if (existe == true ){
+alert("Ce status existe déjà");
+}
+
+
+
+
+</script>
 
 <div th:insert="share/script"></div>
 

@@ -26,7 +26,10 @@ public class RoomStatusService {
     public Optional<RoomStatus> getStatusById(final Long id){
         return statusRepository.findById(id);
     }
-    public RoomStatus saveStatus(RoomStatus status){return statusRepository.save(status);}
+
+    public RoomStatus saveStatus(RoomStatus status){
+
+       return statusRepository.save(status);}
     public void deleteStatus(final Long id) {
         statusRepository.deleteById(id);
     }

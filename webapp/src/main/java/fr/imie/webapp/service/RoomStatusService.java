@@ -7,6 +7,8 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.*;
+
 /**
  * @author raouf
  */
@@ -22,14 +24,16 @@ public class RoomStatusService {
 
     public RoomStatus getStatus (final int id){return statusProxy.getStatus(id);}
 
+
     public void saveStatus(RoomStatus status){
+
         RoomStatus savedStatus = null;
         if(status.getId() == null){
             savedStatus = statusProxy.createStatus(status);
         }else {
             savedStatus = statusProxy.updateStatus(status);
-
         }
+
 
     }
 

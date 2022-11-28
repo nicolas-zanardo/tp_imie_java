@@ -13,6 +13,8 @@ import java.util.List;
  */
 @Repository
 public interface RoomStatusRepository extends CrudRepository<RoomStatus, Long> {
+
+    RoomStatus findByName(String name);
     List<RoomStatus> findAllById(Long status_id);
 }
 
