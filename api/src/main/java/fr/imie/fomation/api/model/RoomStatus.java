@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name= "room_status")
-public class Status {
+public class RoomStatus {
     @Id
     @GeneratedValue ( strategy = GenerationType.AUTO)
     @Column(name ="id", nullable = false)

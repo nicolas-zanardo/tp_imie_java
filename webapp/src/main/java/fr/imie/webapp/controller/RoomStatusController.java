@@ -1,7 +1,7 @@
 package fr.imie.webapp.controller;
 
-import fr.imie.webapp.model.Status;
-import fr.imie.webapp.service.StatusService;
+import fr.imie.webapp.model.RoomStatus;
+import fr.imie.webapp.service.RoomStatusService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,14 +18,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Data
 @Controller
-public class StatusController {
+public class RoomStatusController {
 
     @Autowired
-    private StatusService statusService;
+    private RoomStatusService statusService;
 
     @GetMapping("/manage-status")
     public String manageStatus(Model model){
-        Status status = new Status();
+        RoomStatus status = new RoomStatus();
         model.addAttribute("status", status);
         model.addAttribute("isEdit", false);
         model.addAttribute("addNew", true);
@@ -36,7 +36,7 @@ public class StatusController {
 
     @GetMapping("/manage-status/{id}")
     public String getStatus(@PathVariable("id") final int id, Model model) {
-        Status status = statusService.getStatus(id);
+        RoomStatus status = statusService.getStatus(id);
         model.addAttribute("isEdit", true);
         model.addAttribute("status", status);
         listStatusModel(model);
@@ -45,7 +45,7 @@ public class StatusController {
     }
 
     @PostMapping("/save-status")
-    public ModelAndView saveStatus(@ModelAttribute Status status){
+    public ModelAndView saveStatus(@ModelAttribute RoomStatus status){
         if(!status.getName().isEmpty()){
             status.setName(status.getName().toLowerCase().trim());
             statusService.saveStatus(status);
@@ -62,7 +62,7 @@ public class StatusController {
     }
     private void    listStatusModel(Model model){
 
-        Iterable<Status> listStatus = statusService.getStatuses();
+        Iterable<RoomStatus> listStatus = statusService.getStatuses();
         model.addAttribute("listStatus", listStatus);
     }
 }

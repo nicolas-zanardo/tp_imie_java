@@ -2,7 +2,7 @@ package fr.imie.webapp.repository;
 
 
 import fr.imie.webapp.CustomProperties;
-import fr.imie.webapp.model.Status;
+import fr.imie.webapp.model.RoomStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,20 +20,20 @@ import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 @Component
-public class StatusProxy {
+public class RoomStatusProxy {
 
     @Autowired
     private CustomProperties props;
 
-    public Status  createStatus(Status status) {
+    public RoomStatus createStatus(RoomStatus status) {
         String createStatusUrl = props.getApiUrl() + "/add-status";
         RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<Status> request = new HttpEntity<Status>(status);
-        ResponseEntity<Status> response = restTemplate.exchange(
+        HttpEntity<RoomStatus> request = new HttpEntity<RoomStatus>(status);
+        ResponseEntity<RoomStatus> response = restTemplate.exchange(
                 createStatusUrl,
                 HttpMethod.POST,
                 request,
-                Status.class
+                RoomStatus.class
         );
 
            return response.getBody();
@@ -44,44 +44,43 @@ public class StatusProxy {
      * @param status Status
      * @return ResponseEntity
      */
-
-    public Status updateStatus(Status status){
+    public RoomStatus updateStatus(RoomStatus status){
     String updateStatusUrl = props.getApiUrl() + "/update-status/"+ status.getId();
     RestTemplate restTemplate = new RestTemplate();
-    HttpEntity<Status> request = new HttpEntity<Status>(status);
-    ResponseEntity<Status> response = restTemplate.exchange(
+    HttpEntity<RoomStatus> request = new HttpEntity<RoomStatus>(status);
+    ResponseEntity<RoomStatus> response = restTemplate.exchange(
             updateStatusUrl,
             HttpMethod.PUT,
             request,
-            Status.class
+            RoomStatus.class
      );
     return response.getBody();
     }
 
 
 
-    public Iterable<Status> getStatuses(){
+    public Iterable<RoomStatus> getStatuses(){
 
         String getStatusUrl = props.getApiUrl() + "/statuses";
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Iterable<Status>>  response = restTemplate.exchange(
+        ResponseEntity<Iterable<RoomStatus>>  response = restTemplate.exchange(
                 getStatusUrl,
                 HttpMethod.GET,
                null,
-        new ParameterizedTypeReference<Iterable<Status>>(){}
+        new ParameterizedTypeReference<Iterable<RoomStatus>>(){}
 
         );
         return response.getBody();
     }
 
-    public Status getStatus(int id){
+    public RoomStatus getStatus(int id){
         String getStatusUrl = props.getApiUrl() + "/status/" + id;
         RestTemplate restTemplate =new RestTemplate();
-        ResponseEntity<Status> response = restTemplate.exchange(
+        ResponseEntity<RoomStatus> response = restTemplate.exchange(
                 getStatusUrl,
                 HttpMethod.GET,
                 null,
-                Status.class
+                RoomStatus.class
         );
         return response.getBody();
     }
