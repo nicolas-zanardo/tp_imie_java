@@ -26,10 +26,10 @@ public class RoomIssueController {
          */
         // Recupérer un formateur
 
-        Iterable<User> formateurs = userService.getUserByRoleName("teacher");
+        Iterable<User> formateurs = userService.getUserByRoleName("formateur");
         for (User user : formateurs
              ) {
-            System.out.println(user.getId());
+            System.out.println(user.getRole());
         }
 
         // inserer l'id de ce formateur dans l'html
@@ -57,6 +57,12 @@ public class RoomIssueController {
             }
             if (roomIssue.getRoom() != null) {
                 currentRoomIssue.setRoom(roomIssue.getRoom());
+            }
+            if (roomIssue.getUser() != null) {
+                currentRoomIssue.setUser(roomIssue.getUser());
+            }
+            if (roomIssue.getStatus() != null) {
+                currentRoomIssue.setStatus(roomIssue.getStatus());
             }
             RoomIssueService.saveRoomIssue(currentRoomIssue);
             return currentRoomIssue;
