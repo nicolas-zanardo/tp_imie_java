@@ -33,6 +33,6 @@ public class RoomIssue {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_room_status", nullable = false)
-    private Status status;
+    private RoomStatus roomStatus;
 
 }

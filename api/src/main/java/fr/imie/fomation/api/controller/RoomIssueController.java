@@ -61,8 +61,8 @@ public class RoomIssueController {
             if (roomIssue.getUser() != null) {
                 currentRoomIssue.setUser(roomIssue.getUser());
             }
-            if (roomIssue.getStatus() != null) {
-                currentRoomIssue.setStatus(roomIssue.getStatus());
+            if (roomIssue.getRoomStatus() != null) {
+                currentRoomIssue.setRoomStatus(roomIssue.getRoomStatus());
             }
             RoomIssueService.saveRoomIssue(currentRoomIssue);
             return currentRoomIssue;
