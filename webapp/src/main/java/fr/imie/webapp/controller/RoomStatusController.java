@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * @author raouf
@@ -49,21 +50,28 @@ public class RoomStatusController {
     }
 
     @PostMapping("/save-status")
-    public ModelAndView saveStatus(@ModelAttribute RoomStatus status){
+    public ModelAndView saveStatus(@ModelAttribute RoomStatus status,  RedirectAttributes redirAttrs){
         if(!status.getName().isEmpty()){
             status.setName(status.getName().toLowerCase().trim());
             Iterable<RoomStatus>  list = statusService.getStatusProxy().getStatuses();
-
             for (RoomStatus li: list) {
                 if(li.getName().equals(status.getName())){
                     statusExiste = true;
-                    return  new ModelAndView("redirect:/manage-status");
+                    redirAttrs.addFlashAttribute("error", "Ce status existe déjà.");
+
+                   return new ModelAndView("redirect:/manage-status");
+                    //return  new ModelAndView("redirect:/manage-status");
                 }
             }
             statusService.saveStatus(status);
+            redirAttrs.addFlashAttribute("success", "Le status est ajouter avec succès.");
+
         }
         return  new ModelAndView("redirect:/manage-status");
     }
+
+
+
 
     @GetMapping("/delete-status/{id}")
     public ModelAndView deleteStatus(@PathVariable("id") final int id, Model model){

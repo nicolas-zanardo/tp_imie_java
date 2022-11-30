@@ -5,6 +5,7 @@ import fr.imie.fomation.api._init_data.InitData;
 import fr.imie.fomation.api.service.RoomStatusService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
@@ -15,10 +16,11 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @Tag("StatusControllerTest")
 @DisplayName("unit testing status controller " )
+@DataJpaTest
 public class StatusControllerTest {
 
-    @Autowired
-    RoomStatusService roomStatusService;
+  //  @Autowired
+//    RoomStatusService roomStatusService;
     @Autowired
     private MockMvc mockMvc;
 
