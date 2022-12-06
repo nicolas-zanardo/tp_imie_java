@@ -65,7 +65,7 @@
                     <div class="d-flex align-items-center">
                         <h1>Problème de salle</h1>
                         <div class="mx-3" th:if="${isEdit}">
-                            <a class="btn btn-secondary" th:href="@{~/manage-room-issue}"></a>
+                            <a class="btn btn-secondary" th:href="@{~/manage-room-issue}">Ajout d'un nouveau problème</a>
                         </div>
                     </div>
                 </div>
@@ -87,8 +87,72 @@
                     <select class="form-select w-50" aria-label="Default select" name="room" th:if="${idRoom}" required>
                         <option class="col-sm-3" th:each="roomIssue : ${listRoom}" th:value="${roomIssue.id}" th:text="${roomIssue.name}" th:selected="${roomIssue == idRoom}"></option>
                     </select>
+                    <select class="form-select w-50" aria-label="Default select" th:field="*{roomStatus}" th:if="${idRoomStatus == null}" required>
+                        <option class="col-sm-3" th:each="roomIssue : ${listRoomStatus}" th:value="${roomIssue.id}" th:text="${roomIssue.name}"></option>
+                    </select>
+                    <select class="form-select w-50" aria-label="Default select" name="roomStatus" th:if="${idRoomStatus}" required>
+                        <option class="col-sm-3" th:each="roomIssue : ${listRoomStatus}" th:value="${roomIssue.id}" th:text="${roomIssue.name}" th:selected="${roomIssue == idRoomStatus}"></option>
+                    </select>
+                    <select class="form-select w-50" aria-label="Default select" th:field="*{user}" th:if="${idUser == null}" required>
+                        <option class="col-sm-3" th:each="roomIssue : ${listUser}" th:text="${roomIssue.firstName}" th:value="${roomIssue.id}"></option>
+                    </select>
+                    <select class="form-select w-50" aria-label="Default select" name="user" th:if="${idUser}" required>
+                        <option class="col-sm-3" th:each="roomIssue : ${listUser}" th:text="${roomIssue.firstName}" th:value="${roomIssue.id}" th:selected="${roomIssue == idUser}"></option>
+                    </select>
+                    <div class="w-50 text-end">
+                        <button type="submit" class="btn btn-primary">Valider</button>
+                    </div>
                 </div>
             </form>
+        </div>
+
+        <div class="container">
+            <hr>
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th>Nom du problème</th>
+                        <th>Salle</th>
+                        <th>Statut</th>
+                        <th>Formateur</th>
+                        <th class="text-end"><div class="px-3">Action</div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="roomIssue, row : ${listRoomIssue}">
+                        <td th:text="${roomIssue.name}"></td>
+                        <td th:text="${roomIssue.room.name}"></td>
+                        <td th:text="${roomIssue.roomStatus.name}"></td>
+                        <td th:text="${roomIssue.user.firstName}"></td>
+                        <td class="text-end">
+                            <a th:href="@{~/manage-room-issue/{id}(id=${roomIssue.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"  th:attrappend="data-bs-target=${'#modalDelete_' + roomIssue.id}">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+
+                            <div class="modal fade" th:attrappend="id=${'modalDelete_' + roomIssue.id}, aiaria-labelledby=${'modalLabelDelete_' + roomIssue.id}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header bg-dark text-white">
+                                            <div class="d-flex align-items-end"><b class="modal-title me-2" th:attrappend="id=${'modalLabelDelete_' + roomIssue.id}">Suppression : </b> <span th:text="${roomIssue.name}"></span></div>
+
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body text-start">
+                                            <div>Vous êtes sur le point de supprimer <b th:text="${roomIssue.name}"></b>.</div>
+                                            <div>Voulez vous continuer ?</div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+                                            <a th:href="@{~/delete-room-issue/{id}(id=${roomIssue.id})}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
 

@@ -71,14 +71,7 @@ class RoomStatusServiceTest {
                 .andExpect(jsonPath("name", is("init")));
     }
 
-    @Order(4)
-    @Test
-    public void testUniqueNameRoomStatus() throws Exception {
-        mockMvc.perform(post("/api/add-status").contentType(MediaType.APPLICATION_JSON).content("{\n" +
-                "    \"name\": \"init\"\n" +
-                "}"));
-        Assertions.assertEquals(1, StreamSupport.stream(roomStatusService.getStatuses().spliterator(), true).count());
-    }
+
 
     @Order(5)
     @Test
