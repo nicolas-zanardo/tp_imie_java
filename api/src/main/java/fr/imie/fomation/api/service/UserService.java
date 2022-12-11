@@ -32,4 +32,7 @@ public class UserService {
 
     //DELETE USER
     public void deleteUser(final Long id) { userRepository.deleteById(id); }
+
+    //Get USER BY ROLE
+    public Iterable<User> getUserByRoleName(String name) { return userRepository.findFirst1ByRole_Name(name); }
 }

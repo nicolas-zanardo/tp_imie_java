@@ -1,10 +1,10 @@
 package fr.imie.webapp.controller;
 
-import fr.imie.webapp.model.Room;
-import fr.imie.webapp.model.RoomIssue;
-import fr.imie.webapp.model.RoomIssueFormData;
+import fr.imie.webapp.model.*;
 import fr.imie.webapp.service.RoomIssueService;
 import fr.imie.webapp.service.RoomService;
+import fr.imie.webapp.service.RoomStatusService;
+import fr.imie.webapp.service.UserService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +19,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class RoomIssueController {
 
     @Autowired
+    private RoomStatusService roomStatusService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
     private RoomIssueService roomIssueService;
 
     @Autowired
@@ -29,7 +35,17 @@ public class RoomIssueController {
         RoomIssue roomIssue = new RoomIssue();
         model.addAttribute("roomIssue", roomIssue);
         model.addAttribute("isEdit", false);
+
+        // 1 recupere l'user
+        // model.addAttribute("idFormateur", user.getId());
+
+        /**
+         * Methode
+         */
+        listRoomModel(model);
         listRoomIssuesModel(model);
+        listUserModel(model);
+        listRoomStatusModel(model);
         return "manage-room-issue";
     }
 
@@ -38,19 +54,38 @@ public class RoomIssueController {
         RoomIssue roomIssue = roomIssueService.getRoomIssue(id);
         model.addAttribute("isEdit", true);
         model.addAttribute("roomIssue", roomIssue);
+        model.addAttribute("idRoom", roomIssue.getRoom().getId());
+        model.addAttribute("idUser", roomIssue.getUser().getId());
+        model.addAttribute("idRoomStatus", roomIssue.getRoomStatus().getId());
+
+        /**
+         * Methode
+         */
+
+        listRoomModel(model);
         listRoomIssuesModel(model);
+        listUserModel(model);
+        listRoomStatusModel(model);
         return  "manage-room-issue";
     }
 
     @PostMapping("/save-room-issue")
     public ModelAndView saveRoomIssue(RoomIssueFormData roomIssueFormData) {
+        System.out.println(roomIssueFormData);
         if (!roomIssueFormData.getName().isEmpty() &&
-                (roomIssueFormData.getRoom() > 0)
+                (roomIssueFormData.getRoom() > 0) &&
+                (roomIssueFormData.getUser() > 0) &&
+                (roomIssueFormData.getRoomStatus() > 0)
         ) {
             Room room = roomService.getRoom(roomIssueFormData.getRoom());
+            User user = userService.getUser(roomIssueFormData.getUser());
+            RoomStatus roomStatus = roomStatusService.getStatus(roomIssueFormData.getRoomStatus());
+            System.out.println(room);
             RoomIssue roomIssue = new RoomIssue();
             roomIssue.setId(roomIssueFormData.getId());
             roomIssue.setRoom(room);
+            roomIssue.setUser(user);
+            roomIssue.setRoomStatus(roomStatus);
             roomIssue.setName(roomIssueFormData.getName().toLowerCase().trim());
             roomIssueService.saveRoomIssue(roomIssue);
         }
@@ -64,12 +99,24 @@ public class RoomIssueController {
     }
 
     private void listRoomIssuesModel(Model model) {
-        Iterable<RoomIssue> ListRoomIssues = roomIssueService.getRoomIssues();
-        model.addAttribute("room-issues", ListRoomIssues);
+        Iterable<RoomIssue> ListRoomIssue = roomIssueService.getRoomIssues();
+        model.addAttribute("listRoomIssue", ListRoomIssue);
     }
 
     private void listRoomModel(Model model) {
-        Iterable<Room> ListRooms = roomService.getRooms();
-        model.addAttribute("ListRooms", ListRooms);
+        Iterable<Room> listRoom = roomService.getRooms();
+        model.addAttribute("listRoom", listRoom);
     }
+
+    private void listUserModel(Model model) {
+        Iterable<User> listUser = userService.getUsers();
+        model.addAttribute("listUser", listUser);
+    }
+
+    private void listRoomStatusModel(Model model) {
+        Iterable<RoomStatus> roomStatuses = roomStatusService.getStatuses();
+        model.addAttribute("listRoomStatus", roomStatuses);
+    }
+
+    // METHODE
 }

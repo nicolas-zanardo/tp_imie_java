@@ -24,6 +24,15 @@ public class RoomIssue {
     private String name;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_room", nullable = false)
+    @JoinColumn(name = "id_room", nullable = true)
     private Room room;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_user", nullable = false)
+    private User user;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_room_status", nullable = false)
+    private RoomStatus roomStatus;
+
 }

@@ -32,7 +32,7 @@ public class RoomIssueProxy {
     }
 
     public Iterable<RoomIssue> getRoomIssues() {
-        String getRoomIssuesUrl = props.getApiUrl() + "/room_issues";
+        String getRoomIssuesUrl = props.getApiUrl() + "/room-issues";
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Iterable<RoomIssue>> response = restTemplate.exchange(
                 getRoomIssuesUrl,
@@ -46,7 +46,7 @@ public class RoomIssueProxy {
     }
 
     public RoomIssue getRoomIssue(int id) {
-        String getRoomIssuesUrl = props.getApiUrl() + "/room-issue" + id;
+        String getRoomIssuesUrl = props.getApiUrl() + "/room-issue/" + id;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<RoomIssue> response = restTemplate.exchange(
                 getRoomIssuesUrl,
@@ -58,7 +58,7 @@ public class RoomIssueProxy {
     }
 
     public RoomIssue updateRoomIssue(RoomIssue roomIssue) {
-        String updateRoomIssueUrl = props.getApiUrl() + "/room-issue" + roomIssue.getId();
+        String updateRoomIssueUrl = props.getApiUrl() + "/room-issue/" + roomIssue.getId();
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<RoomIssue> request = new HttpEntity<RoomIssue>(roomIssue);
         ResponseEntity<RoomIssue> response = restTemplate.exchange(
@@ -71,7 +71,7 @@ public class RoomIssueProxy {
     }
 
     public void deleteRoomIssue(int id){
-        String deleteRoomIssueUrl = props.getApiUrl() + "/room-salle-delete/" + id;
+        String deleteRoomIssueUrl = props.getApiUrl() + "/delete-room-issue/" + id;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Void> response = restTemplate.exchange(
                 deleteRoomIssueUrl,

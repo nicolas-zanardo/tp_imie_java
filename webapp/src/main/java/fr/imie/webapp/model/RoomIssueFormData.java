@@ -7,4 +7,6 @@ public class RoomIssueFormData {
     private Integer id;
     private String name;
     private int room;
+    private int user;
+    private int roomStatus;
 }

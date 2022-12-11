@@ -13,12 +13,12 @@ public class RoomIssueService {
     @Autowired
     private RoomIssueProxy roomIssueProxy;
 
-    public void  saveRoomIssue(RoomIssue roomIssue) {
-        RoomIssue savedRoomIssue = null;
-        if (roomIssue.getId() == null) {
-            savedRoomIssue = roomIssueProxy.createRoomIssue(roomIssue);
+    public void saveRoomIssue(RoomIssue roomIssue) {
+        RoomIssue saveRoomIssue = null;
+        if(roomIssue.getId() == null && roomIssue.getUser().getRole().getName() == "formateur") {
+            saveRoomIssue = roomIssueProxy.createRoomIssue(roomIssue);
         } else {
-            savedRoomIssue = roomIssueProxy.createRoomIssue(roomIssue);
+            saveRoomIssue = roomIssueProxy.createRoomIssue(roomIssue);
         }
     }
 
