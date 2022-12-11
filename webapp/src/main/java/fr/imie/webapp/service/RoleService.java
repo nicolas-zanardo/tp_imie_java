@@ -29,6 +29,9 @@ public class RoleService {
     // GET ALL ROLE USER
     public Iterable<Role> getAllRoles() { return roleUserProxy.getAllRole(); }
 
+    // GET ALL ROLE BY NAME
+    public Iterable<Role> getRolesByName(Role role) { return roleUserProxy.getRoleByName(role); }
+
     // GET ROLE USER BY ID
     public Role getRole(final int id) { return  roleUserProxy.getRoleById(id); }
 

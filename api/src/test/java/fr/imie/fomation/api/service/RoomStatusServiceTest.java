@@ -54,7 +54,7 @@ class RoomStatusServiceTest {
     public void testRoomStatusGetById() throws Exception {
         mockMvc.perform(get("/api/status/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("name", is("init_TEST"))
+                .andExpect(jsonPath("name", is("init_test"))
         );
     }
 

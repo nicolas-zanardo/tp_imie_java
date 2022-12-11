@@ -23,19 +23,26 @@
     </div>
   </div>
 
+
   <!--        Form-->
   <div class="container text-center bg-light shadow-sm p-3">
-    <form th:action="@{~/save-user}" method="post" th:object="${user}">
+
+    <div class="alert alert-warning" role="alert" th:text="${noRole}" th:if="${!haveRole}"></div>
+    <div class="col-12 alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
+    <div class="col-12 alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+    <div class="alert alert-warning" role="alert" th:text="${warning}" th:if="${warning}"></div>
+
+    <form th:action="@{~/save-user}" method="post" th:object="${user}" th:if="${haveRole}">
       <input type="hidden" th:field="*{id}" class="form-control">
 
       <div class="d-flex align-items-center py-3">
         <div class="d-flex align-items-center mx-3 w-50">
           <label for="inputfirstName" class="me-3 w-25 text-start">Nom</label>
-          <input type="text" th:field="*{firstName}" class="form-control w-75" id="inputfirstName" required>
+          <input type="text" th:field="*{lastName}" class="form-control w-75" id="inputfirstName" required>
         </div>
         <div class="d-flex  align-items-center mx-3 w-50">
           <label for="inputlastName" class="me-3 w-25 text-start">prenom</label>
-          <input type="text" th:field="*{lastName}" class="form-control w-75" id="inputlastName" required>
+          <input type="text" th:field="*{firstName}" class="form-control w-75" id="inputlastName" required>
         </div>
       </div>
 
@@ -76,7 +83,7 @@
       </thead>
       <tbody>
       <tr th:each="user, row : ${listUsers}">
-        <td  th:text="${#strings.toUpperCase(user.firstName) + ' ' + #strings.toUpperCase(user.lastName)}">nom</td>
+        <td  th:text="${#strings.capitalizeWords(user.firstName) + ' ' + #strings.toUpperCase(user.lastName)}">nom</td>
         <td  th:text="${user.role.name}">nom</td>
         <td class="text-end">
           <a th:href="@{~/manage-users/{id}(id=${user.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>

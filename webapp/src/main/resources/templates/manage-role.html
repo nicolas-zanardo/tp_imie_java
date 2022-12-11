@@ -19,6 +19,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
+                <div class="col-12 alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+                <div class="alert alert-warning" role="alert" th:text="${warning}" th:if="${warning}"></div>
             </div>
         </div>
 

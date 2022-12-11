@@ -59,6 +59,30 @@ public class UserProxy {
         return response.getBody();
     }
 
+    public Iterable<User> getUsersByLogin(String login) {
+        String usersUrl = props.getApiUrl() + "/get-user-by-login/" + login;
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Iterable<User>> response = restTemplate.exchange(
+                usersUrl,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<Iterable<User>>() {}
+        );
+        return response.getBody();
+    }
+
+    public Iterable<User> getUsersByRole(int roleId) {
+        String usersByRoleUrl = props.getApiUrl() + "/get-user-by-role/" + roleId;
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Iterable<User>> response = restTemplate.exchange(
+                usersByRoleUrl,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<Iterable<User>>() {}
+        );
+        return response.getBody();
+    }
+
     public User getUser(int id) {
         String userUrl = props.getApiUrl() + "/user/" + id;
         RestTemplate restTemplate = new RestTemplate();

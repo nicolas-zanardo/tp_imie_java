@@ -1,7 +1,9 @@
 package fr.imie.fomation.api.controller;
 
 import fr.imie.fomation.api.model.Role;
+import fr.imie.fomation.api.model.User;
 import fr.imie.fomation.api.service.RoleService;
+import fr.imie.fomation.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +18,17 @@ public class RoleController {
 
     @Autowired
     private RoleService roleUserService;
+    @Autowired
+    private UserService userService;
 
     // GET ALL ROLE USERS
     @GetMapping("/role-users")
     public Iterable<Role> getRoleUsers() { return roleUserService.getRolesUser(); }
+
+    @GetMapping("/role-users-by-name/{name}")
+    public Iterable<Role> getRolUserByName(@PathVariable("name") final  String name) {
+        return roleUserService.findRoleUserByName(name);
+    }
 
     // GET ROLE USER BY ID
     @GetMapping("/role-user/{id}")
@@ -30,11 +39,12 @@ public class RoleController {
 
     // ADD ROLE USER
     @PostMapping("/add-role-user")
-    public Role createRoleUSer(@RequestBody Role roleUser) {
+    public Optional<Role> createRoleUSer(@RequestBody Role roleUser) {
+        Optional<Role> role = Optional.empty();
         if (roleUserService.findRoleUserByName(roleUser.getName()).isEmpty()) {
-            return roleUserService.saveRoleUser(roleUser);
+            role = Optional.ofNullable(roleUserService.saveRoleUser(roleUser));
         }
-       return new Role();
+       return role;
     }
 
     // UPDATE ROLE USER

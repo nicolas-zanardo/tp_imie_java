@@ -1,5 +1,6 @@
 package fr.imie.fomation.api.service;
 
+import fr.imie.fomation.api.model.Role;
 import fr.imie.fomation.api.model.User;
 import fr.imie.fomation.api.repository.UserRepository;
 import lombok.Data;
@@ -21,8 +22,18 @@ public class UserService {
 
     // GET ALL USER
     public Iterable<User> getUsers() {
+        return  userRepository.findAll();
+    }
 
-        return  userRepository.findAll(); }
+    // GET ALL USER BY LOGIN
+    public Iterable<User> getUserByLogin(final String login) {
+        return userRepository.findByLogin(login);
+    }
+
+    // GET ALL USER BY ROLE
+    public Iterable<User> getUserByRole(final Long role) {
+        return userRepository.findByRoleId(role);
+    }
 
     // GET USER BY ID
     public Optional<User> getUserById(final Long id) { return userRepository.findById(id); }

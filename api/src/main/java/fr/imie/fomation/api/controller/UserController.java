@@ -6,7 +6,9 @@ import fr.imie.fomation.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 /**
  *
@@ -30,7 +32,30 @@ public class UserController {
 
     @PostMapping("/add-user")
     public User createUser(@RequestBody User user) {
-        return userService.saveUser(user);
+        int error = 0; // Count number of error form
+        Iterable<User> getUserByLogin = userService.getUserByLogin(user.getLogin());
+
+        // ADD USER
+        if (user.getId() == null) {
+            if(StreamSupport.stream(getUserByLogin.spliterator(), true).findFirst().isPresent()) {
+                error++;
+            }
+        } else { // UPDATE USER
+            for (User userByLogin: getUserByLogin) {
+                if (!userByLogin.getId().equals(user.getId())) { // Check is different id
+                    // find error
+                    if (Objects.equals(userByLogin.getLogin(), user.getLogin())) {
+                        error++;
+                    }
+                }
+            }
+        }
+        if(error == 0) {
+            return userService.saveUser(user);
+        } else {
+            return new User();
+        }
+
     }
 
     @PutMapping("/update-user/{id}")
@@ -63,6 +88,16 @@ public class UserController {
         } else {
             return null;
         }
+    }
+
+    @GetMapping("/get-user-by-login/{login}")
+    public Iterable<User> getUserByLogin (@PathVariable("login") final  String login) {
+        return userService.getUserByLogin(login);
+    }
+
+    @GetMapping("/get-user-by-role/{roleId}")
+    public Iterable<User> getUserByRole (@PathVariable("roleId") final Long roleId) {
+        return userService.getUserByRole(roleId);
     }
 
     @DeleteMapping("/delete-user/{id}")

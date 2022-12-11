@@ -42,7 +42,7 @@ class RoleControllerTest {
     public void testRoleUserAdd() throws Exception {
         mockMvc.perform(post("/api/add-role-user")
                 .contentType(MediaType.APPLICATION_JSON).content("{\n" +
-                        "    \"name\": \"eleve_test\"\n" +
+                        "   \"name\": \"eleve_test\"\n" +
                         "}")
         );
         Assertions.assertEquals(1, StreamSupport.stream(roleUserService.getRolesUser().spliterator(), true).count());
@@ -92,6 +92,7 @@ class RoleControllerTest {
                         "        }\n" +
                         "}"))
         );
+        // if role have user, you can not delete the role.
     Assertions.assertTrue(roleUserService.roleHaveUser(roleUserService.getRoleUser(1L)));
     }
 
@@ -104,7 +105,6 @@ class RoleControllerTest {
                 .andExpect(status().isOk());
         Assertions.assertFalse(roleUserService.roleHaveUser(roleUserService.getRoleUser(1L)));
     }
-
 
     @Order(7)
     @Test

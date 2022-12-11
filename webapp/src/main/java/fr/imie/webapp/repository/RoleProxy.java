@@ -48,6 +48,19 @@ public class RoleProxy {
         return response.getBody();
     }
 
+    // GET ALL ROLE USER BY NAME
+    public Iterable<Role> getRoleByName(Role role) {
+        String getAllRole = props.getApiUrl() + "/role-users-by-name/" + role.getName();
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Iterable<Role>> response =restTemplate.exchange(
+                getAllRole,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<Iterable<Role>>() {}
+        );
+        return response.getBody();
+    }
+
     // GET ROLE USER BY ID
     public Role getRoleById(int id) {
         String getRoleUrl = props.getApiUrl() + "/role-user/" + id;
