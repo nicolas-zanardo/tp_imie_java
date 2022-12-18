@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head th:insert="share/head"></head>
+
 <body>
-$END$
-</body>
+  <header th:insert="share/header"></header>
+
+  <main>
+
+    <div class="container mt-5 p-3 border rounded shadow">
+
+
+
+      <table class="table mt-3">
+
+        <thead class="bg-dark text-white">
+          <tr>
+            <th>Nom et prénom</th>
+            <th>Qualité</th>
+            <th class="text-end"><div class="px-3">Action</div></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="user, row : ${listUsers}">
+            <td  th:text="${#strings.capitalizeWords(user.firstName) + ' ' + #strings.toUpperCase(user.lastName)}">nom</td>
+            <td  th:text="${user.role.name}">nom</td>
+            <td class="text-end">
+              <a th:href="@{~/manage-users/{id}(id=${user.id})}"><button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button></a>
+            </td>
+          </tr>
+        </tbody> <!-- END -->
+
+      </table> <!-- END -->
+
+    </div> <!-- END : class container -->
+
+    </main> <!-- END -->
+
+  <!-- SCRIPT -->
+  <div th:insert="share/script"></div>
+
+  </body>
+
 </html>

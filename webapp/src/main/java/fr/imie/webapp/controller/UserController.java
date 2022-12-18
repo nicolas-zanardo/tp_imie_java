@@ -37,6 +37,7 @@ public class UserController {
     @GetMapping("/manage-users")
     public String manageUsers(Model model) {
         Iterable<Role> findRole = roleUserService.getAllRoles();
+        haveRole = true;
         if(StreamSupport.stream(findRole.spliterator(), true).findFirst().isEmpty()) {
             haveRole = false;
             model.addAttribute("noRole",

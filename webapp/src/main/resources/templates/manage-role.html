@@ -13,9 +13,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="d-flex align-items-center">
-                        <h1>Role User</h1>
+                        <h1>Role utilisateur</h1>
                         <div class="mx-3" th:if="${isEdit}">
-                            <a  class="btn btn-secondary" th:href="@{~/manage-roles-user}">Ajout d'un nouveau Role user</a>
+                            <a  class="btn btn-secondary" th:href="@{~/manage-roles-user}">Ajout d'un nouveau Role utilisateur</a>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
             <form th:action="@{~/save-role-user}" method="post" th:object="${role}">
                 <input type="hidden" th:field="*{id}" class="form-control">
                 <div class="mb-3 row">
-                    <label for="inputName" class="col-2 col-form-label">Type de salle</label>
+                    <label for="inputName" class="col-2 col-form-label">Type d'utilisateur</label>
                     <div class="col-sm-7">
                         <input type="text" th:field="*{name}" class="form-control" id="inputName" required>
                     </div>

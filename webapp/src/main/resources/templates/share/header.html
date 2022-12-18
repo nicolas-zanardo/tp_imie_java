@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
   <div class="container-fluid">
-    <div class="navbar-brand" >IMIE</div>
+    <div class="navbar-brand" ><a class="btn text-white" th:href="@{~/}">IMIE</a></div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -45,8 +45,8 @@
             User
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" th:href="@{~/manage-roles-user}">Gestion des roles user</a></li>
-            <li><a class="dropdown-item" th:href="@{~/manage-users}">Gestion des users</a></li>
+            <li><a class="dropdown-item" th:href="@{~/manage-roles-user}">Gestion des roles utilisateurs</a></li>
+            <li><a class="dropdown-item" th:href="@{~/manage-users}">Gestion des utilisateurs</a></li>
           </ul>
         </li>
       </ul>
